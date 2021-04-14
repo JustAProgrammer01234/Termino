@@ -2,7 +2,7 @@
 import random
 from discord.ext import commands
 
-termino = commands.Bot(command_prefix = '$', description = "Not yet fit for a moderator..")
+termino = commands.Bot(command_prefix = '$', help_command = None)
 
 def get_token():
     with open('token.txt','r') as f:
@@ -14,7 +14,7 @@ async def on_ready():
     print('-----------------------------------')
 
 @termino.command()
-async def helpme(ctx):
+async def help(ctx):
     with open('help.txt','r') as help_message:
         await ctx.send(help_message.read())
 
