@@ -20,26 +20,29 @@ async def help(ctx):
 async def bubble_sort(ctx, array, mode):
     array = str_to_array(array)
 
-    if mode == 'ascending':
+    if len(array) < 10:
+        if mode == 'ascending':
 
-        index = 1
-        start = time.time()
-        bubble_sort_ascending(array)
-        finish = time.time()
-        elapsed = finish - start
-        await ctx.send(f'Finished sorting array: {array} in {elapsed:.2f} seconds.')
+            index = 1
+            start = time.time()
+            bubble_sort_ascending(array)
+            finish = time.time()
+            elapsed = finish - start
+            await ctx.send(f'Finished sorting array: {array} in {elapsed:.2f} seconds.')
 
-    elif mode == 'descending':
-    
-        index = 1
-        start = time.time()
-        bubble_sort_descending(array)
-        finish = time.time()
-        elapsed = finish - start
-        await ctx.send(f'Finished sorting array: {array} in {elapsed:.2f} seconds.')
+        elif mode == 'descending':
         
+            index = 1
+            start = time.time()
+            bubble_sort_descending(array)
+            finish = time.time()
+            elapsed = finish - start
+            await ctx.send(f'Finished sorting array: {array} in {elapsed:.2f} seconds.')
+            
+        else:
+            await ctx.send(f'Error: wrong value of mode: {mode}\nMust be ascending or descending.')
     else:
-        await ctx.send(f'Error: wrong value of mode: {mode}\nMust be ascending or descending.')
+        await ctx.send('Length of array must not be greater than ten')
 
 
 @termino.command()
