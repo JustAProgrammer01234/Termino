@@ -12,7 +12,7 @@ def get_token():
 async def on_ready():
     print(f'{termino.user.name} is ready to go.')
     print('-----------------------------------')
-    
+
 @termino.command()
 async def helpme(ctx):
     with open('help.txt','r') as help_message:
@@ -29,5 +29,9 @@ async def randomnum(ctx, start, stop):
 @termino.command()
 async def add(ctx, addend1, addend2):
     await ctx.send(float(addend1) + float(addend2))
+
+@termino.command()
+async def source(ctx):
+    await ctx.send('https://github.com/JustAProgrammer01234/Termino')
 
 termino.run(get_token())
