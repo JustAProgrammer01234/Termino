@@ -12,15 +12,7 @@ def get_token():
 async def on_ready():
     print(f'{termino.user.name} is ready to go.')
     print('-----------------------------------')
-
-@termino.event
-async def on_member_join(member):
-    print(f'{member} has joined this server!')
-
-@termino.event
-async def on_member_remove(member):
-    print(f'{member} has left the server!')
-
+    
 @termino.command()
 async def helpme(ctx):
     with open('help.txt','r') as help_message:
