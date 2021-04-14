@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import time
 import random
-import discord
 from noncoroobj import *
 from discord.ext import commands
 
@@ -14,7 +13,7 @@ async def on_ready():
 
 @termino.command()
 async def help(ctx):
-    with open('help.txt','r') as help_message:
+    with open('txt files/help.txt','r') as help_message:
         await ctx.send(help_message.read())
 
 @termino.command()

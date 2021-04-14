@@ -4,7 +4,7 @@ All non courotine objects are here.
 import time
 
 def get_token():
-    with open('token.txt','r') as f:
+    with open('txt files/token.txt','r') as f:
         return f.read()
 
 def str_to_array(string):
