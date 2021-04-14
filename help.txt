@@ -1,0 +1,16 @@
+```
+To begin using me, first type a $ dollar then type the command you want to execute
+Like for example:
+
+$testcommand <parameters>
+
+List of commands:
+1. copy (Which copies your message after the command.)
+2. randomnum (Which takes in parameters start and stop.) 
+3. add (Type the numbers you want to add next to the command.)
+4. helpme (Basically shows this message lol.)
+5. help (A more professional way to know about me.....)
+
+**Note**
+1. For a more detailed explanation type $help.
+```
