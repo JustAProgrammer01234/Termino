@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
+import time
 import random
 import discord
+from noncoroobj import *
 from discord.ext import commands
 
 termino = commands.Bot(command_prefix = '$', help_command = None)
-
-def get_token():
-    with open('token.txt','r') as f:
-        return f.read()
 
 @termino.event
 async def on_ready():
@@ -18,6 +16,32 @@ async def on_ready():
 async def help(ctx):
     with open('help.txt','r') as help_message:
         await ctx.send(help_message.read())
+
+@termino.command()
+async def bubble_sort(ctx, array, mode):
+    array = str_to_array(array)
+
+    if mode == 'ascending':
+
+        index = 1
+        start = time.time()
+        bubble_sort_ascending(array)
+        finish = time.time()
+        elapsed = finish - start
+        await ctx.send(f'Finished sorting array: {array} in {elapsed:.2f} seconds.')
+
+    elif mode == 'descending':
+    
+        index = 1
+        start = time.time()
+        bubble_sort_descending(array)
+        finish = time.time()
+        elapsed = finish - start
+        await ctx.send(f'Finished sorting array: {array} in {elapsed:.2f} seconds.')
+        
+    else:
+        await ctx.send(f'Error: wrong value of mode: {mode}\nMust be ascending or descending.')
+
 
 @termino.command()
 async def display(ctx, message):
