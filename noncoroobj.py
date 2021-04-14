@@ -8,7 +8,7 @@ def get_token():
         return f.read()
 
 def str_to_array(string):
-    return [digit for digit in string if digit.isdigit()]
+    return [int(digit) for digit in string if digit.isdigit()]
 
 def bubble_sort_ascending(array):
     index = 1
