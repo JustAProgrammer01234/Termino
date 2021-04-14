@@ -6,10 +6,10 @@ Like for example:
 $testcommand <parameters>
 
 List of commands:
-1. copy - Which copies your message after the command.
-2. randomnum - Which takes in parameters start and stop. 
-3. add - Type two numbers you want to add. 
+1. display <message> - Returns your message (I recommend you put quotation marks on your message).
+2. randomnum <start> <stop> - Returns a random value from start to stop. 
+3. add <addend1> <addend2> - Returns the sum of addend1 and addend2. 
 4. helpme - Basically shows this message lol.
-5. help - A more professional way to know about me.
-6. source - Shows my source code from https://github.com.
+5. source - Shows my source code from https://github.com.
+6. version - Displays the version of this bot.
 ```

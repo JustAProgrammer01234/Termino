@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import random
+import discord
 from discord.ext import commands
 
 termino = commands.Bot(command_prefix = '$', help_command = None)
@@ -19,7 +20,7 @@ async def help(ctx):
         await ctx.send(help_message.read())
 
 @termino.command()
-async def copy(ctx, message):
+async def display(ctx, message):
     await ctx.send(message)
 
 @termino.command()
@@ -33,5 +34,9 @@ async def add(ctx, addend1, addend2):
 @termino.command()
 async def source(ctx):
     await ctx.send('https://github.com/JustAProgrammer01234/Termino')
+
+@termino.command()
+async def version(ctx):
+    await ctx.send('Version 1.0')
 
 termino.run(get_token())
