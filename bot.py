@@ -23,7 +23,6 @@ async def bubble_sort(ctx, array, mode):
     if len(array) < 10:
         if mode == 'ascending':
 
-            index = 1
             start = time.time()
             bubble_sort_ascending(array)
             finish = time.time()
@@ -32,7 +31,6 @@ async def bubble_sort(ctx, array, mode):
 
         elif mode == 'descending':
         
-            index = 1
             start = time.time()
             bubble_sort_descending(array)
             finish = time.time()
@@ -42,7 +40,7 @@ async def bubble_sort(ctx, array, mode):
         else:
             await ctx.send(f'Error: wrong value of mode: {mode}\nMust be ascending or descending.')
     else:
-        await ctx.send('Length of array must not be greater than ten')
+        await ctx.send('Length of array must not be greater than ten.')
 
 
 @termino.command()
