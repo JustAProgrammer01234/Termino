@@ -1,7 +1,7 @@
 import time
 import random
-from noncoroutines import *
 from discord.ext import commands
+from noncoroutines.funcs import *
 
 termino = commands.Bot(command_prefix = '$', help_command = None)
 
@@ -32,7 +32,7 @@ async def bubble_sort(ctx, array, mode):
             await ctx.send(f'Finished sorting array: {array} in {elapsed:.2f} seconds.')
 
         else:
-            await ctx.send(f'Error: wrong value of mode: {mode}\nMust be ascending or descending.')
+            await ctx.send(f'Error:\nWrong value of mode: {mode}\nMust be ascending or descending.')
     else:
         await ctx.send('Length of array must not be greater than ten.')
 
@@ -62,7 +62,6 @@ async def insertion_sort(ctx, array, mode):
     else:
         await ctx.send('Length of array must not be greater than ten.')
 
-
 @termino.command()
 async def help(ctx):
     await ctx.send(get_help())
@@ -72,12 +71,12 @@ async def display(ctx, message):
     await ctx.send(message)
 
 @termino.command()
-async def randomnum(ctx, start, stop):
-    await ctx.send(f'Generated random number: {random.randint(int(start), int(stop))}')
+async def randomnum(ctx, start: int, stop: int):
+    await ctx.send(f'Generated random number: {random.randint(start, stop)}')
 
 @termino.command()
-async def add(ctx, addend1, addend2):
-    await ctx.send(float(addend1) + float(addend2))
+async def add(ctx, addend1: float, addend2: float):
+    await ctx.send(addend1 + addend2)
 
 @termino.command()
 async def source(ctx):

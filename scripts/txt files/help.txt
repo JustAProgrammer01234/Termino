@@ -16,5 +16,5 @@ List of commands:
 8. insertion_sort <array> <mode> - Sorts the array each 0.001 seconds using insertion sort algorithm and calculates the elapsed time.
 
 Note:
-Mode for each sorting algorithm is either ascending or descending
+Mode for each sorting algorithm is either ascending or descending.
 ```
