@@ -1,7 +1,6 @@
-#!/usr/bin/env python3
 import time
 import random
-from noncoroobj import *
+from noncoroutines import *
 from discord.ext import commands
 
 termino = commands.Bot(command_prefix = '$', help_command = None)
@@ -10,11 +9,6 @@ termino = commands.Bot(command_prefix = '$', help_command = None)
 async def on_ready():
     print(f'{termino.user.name} is ready to go.')
     print('-----------------------------------')
-
-@termino.command()
-async def help(ctx):
-    with open('txt files/help.txt','r') as help_message:
-        await ctx.send(help_message.read())
 
 @termino.command()
 async def bubble_sort(ctx, array, mode):
@@ -30,18 +24,21 @@ async def bubble_sort(ctx, array, mode):
             await ctx.send(f'Finished sorting array: {array} in {elapsed:.2f} seconds.')
 
         elif mode == 'descending':
-        
+
             start = time.time()
             bubble_sort_descending(array)
             finish = time.time()
             elapsed = finish - start
             await ctx.send(f'Finished sorting array: {array} in {elapsed:.2f} seconds.')
-            
+
         else:
             await ctx.send(f'Error: wrong value of mode: {mode}\nMust be ascending or descending.')
     else:
         await ctx.send('Length of array must not be greater than ten.')
 
+@termino.command()
+async def help(ctx):
+    await ctx.send(get_help())
 
 @termino.command()
 async def display(ctx, message):
