@@ -13,49 +13,32 @@ async def on_ready():
 @termino.command()
 async def bubble_sort(ctx, array, mode):
     array = str_to_array(array)
+    if len(array) <= 10:
+            if mode == 'ascending':
+                elapsed = run_bubble_sort_ascending(array)
+                await ctx.send(f'Finished sorting array: {array} in {elapsed} seconds.')
 
-    if len(array) < 10:
-        if mode == 'ascending':
+            elif mode == 'descending':
+                elapsed = run_bubble_sort_descending(array)
+                await ctx.send(f'Finished sorting array: {array} in {elapsed} seconds.')
 
-            start = time.time()
-            bubble_sort_ascending(array)
-            finish = time.time()
-            elapsed = finish - start
-            await ctx.send(f'Finished sorting array: {array} in {elapsed:.2f} seconds.')
-
-        elif mode == 'descending':
-
-            start = time.time()
-            bubble_sort_descending(array)
-            finish = time.time()
-            elapsed = finish - start
-            await ctx.send(f'Finished sorting array: {array} in {elapsed:.2f} seconds.')
-
-        else:
-            await ctx.send(f'Error:\nWrong value of mode: {mode}\nMust be ascending or descending.')
+            else:
+                await ctx.send(f'Error:\nWrong value of mode: {mode}\nMust be ascending or descending.')
     else:
         await ctx.send('Length of array must not be greater than ten.')
+
 
 @termino.command()
 async def insertion_sort(ctx, array, mode):
     array = str_to_array(array)
-
-    if len(array) < 10:
+    if len(array) <= 10:
         if mode == 'ascending':
-
-            start = time.time()
-            insertion_sort_ascending(array)
-            finish = time.time()
-            elapsed = finish - start
-            await ctx.send(f'Finished sorting array: {array} in {elapsed:.2f} seconds.')
+            elapsed = run_insertion_sort_ascending(array)
+            await ctx.send(f'Finished sorting array: {array} in {elapsed} seconds.')
 
         elif mode == 'descending':
-
-            start = time.time()
-            insertion_sort_descending(array)
-            finish = time.time()
-            elapsed = finish - start
-            await ctx.send(f'Finished sorting array: {array} in {elapsed:.2f} seconds.')
+            elapsed = run_insertion_sort_descending(array)
+            await ctx.send(f'Finished sorting array: {array} in {elapsed} seconds.')
 
         else:
             await ctx.send(f'Error: wrong value of mode: {mode}\nMust be ascending or descending.')
