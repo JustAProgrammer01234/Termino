@@ -1,9 +1,12 @@
 import time
 import random
+import discord
+from converters import *
 from discord.ext import commands
 from noncoroutines.funcs import *
 
-termino = commands.Bot(command_prefix = '$', help_command = None)
+intents = discord.Intents.all()
+termino = commands.Bot(command_prefix = '$', help_command = None, intents = intents)
 
 @termino.event
 async def on_ready():
@@ -68,5 +71,9 @@ async def source(ctx):
 @termino.command()
 async def version(ctx):
     await ctx.send('Version 1.0')
+
+@termino.command()
+async def slap(ctx, reason: SlapSomeone):
+    await ctx.send(reason)
 
 termino.run(get_token())
