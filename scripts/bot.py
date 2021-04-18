@@ -10,7 +10,7 @@ termino = commands.Bot(command_prefix = '$', help_command = None, intents = inte
 @termino.event
 async def on_ready():
     print(f'{termino.user.name} is ready to go.')
-    print('-----------------------------------'))
+    print('-----------------------------------')
 
 @termino.command()
 async def help(ctx):

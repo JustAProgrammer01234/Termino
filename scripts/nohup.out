@@ -42,3 +42,7 @@ Ignoring exception in command None:
 discord.ext.commands.errors.CommandNotFound: Command "8ball" is not found
 Termino is ready to go.
 -----------------------------------
+  File "bot.py", line 13
+    print('-----------------------------------'))
+                                                ^
+SyntaxError: invalid syntax
