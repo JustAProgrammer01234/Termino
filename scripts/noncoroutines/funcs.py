@@ -71,11 +71,11 @@ def run_insertion_sort_ascending(array):
     insertion_sort_ascending(array)
     finish = time.time()
     elapsed = finish - start
-    return f'{elapsed:.2f}'
+    return f'{elapsed:.3f}'
 
 def run_insertion_sort_descending(array):
     start = time.time()
     insertion_sort_ascending(array)
     finish = time.time()
     elapsed = finish - start
-    return f'{elapsed:.2f}'
+    return f'{elapsed:.3f}'
