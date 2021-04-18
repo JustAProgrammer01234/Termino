@@ -15,7 +15,7 @@ def eightball(question):
             'My sources say no.',
             'Outlook not so good.',
             'Outlook good.',
-            'Replay hazy, try again.'
+            'Replay hazy, try again.',
             'Signs point to yes.',
             'Very doubtful.',
             'Without a doubt.',

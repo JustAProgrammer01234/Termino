@@ -13,6 +13,7 @@ List of commands:
 5. source - Shows my source code from https://github.com.
 6. version - Displays the version of this bot.
 7. slap <reason> - Randomly slap a member in a discord server because of <reason>.
+8. 8ball <question> (or) fortune_teller <question> - Answers to your question by telling advices or predicting the future.
 
 Note:
 Mode for each sorting algorithm is either ascending or descending.
