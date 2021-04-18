@@ -1,8 +1,6 @@
 '''
 All non courotine objects are here.
 '''
-import time
-
 def get_help():
     with open('txt files/help.txt','r') as f:
         return f.read()
