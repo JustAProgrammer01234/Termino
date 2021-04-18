@@ -1,8 +1,9 @@
 import random
 import discord
-from converters import *
 from discord.ext import commands
 from noncoroutines.funcs import *
+from converters.converters import *
+from converters.advancedconverters import *
 
 intents = discord.Intents.all()
 termino = commands.Bot(command_prefix = '$', help_command = None, intents = intents)
@@ -39,5 +40,9 @@ async def version(ctx):
 @termino.command()
 async def slap(ctx, reason: SlapSomeone):
     await ctx.send(reason)
+
+@termino.command(aliases = ['8ball','fortune_teller'])
+async def _8ball(ctx, *, answer: eightball):
+    await ctx.send(f'{answer}')
 
 termino.run(get_token())

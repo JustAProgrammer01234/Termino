@@ -46,3 +46,5 @@ Termino is ready to go.
     print('-----------------------------------'))
                                                 ^
 SyntaxError: invalid syntax
+Termino is ready to go.
+-----------------------------------
