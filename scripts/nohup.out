@@ -50,3 +50,15 @@ Termino is ready to go.
 -----------------------------------
 Termino is ready to go.
 -----------------------------------
+Termino is ready to go.
+-----------------------------------
+Ignoring exception in command None:
+discord.ext.commands.errors.CommandNotFound: Command "sourxe" is not found
+Ignoring exception in command None:
+discord.ext.commands.errors.CommandNotFound: Command "say" is not found
+Ignoring exception in command None:
+discord.ext.commands.errors.CommandNotFound: Command "hepl" is not found
+Termino is ready to go.
+-----------------------------------
+Termino is ready to go.
+-----------------------------------

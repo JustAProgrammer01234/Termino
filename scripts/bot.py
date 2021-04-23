@@ -34,10 +34,6 @@ async def source(ctx):
     await ctx.send('https://github.com/JustAProgrammer01234/Termino')
 
 @termino.command()
-async def version(ctx):
-    await ctx.send('Version 1.0')
-
-@termino.command()
 async def slap(ctx, reason: SlapSomeone):
     await ctx.send(reason)
 

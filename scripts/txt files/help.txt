@@ -11,7 +11,6 @@ List of commands:
 3. add <addend1> <addend2> - Returns the sum of addend1 and addend2.
 4. help - Basically shows this message lol.
 5. source - Shows my source code from https://github.com.
-6. version - Displays the version of this bot.
-7. slap <reason> - Randomly slap a member in a discord server because of <reason>.
-8. 8ball <question> (or) fortune_teller <question> - Answers to your question by telling advices or predicting the future.
+6. slap <reason> - Randomly slap a member in a discord server because of <reason>.
+7. 8ball <question> (or) fortune_teller <question> - Answers to your question by telling advices or predicting the future.
 ```
