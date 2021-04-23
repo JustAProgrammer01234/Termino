@@ -34,7 +34,7 @@ async def source(ctx):
     await ctx.send('https://github.com/JustAProgrammer01234/Termino')
 
 @termino.command()
-async def slap(ctx, reason: SlapSomeone):
+async def slap(ctx,*, reason: SlapSomeone):
     await ctx.send(reason)
 
 @termino.command(aliases = ['8ball','fortune_teller'])
