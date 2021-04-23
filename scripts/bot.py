@@ -15,19 +15,26 @@ async def on_ready():
 
 @termino.command()
 async def help(ctx):
-    await ctx.send(get_help())
+    embd = discord.Embed(title = 'Need help? Refer down below!',
+            description = get_help())
+    await ctx.send(embed = embd)
 
 @termino.command()
 async def display(ctx,*, message):
-    await ctx.send(message)
+    embd = discord.Embed(description = message)
+    await ctx.send(embed = embd)
 
 @termino.command()
 async def randomnum(ctx, start: int, stop: int):
-    await ctx.send(f'Generated random number: {random.randint(start, stop)}')
+    embd = discord.Embed(title = 'Generated random number:',
+            description = f'{random.randint(start, stop)}')
+    await ctx.send(embed = embd)
 
 @termino.command()
 async def add(ctx, addend1: float, addend2: float):
-    await ctx.send(addend1 + addend2)
+    embd = discord.Embed(title = f'The sum of {addend1} and {addend2} is:',
+        description = f'{addend1 + addend2}')
+    await ctx.send(embed = embd)
 
 @termino.command()
 async def source(ctx):
@@ -35,10 +42,12 @@ async def source(ctx):
 
 @termino.command()
 async def slap(ctx,*, reason: SlapSomeone):
-    await ctx.send(reason)
+    embd = discord.Embed(description = reason)
+    await ctx.send(embed = embd)
 
 @termino.command(aliases = ['8ball','fortune_teller'])
 async def _8ball(ctx, *, answer: eightball):
-    await ctx.send(f'{answer}')
+    embd = discord.Embed(description = answer)
+    await ctx.send(embed = embd)
 
 termino.run(get_token())

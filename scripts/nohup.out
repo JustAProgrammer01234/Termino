@@ -62,3 +62,41 @@ Termino is ready to go.
 -----------------------------------
 Termino is ready to go.
 -----------------------------------
+Ignoring exception in command None:
+discord.ext.commands.errors.CommandNotFound: Command "version" is not found
+Termino is ready to go.
+-----------------------------------
+Traceback (most recent call last):
+  File "bot.py", line 2, in <module>
+    import discord
+ModuleNotFoundError: No module named 'discord'
+Termino is ready to go.
+-----------------------------------
+Ignoring exception in command add:
+Traceback (most recent call last):
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 467, in _actual_conversion
+    return converter(argument)
+ValueError: could not convert string to float: 'w'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/bot.py", line 939, in invoke
+    await ctx.command.invoke(ctx)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 855, in invoke
+    await self.prepare(ctx)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 789, in prepare
+    await self._parse_arguments(ctx)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 697, in _parse_arguments
+    transformed = await self.transform(ctx, param)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 552, in transform
+    return await self.do_conversion(ctx, converter, argument, param)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 505, in do_conversion
+    return await self._actual_conversion(ctx, converter, argument, param)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 476, in _actual_conversion
+    raise BadArgument('Converting to "{}" failed for parameter "{}".'.format(name, param.name)) from exc
+discord.ext.commands.errors.BadArgument: Converting to "float" failed for parameter "addend2".
+Termino is ready to go.
+-----------------------------------
+Termino is ready to go.
+-----------------------------------
