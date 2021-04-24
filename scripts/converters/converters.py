@@ -23,3 +23,6 @@ def eightball(question):
 
     return random.choice(messages)
 
+def is_even(num):
+    num = int(num)
+    return f'Yes `{num}` is even.' if num % 2 == 0 else f'Nope, `{num}` is not even.'

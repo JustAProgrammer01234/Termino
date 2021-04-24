@@ -38,7 +38,9 @@ async def add(ctx, addend1: float, addend2: float):
 
 @termino.command()
 async def source(ctx):
-    await ctx.send('https://github.com/JustAProgrammer01234/Termino')
+    embd = discord.Embed(title = "I'm glad you want to see how I was built, click the link below to see my source code!",
+            description = 'https://github.com/JustAProgrammer01234/Termino',)
+    await ctx.send(embed = embd)
 
 @termino.command()
 async def slap(ctx,*, reason: SlapSomeone):
@@ -48,6 +50,11 @@ async def slap(ctx,*, reason: SlapSomeone):
 @termino.command(aliases = ['8ball','fortune_teller'])
 async def _8ball(ctx, *, answer: eightball):
     embd = discord.Embed(description = answer)
+    await ctx.send(embed = embd)
+
+@termino.command()
+async def iseven(ctx, number: is_even):
+    embd = discord.Embed(description = number)
     await ctx.send(embed = embd)
 
 termino.run(get_token())
