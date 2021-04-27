@@ -4,7 +4,7 @@
 
 `$testcommand <parameters>`
 
-**List of commands:**
+**List of default commands:**
 
 1. `display <message>` - Displays <message>.
 
@@ -21,3 +21,8 @@
 7. `8ball <question> (or) fortune_teller <question>` - Answers to your question by telling advices or predicting the future.
 
 8. `iseven <num>` - Tells you if <num> is even or not.
+
+**Moderator commands: (In development.)**
+
+1. `ban <member>` - Bans <member>.
+2. `kick <member>` - Kicks <member>. 

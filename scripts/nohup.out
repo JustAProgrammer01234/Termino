@@ -106,3 +106,12 @@ Termino is ready to go.
 -----------------------------------
 Termino is ready to go.
 -----------------------------------
+Fatal read error on socket transport
+protocol: <asyncio.sslproto.SSLProtocol object at 0xb3d854f0>
+transport: <_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>
+Traceback (most recent call last):
+  File "/usr/lib/python3.7/asyncio/selector_events.py", line 801, in _read_ready__data_received
+    data = self._sock.recv(self.max_size)
+OSError: [Errno 101] Network is unreachable
+Termino is ready to go.
+-----------------------------------

@@ -1,9 +1,9 @@
 import random
 import discord
+import moderation
+from converters import *
 from discord.ext import commands
 from noncoroutines.funcs import *
-from converters.converters import *
-from converters.advancedconverters import *
 
 intents = discord.Intents.all()
 termino = commands.Bot(command_prefix = '$', help_command = None, intents = intents)
@@ -57,4 +57,5 @@ async def iseven(ctx, number: is_even):
     embd = discord.Embed(description = number)
     await ctx.send(embed = embd)
 
+moderation.add_command(termino)
 termino.run(get_token())
