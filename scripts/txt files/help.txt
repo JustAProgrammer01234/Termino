@@ -1,4 +1,4 @@
-**To begin using me, first add $ then type the command you want to execute.**
+**To begin using me, first add $ then the command you want to execute.**
 
 **Like for example:**
 
@@ -6,7 +6,7 @@
 
 **List of default commands:**
 
-1. `display <message>` - Displays <message>.
+1. `display <message>` - Displays <message> inside embed.
 
 2. `randomnum <start> <stop>` - Returns a random value from <start> to <stop>.
 
@@ -16,7 +16,7 @@
 
 5. `source` - Shows my source code from https://github.com.
 
-6. `slap <reason>` - Randomly slap a member in a discord server because of <reason>.
+6. `slap <reason>` - Slap a random member in a discord server because of <reason>.
 
 7. `8ball <question> (or) fortune_teller <question>` - Answers to your question by telling advices or predicting the future.
 
@@ -24,5 +24,5 @@
 
 **Moderator commands: (In development.)**
 
-1. `ban <member>` - Bans <member>.
-2. `kick <member>` - Kicks <member>. 
+1. `ban <member> <reason>` - Bans <member> because of <reason>.
+2. `kick <member> <reason>` - Kicks <member> 
