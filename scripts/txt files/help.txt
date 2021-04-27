@@ -18,7 +18,7 @@
 
 6. `slap <reason>` - Slap a random member in a discord server because of <reason>.
 
-7. `8ball <question> (or) fortune_teller <question>` - Answers to your question by telling advices or predicting the future.
+7. `8ball <question>` - Answers to your question by telling advices or predicting the future.
 
 8. `iseven <num>` - Tells you if <num> is even or not.
 
