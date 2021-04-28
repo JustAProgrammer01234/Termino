@@ -23,21 +23,7 @@ In linux/Mac:
 python3 -m venv termino
 ```
 
-### 2. Install discord.py library:
-
-In windows:
-
-```bash
-python -m pip install -U discord.py
-```
-
-In linux/Mac:
-
-```bash
-python3 -m pip install -U discord.py
-```
-
-### 3. Activating the virtual environment:
+### 2. Activating the virtual environment:
 
 In windows:
 
@@ -49,6 +35,20 @@ In Linux/Mac:
 
 ```bash
 source virtualenv.sh
+```
+
+### 3. Installing discord.py:
+
+In windows:
+
+```bash
+python -m pip install -U discord.py
+```
+
+In Linux/Mac:
+
+```bash
+python3 -m pip install -U discord.py
 ```
 
 ### 4. Running the script:
