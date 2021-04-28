@@ -9,6 +9,9 @@ This discord bot is still in development, so expect some errors to occur.
 ## To run this bot:
 (You need python 3.5.3 or higher for this.)
 
+The first and second procedures are optional, but I recommend you set up virtual environments so you can install the library needed locally in this repository instead of
+installing them globally in your system (Which is bad since it's just going to bloat your system.).
+
 ### 1. Setting up the virtual environment:
 
 In windows:
@@ -53,9 +56,9 @@ python3 -m pip install -U discord.py
 
 ### 4. Running the script:
 
-First, to run the script, you will need to create token.txt in scripts/txt files/. Then you will put the token needed for your bot in token.txt.
+First, to run the script (bot.py), you will need to create token.txt in scripts/txt files/. Then you will put the token needed for your bot in token.txt.
 
-Second you will need to run bot.py. To run the script, all you have to do is go to the scripts directory and type the following on the command line:
+Second, all you have to do is go to the scripts directory and type the following in the command line:
 
 In windows:
 
