@@ -1,0 +1,1 @@
+termino/Scripts/activate.bat

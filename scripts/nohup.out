@@ -210,3 +210,81 @@ Termino is ready to go.
 -----------------------------------
 Termino is ready to go.
 -----------------------------------
+Ignoring exception in command randomslap:
+Traceback (most recent call last):
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 451, in _actual_conversion
+    ret = await instance.convert(ctx, argument)
+  File "/home/pi/Termino/scripts/converters/advancedconverters.py", line 6, in convert
+    random_member = random.choice(ctx.guild.members)
+AttributeError: 'NoneType' object has no attribute 'members'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/bot.py", line 939, in invoke
+    await ctx.command.invoke(ctx)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 855, in invoke
+    await self.prepare(ctx)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 789, in prepare
+    await self._parse_arguments(ctx)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 706, in _parse_arguments
+    kwargs[name] = await self.transform(ctx, param)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 552, in transform
+    return await self.do_conversion(ctx, converter, argument, param)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 505, in do_conversion
+    return await self._actual_conversion(ctx, converter, argument, param)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 464, in _actual_conversion
+    raise ConversionError(converter, exc) from exc
+discord.ext.commands.errors.ConversionError: (<class 'converters.advancedconverters.SlapSomeone'>, AttributeError("'NoneType' object has no attribute 'members'"))
+Ignoring exception in command kick:
+Traceback (most recent call last):
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 85, in wrapped
+    ret = await coro(*args, **kwargs)
+  File "/home/pi/Termino/scripts/moderation/kickban.py", line 9, in kick
+    await member.kick(reason = "Didn't provide a reason.")
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/member.py", line 555, in kick
+    await self.guild.kick(self, reason=reason)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/guild.py", line 1997, in kick
+    await self._state.http.kick(user.id, self.id, reason=reason)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/http.py", line 248, in request
+    raise Forbidden(r, data)
+discord.errors.Forbidden: 403 Forbidden (error code: 50013): Missing Permissions
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/bot.py", line 939, in invoke
+    await ctx.command.invoke(ctx)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 863, in invoke
+    await injected(*ctx.args, **ctx.kwargs)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 94, in wrapped
+    raise CommandInvokeError(exc) from exc
+discord.ext.commands.errors.CommandInvokeError: Command raised an exception: Forbidden: 403 Forbidden (error code: 50013): Missing Permissions
+Ignoring exception in command slap:
+Traceback (most recent call last):
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/bot.py", line 939, in invoke
+    await ctx.command.invoke(ctx)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 855, in invoke
+    await self.prepare(ctx)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 789, in prepare
+    await self._parse_arguments(ctx)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 706, in _parse_arguments
+    kwargs[name] = await self.transform(ctx, param)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 542, in transform
+    raise MissingRequiredArgument(param)
+discord.ext.commands.errors.MissingRequiredArgument: reason is a required argument that is missing.
+Ignoring exception in command slap:
+Traceback (most recent call last):
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/bot.py", line 939, in invoke
+    await ctx.command.invoke(ctx)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 855, in invoke
+    await self.prepare(ctx)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 789, in prepare
+    await self._parse_arguments(ctx)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 706, in _parse_arguments
+    kwargs[name] = await self.transform(ctx, param)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 542, in transform
+    raise MissingRequiredArgument(param)
+discord.ext.commands.errors.MissingRequiredArgument: reason is a required argument that is missing.
+Termino is ready to go.
+-----------------------------------

@@ -1,0 +1,1 @@
+source termino/bin/activate
