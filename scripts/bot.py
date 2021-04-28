@@ -43,8 +43,9 @@ async def source(ctx):
     await ctx.send(embed = embd)
 
 @termino.command()
-async def slap(ctx,*, reason: SlapSomeone):
+async def randomslap(ctx,*, reason: SlapSomeone):
     embd = discord.Embed(description = reason)
+    embd.set_image(url = "https://media1.tenor.com/images/8b80166ce48c9c198951361715a90696/tenor.gif?itemid=4575896")
     await ctx.send(embed = embd)
 
 @termino.command(name = '8ball')
@@ -57,6 +58,13 @@ async def _8ball(ctx, *, answer: eightball):
 async def iseven(ctx, number: is_even):
     embd = discord.Embed(description = number)
     await ctx.send(embed = embd)
+
+@termino.command()
+async def slap(ctx, member: discord.Member, *, reason):
+    embd = discord.Embed(description = f"**{ctx.author.mention} slapped {member.mention} because of {reason}.**")
+    embd.set_image(url = "https://media1.tenor.com/images/0480faa72a67ba6cdd3bc87de26c819d/tenor.gif?itemid=16545714")
+    await ctx.send(embed = embd)
+
 
 moderation.add_command(termino)
 termino.run(get_token())

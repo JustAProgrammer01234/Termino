@@ -16,11 +16,13 @@
 
 5. `source` - Shows my source code from https://github.com.
 
-6. `slap <reason>` - Slap a random member in a discord server because of <reason>.
+6. `randomslap <reason>` - Slap a random member in a discord server because of <reason>.
 
 7. `8ball <question>` - Answers to your question by telling advices or predicting the future.
 
 8. `iseven <num>` - Tells you if <num> is even or not.
+
+9. `slap <member> <reason>` - Slaps <member> because of <reason>.
 
 **Moderator commands: (In development.)**
 
