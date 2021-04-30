@@ -321,3 +321,39 @@ Termino is ready to go.
 SyntaxError: invalid syntax
 Termino is ready to go.
 -----------------------------------
+Ignoring exception in command kick:
+Traceback (most recent call last):
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/bot.py", line 939, in invoke
+    await ctx.command.invoke(ctx)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 855, in invoke
+    await self.prepare(ctx)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 777, in prepare
+    if not await self.can_run(ctx):
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 1087, in can_run
+    return await discord.utils.async_all(predicate(ctx) for predicate in predicates)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/utils.py", line 348, in async_all
+    for elem in gen:
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 1087, in <genexpr>
+    return await discord.utils.async_all(predicate(ctx) for predicate in predicates)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 1790, in predicate
+    raise MissingPermissions(missing)
+discord.ext.commands.errors.MissingPermissions: You are missing Kick Members and Administrator permission(s) to run this command.
+Ignoring exception in command kick:
+Traceback (most recent call last):
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/bot.py", line 939, in invoke
+    await ctx.command.invoke(ctx)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 855, in invoke
+    await self.prepare(ctx)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 777, in prepare
+    if not await self.can_run(ctx):
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 1087, in can_run
+    return await discord.utils.async_all(predicate(ctx) for predicate in predicates)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/utils.py", line 348, in async_all
+    for elem in gen:
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 1087, in <genexpr>
+    return await discord.utils.async_all(predicate(ctx) for predicate in predicates)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 1790, in predicate
+    raise MissingPermissions(missing)
+discord.ext.commands.errors.MissingPermissions: You are missing Kick Members and Administrator permission(s) to run this command.
+Termino is ready to go.
+-----------------------------------

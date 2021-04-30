@@ -51,8 +51,9 @@ async def randomslap(ctx,*, reason: SlapSomeone):
 @termino.command(name = '8ball')
 async def _8ball(ctx, *, answer: eightball):
     embd = discord.Embed(title = '8ball says:', 
-            description = answer)
+            description = answer[0]) 
     embd.set_thumbnail(url = 'https://upload.wikimedia.org/wikipedia/commons/9/90/Magic8ball.jpg')
+    embd.set_footer(text = f'Question: {answer[1]}')
     await ctx.reply(embed = embd)
 
 @termino.command()

@@ -21,7 +21,7 @@ def eightball(question):
             'Without a doubt.',
             'Yes.']
 
-    return random.choice(messages)
+    return random.choice(messages), question
 
 def is_even(num):
     num = int(num)
