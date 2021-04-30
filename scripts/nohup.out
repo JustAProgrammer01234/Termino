@@ -288,3 +288,36 @@ Traceback (most recent call last):
 discord.ext.commands.errors.MissingRequiredArgument: reason is a required argument that is missing.
 Termino is ready to go.
 -----------------------------------
+Ignoring exception in command None:
+discord.ext.commands.errors.CommandNotFound: Command "HELP" is not found
+Ignoring exception in command None:
+discord.ext.commands.errors.CommandNotFound: Command "hel" is not found
+Ignoring exception in command slap:
+Traceback (most recent call last):
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/bot.py", line 939, in invoke
+    await ctx.command.invoke(ctx)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 855, in invoke
+    await self.prepare(ctx)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 789, in prepare
+    await self._parse_arguments(ctx)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 697, in _parse_arguments
+    transformed = await self.transform(ctx, param)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 552, in transform
+    return await self.do_conversion(ctx, converter, argument, param)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 505, in do_conversion
+    return await self._actual_conversion(ctx, converter, argument, param)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 451, in _actual_conversion
+    ret = await instance.convert(ctx, argument)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/converter.py", line 195, in convert
+    raise MemberNotFound(argument)
+discord.ext.commands.errors.MemberNotFound: Member "<@&818352320243826690>" not found.
+Termino is ready to go.
+-----------------------------------
+Termino is ready to go.
+-----------------------------------
+  File "bot.py", line 56
+    await ctx.reply(embed = embd)
+        ^
+SyntaxError: invalid syntax
+Termino is ready to go.
+-----------------------------------

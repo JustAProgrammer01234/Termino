@@ -17,30 +17,30 @@ async def on_ready():
 async def help(ctx):
     embd = discord.Embed(title = 'Need help? Refer down below!',
             description = get_help())
-    await ctx.send(embed = embd)
+    await ctx.reply(embed = embd)
 
 @termino.command()
 async def display(ctx,*, message):
     embd = discord.Embed(description = message)
-    await ctx.send(embed = embd)
+    await ctx.reply(embed = embd)
 
 @termino.command()
 async def randomnum(ctx, start: int, stop: int):
     embd = discord.Embed(title = 'Generated random number:',
             description = f'{random.randint(start, stop)}')
-    await ctx.send(embed = embd)
+    await ctx.reply(embed = embd)
 
 @termino.command()
 async def add(ctx, addend1: float, addend2: float):
     embd = discord.Embed(title = f'The sum of {addend1} and {addend2} is:',
         description = f'{addend1 + addend2}')
-    await ctx.send(embed = embd)
+    await ctx.reply(embed = embd)
 
 @termino.command()
 async def source(ctx):
     embd = discord.Embed(title = "I'm glad you want to see how I was built. Click the link below to see my source code!",
             description = 'https://github.com/JustAProgrammer01234/Termino',)
-    await ctx.send(embed = embd)
+    await ctx.reply(embed = embd)
 
 @termino.command()
 async def randomslap(ctx,*, reason: SlapSomeone):
@@ -52,12 +52,13 @@ async def randomslap(ctx,*, reason: SlapSomeone):
 async def _8ball(ctx, *, answer: eightball):
     embd = discord.Embed(title = '8ball says:', 
             description = answer)
-    await ctx.send(embed = embd)
+    embd.set_thumbnail(url = 'https://upload.wikimedia.org/wikipedia/commons/9/90/Magic8ball.jpg')
+    await ctx.reply(embed = embd)
 
 @termino.command()
 async def iseven(ctx, number: is_even):
     embd = discord.Embed(description = number)
-    await ctx.send(embed = embd)
+    await ctx.reply(embed = embd)
 
 @termino.command()
 async def slap(ctx, member: discord.Member, *, reason):
