@@ -25,7 +25,7 @@ async def kick_error(ctx, error):
     elif isinstance(error, MissingPermissions):
         await ctx.reply("Error: Permission denied.")
 
-@kick.error
+@ban.error
 async def ban_error(ctx,error):
     if isinstance(error, Forbidden):
         await ctx.reply("Error: The bot doesn't have permissions to ban.")
