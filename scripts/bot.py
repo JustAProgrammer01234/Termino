@@ -35,7 +35,6 @@ async def display(ctx, mode, *, message):
     else:
         await ctx.reply('Error: <mode> must either be -orig if you want to show just plain text, or -embd if you want to show message inside embed.')
     
-
 @termino.command()
 async def randomnum(ctx, start: int, stop: int):
     embd = discord.Embed(title = 'Generated random number:',
