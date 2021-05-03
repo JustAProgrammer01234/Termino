@@ -4,6 +4,7 @@ import moderation
 from converters import *
 from discord.ext import commands
 from noncoroutines.funcs import *
+from discord.ext.commands.errors import *
 
 intents = discord.Intents.all()
 termino = commands.Bot(command_prefix = '$', help_command = None, intents = intents)
@@ -13,6 +14,11 @@ async def on_ready():
     print(f'{termino.user.name} is ready to go.')
     print('-----------------------------------')
 
+@termino.event
+async def on_command_error(ctx, error):
+    if isinstance(error, CommandNotFound):
+        await ctx.reply('Error: Command not found')
+
 @termino.command()
 async def help(ctx):
     embd = discord.Embed(title = 'Need help? Refer down below!',
@@ -20,9 +26,15 @@ async def help(ctx):
     await ctx.reply(embed = embd)
 
 @termino.command()
-async def display(ctx,*, message):
-    embd = discord.Embed(description = message)
-    await ctx.reply(embed = embd)
+async def display(ctx, mode, *, message):
+    if mode == '-orig':
+        await ctx.reply(message)
+    elif mode == '-embd':
+        embd = discord.Embed(description = message)
+        await ctx.reply(embed = embd)
+    else:
+        await ctx.reply('Error: <mode> must either be -orig if you want to show just plain text, or -embd if you want to show message inside embed.')
+    
 
 @termino.command()
 async def randomnum(ctx, start: int, stop: int):
@@ -58,8 +70,7 @@ async def _8ball(ctx, *, answer: eightball):
 
 @termino.command()
 async def iseven(ctx, number: is_even):
-    embd = discord.Embed(description = number)
-    await ctx.reply(embed = embd)
+    await ctx.reply(number)
 
 @termino.command()
 async def slap(ctx, member: discord.Member, *, reason):
