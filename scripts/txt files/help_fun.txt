@@ -1,0 +1,13 @@
+1. `$display <mode> <message>` - Displays <message>. (<mode> must either be -orig if you want to display <message> in plain text, or -embd if you want to display message in embed.)
+
+2. `randomnum <start> stop>` - Returns a random number from <start> to <stop>.
+
+3. `add <addend1> <addend2>` - Returns the sum of <addend1> and <addend2> in decimal form.
+
+4. `randomslap <reason>` - Slap a random member in a discord server because of <reason>.
+
+5. `8ball <question>` - Answers to you question in a yes or no format.
+
+6. `iseven <num>` - Tells you if <num> is even or not.
+
+7. `slap <member> <reason>` - Slaps <member> because of <reason>.

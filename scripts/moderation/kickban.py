@@ -18,20 +18,6 @@ async def ban(ctx, member: discord.Member, *, reason = None):
     else:
         await member.ban(reason = reason)
 
-@kick.error
-async def kick_error(ctx, error):
-    if isinstance(error, Forbidden):
-        await ctx.reply("Error: The bot doesn't have permissions to kick.")
-    elif isinstance(error, MissingPermissions):
-        await ctx.reply("Error: Permission denied.")
-
-@ban.error
-async def ban_error(ctx,error):
-    if isinstance(error, Forbidden):
-        await ctx.reply("Error: The bot doesn't have permissions to ban.")
-    elif isinstance(error, MissingPermissions):
-        await ctx.reply("Error: Permission denied.")
-
 def add_command(bot):
     bot.add_command(kick)
     bot.add_command(ban)

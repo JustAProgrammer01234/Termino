@@ -1,0 +1,7 @@
+1. `ban <member> <reason>` - Bans <member> because of <reason>.
+
+2. `kick <member> <reason>` - Kicks <member> because of <reason>.
+
+3. `Mute <member>` - Mutes <member>.
+
+4. `Unban <member>` - Unbans <member>.

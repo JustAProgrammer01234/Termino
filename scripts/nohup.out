@@ -389,3 +389,165 @@ Termino is ready to go.
 -----------------------------------
 Termino is ready to go.
 -----------------------------------
+Ignoring exception in on_message
+Traceback (most recent call last):
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 85, in wrapped
+    ret = await coro(*args, **kwargs)
+  File "/home/pi/Termino/scripts/moderation/kickban.py", line 9, in kick
+    await member.kick(reason = "Didn't provide a reason.")
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/member.py", line 555, in kick
+    await self.guild.kick(self, reason=reason)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/guild.py", line 1997, in kick
+    await self._state.http.kick(user.id, self.id, reason=reason)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/http.py", line 248, in request
+    raise Forbidden(r, data)
+discord.errors.Forbidden: 403 Forbidden (error code: 50013): Missing Permissions
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/bot.py", line 939, in invoke
+    await ctx.command.invoke(ctx)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 863, in invoke
+    await injected(*ctx.args, **ctx.kwargs)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 94, in wrapped
+    raise CommandInvokeError(exc) from exc
+discord.ext.commands.errors.CommandInvokeError: Command raised an exception: Forbidden: 403 Forbidden (error code: 50013): Missing Permissions
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 71, in wrapped
+    ret = await coro(*args, **kwargs)
+  File "/home/pi/Termino/scripts/moderation/kickban.py", line 32, in ban_error
+    elif isinstance(error, MissingPermissions):
+NameError: name 'MissingPermissions' is not defined
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/client.py", line 343, in _run_event
+    await coro(*args, **kwargs)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/bot.py", line 979, in on_message
+    await self.process_commands(message)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/bot.py", line 976, in process_commands
+    await self.invoke(ctx)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/bot.py", line 943, in invoke
+    await ctx.command.dispatch_error(ctx, exc)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 424, in dispatch_error
+    await injected(ctx, error)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 77, in wrapped
+    raise CommandInvokeError(exc) from exc
+discord.ext.commands.errors.CommandInvokeError: Command raised an exception: NameError: name 'MissingPermissions' is not defined
+Termino is ready to go.
+-----------------------------------
+Ignoring exception in on_message
+Traceback (most recent call last):
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 85, in wrapped
+    ret = await coro(*args, **kwargs)
+  File "/home/pi/Termino/scripts/moderation/kickban.py", line 19, in ban
+    await member.ban(reason = reason)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/member.py", line 541, in ban
+    await self.guild.ban(self, **kwargs)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/guild.py", line 2026, in ban
+    await self._state.http.ban(user.id, self.id, delete_message_days, reason=reason)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/http.py", line 248, in request
+    raise Forbidden(r, data)
+discord.errors.Forbidden: 403 Forbidden (error code: 50013): Missing Permissions
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/bot.py", line 939, in invoke
+    await ctx.command.invoke(ctx)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 863, in invoke
+    await injected(*ctx.args, **ctx.kwargs)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 94, in wrapped
+    raise CommandInvokeError(exc) from exc
+discord.ext.commands.errors.CommandInvokeError: Command raised an exception: Forbidden: 403 Forbidden (error code: 50013): Missing Permissions
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 71, in wrapped
+    ret = await coro(*args, **kwargs)
+  File "/home/pi/Termino/scripts/moderation/kickban.py", line 32, in ban_error
+    elif isinstance(error, MissingPermissions):
+NameError: name 'MissingPermissions' is not defined
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/client.py", line 343, in _run_event
+    await coro(*args, **kwargs)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/bot.py", line 979, in on_message
+    await self.process_commands(message)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/bot.py", line 976, in process_commands
+    await self.invoke(ctx)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/bot.py", line 943, in invoke
+    await ctx.command.dispatch_error(ctx, exc)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 424, in dispatch_error
+    await injected(ctx, error)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 77, in wrapped
+    raise CommandInvokeError(exc) from exc
+discord.ext.commands.errors.CommandInvokeError: Command raised an exception: NameError: name 'MissingPermissions' is not defined
+SSL error in data received
+protocol: <asyncio.sslproto.SSLProtocol object at 0xb4658dd0>
+transport: <_SelectorSocketTransport fd=7 read=polling write=<idle, bufsize=0>>
+Traceback (most recent call last):
+  File "/usr/lib/python3.7/asyncio/sslproto.py", line 526, in data_received
+    ssldata, appdata = self._sslpipe.feed_ssldata(data)
+  File "/usr/lib/python3.7/asyncio/sslproto.py", line 207, in feed_ssldata
+    self._sslobj.unwrap()
+  File "/usr/lib/python3.7/ssl.py", line 767, in unwrap
+    return self._sslobj.shutdown()
+ssl.SSLError: [SSL: KRB5_S_INIT] application data after close notify (_ssl.c:2609)
+Ignoring exception in on_message
+Traceback (most recent call last):
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/bot.py", line 939, in invoke
+    await ctx.command.invoke(ctx)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 855, in invoke
+    await self.prepare(ctx)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 789, in prepare
+    await self._parse_arguments(ctx)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 697, in _parse_arguments
+    transformed = await self.transform(ctx, param)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 542, in transform
+    raise MissingRequiredArgument(param)
+discord.ext.commands.errors.MissingRequiredArgument: member is a required argument that is missing.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 71, in wrapped
+    ret = await coro(*args, **kwargs)
+  File "/home/pi/Termino/scripts/moderation/kickban.py", line 25, in kick_error
+    elif isinstance(error, MissingPermissions):
+NameError: name 'MissingPermissions' is not defined
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/client.py", line 343, in _run_event
+    await coro(*args, **kwargs)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/bot.py", line 979, in on_message
+    await self.process_commands(message)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/bot.py", line 976, in process_commands
+    await self.invoke(ctx)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/bot.py", line 943, in invoke
+    await ctx.command.dispatch_error(ctx, exc)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 424, in dispatch_error
+    await injected(ctx, error)
+  File "/home/pi/Termino/termino/lib/python3.7/site-packages/discord/ext/commands/core.py", line 77, in wrapped
+    raise CommandInvokeError(exc) from exc
+discord.ext.commands.errors.CommandInvokeError: Command raised an exception: NameError: name 'MissingPermissions' is not defined
+Termino is ready to go.
+-----------------------------------
+Traceback (most recent call last):
+  File "bot.py", line 2, in <module>
+    import discord
+ModuleNotFoundError: No module named 'discord'
+Termino is ready to go.
+-----------------------------------
+Termino is ready to go.
+-----------------------------------
