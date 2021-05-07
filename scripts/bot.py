@@ -29,6 +29,10 @@ async def on_command_error(ctx, error):
         #for debugging purposes
         print(error)
 
+@termino.event
+async def on_member_join(member: discord.Member):
+    pass
+
 @termino.command()
 async def help(ctx, cmd_category = None):
     if cmd_category == None:
