@@ -27,21 +27,21 @@ async def add(ctx, addend1: float, addend2: float):
 
 @commands.command()
 async def source(ctx):
-    embed = discord.Embed(title = "I'm glad you want to see how I was built. Click the link below to see my source code!",
+    embd = discord.Embed(title = "I'm glad you want to see how I was built. Click the link below to see my source code!",
             description = 'https://github.com/JustAProgrammer01234/Termino')
-    ctx.reply(embed = embd)
+    await ctx.reply(embed = embd)
 
 @commands.command()
 async def randomslap(ctx, *, reason: SlapSomeone):
     embd = discord.Embed(description = reason)
-    embd.set_image(url = 'https://media1.tenor.com/images/8b80166ce48c9c198951361715a9069')
+    embd.set_image(url = 'https://media1.tenor.com/images/0480faa72a67ba6cdd3bc87de26c819d/tenor.gif?itemid=16545714')
     await ctx.send(embed = embd)
 
 @commands.command(aliases = ['8ball', '8b'])
 async def _8ball(ctx, *, answer: eightball):
     embd = discord.Embed(title = '8ball says:',
             description = answer[0])
-    embd.set_thumbnail(url = 'https://upload.wikimedia.org/wikipedia/commmons/9/90/Magic8ball.jpg')
+    embd.set_thumbnail(url = 'https://magic-8ball.com/assets/images/magicBallStart.png')
     embd.set_footer(text = f'Question: {answer[1]}')
     await ctx.reply(embed = embd)
 

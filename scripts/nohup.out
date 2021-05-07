@@ -551,3 +551,16 @@ Termino is ready to go.
 -----------------------------------
 Termino is ready to go.
 -----------------------------------
+Termino is ready to go.
+-----------------------------------
+Termino is ready to go.
+-----------------------------------
+  File "bot.py", line 17
+    print(f'{termino.user.name} is ready to go.')
+        ^
+SyntaxError: invalid syntax
+Termino is ready to go.
+-----------------------------------
+Command raised an exception: Forbidden: 403 Forbidden (error code: 50013): Missing Permissions
+Termino is ready to go.
+-----------------------------------
