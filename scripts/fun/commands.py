@@ -32,7 +32,7 @@ async def source(ctx):
 @commands.command()
 async def randomslap(ctx, *, reason: SlapSomeone):
     embd = discord.Embed(description = reason)
-    embd.set_image(url = 'https://media1.tenor.com/images/49de17c621172b3abfaf5972fddf6d6/tenor.gif?itemid=10206784')
+    embd.set_image(url = 'https://media1.tenor.com/images/49de17c6f21172b3abfaf5972fddf6d6/tenor.gif?itemid=10206784')
     await ctx.send(embed = embd)
 
 @commands.command(aliases = ['8ball', '8b'])
