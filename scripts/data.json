@@ -1,7 +1,7 @@
 {
 	78937004571590656: {
-		mute_role: null,
-		join_announcement_channel: null,
-		join_role: null
+		"mute_role": null,
+		"join_announcement_channel": null,
+		"join_role": null
 	}
 }
