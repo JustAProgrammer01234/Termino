@@ -31,7 +31,24 @@ async def on_command_error(ctx, error):
 
 @termino.event
 async def on_member_join(member: discord.Member):
-    pass
+    data = get_server_data('data.json')
+    welcome_channel = termino.get_channel(data[str(member.guild.id)]['join_announcement_channel'])
+    await member.send('Welcome!')
+    if data[str(member.guild.id)]['join_role'] is not None:
+        await member.add_roles(data[str(member.guild.id)]['join_role'])
+    if data[str(member.guild.id)]['join_announcement_channel'] is not None:
+        welcome_channel = termino.get_channel(data[str(member.guild.id)]['join_announcement_channel'])
+        await welcome_channel.send(f'{member.mention} has joined the server!')
+
+@termino.command()
+async def initialize(ctx):
+    data = get_server_data('data.json')
+    if str(ctx.guild.id) in data:
+        await ctx.send('Bot already initialized')
+    else:
+        data[str(ctx.guild.id)] = {"mute_role":None, "join_announcement_channel": None, "join_role": None}
+        change_server_data('data.json',data)
+        await ctx.send(f'Bot initialized in {ctx.guild} discord server.')
 
 @termino.command()
 async def help(ctx, cmd_category = None):

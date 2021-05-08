@@ -25,4 +25,4 @@ def get_server_data(json_file):
 
 def change_server_data(json_file, data):
     with open(json_file, 'w') as f:
-        json.dump(data, f, indent = 4)
+        json.dump(data, f, indent = 2)
