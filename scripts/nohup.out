@@ -578,3 +578,20 @@ Termino is ready to go.
 -----------------------------------
 Termino is ready to go.
 -----------------------------------
+Termino is ready to go.
+-----------------------------------
+Member "@​here" not found.
+reason is a required argument that is missing.
+Traceback (most recent call last):
+  File "bot.py", line 1, in <module>
+    import fun
+  File "/home/pi/Termino/scripts/fun/__init__.py", line 1, in <module>
+    from .commands import add_command
+  File "/home/pi/Termino/scripts/fun/commands.py", line 2, in <module>
+    import discord
+ModuleNotFoundError: No module named 'discord'
+bot.py:74: RuntimeWarning: coroutine 'Context.reply' was never awaited
+  ctx.reply('Command category does not exist bro.')
+RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+Termino is ready to go.
+-----------------------------------

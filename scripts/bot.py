@@ -59,17 +59,19 @@ async def help(ctx, cmd_category = None):
                 description = 'Check out the commands!')
         embd.add_field(name = 'For fun:', value = '`$help fun`',  inline = False)
         embd.add_field(name = 'For moderation:',value = '`$help moderation`', inline = True)
+        await ctx.reply(embed = embd)
     elif cmd_category == 'fun':
         embd = discord.Embed(title = 'These are the commands for fun!')
         embd.add_field(name = 'Here:', value = get_help_fun(), inline = False)
         embd.set_footer(text = 'Hope you have fun lmfao')
+        await ctx.reply(embed = embd)
     elif cmd_category == 'moderation':
         embd = discord.Embed(title = 'These are the commands for discord mods to use!')
         embd.add_field(name = 'Here:', value = get_help_mod(), inline = False)
         embd.set_footer(text = 'Still in development!')
+        await ctx.reply(embed = embd)
     else:
-        ctx.reply('Command category does not exist bro.')
-    await ctx.reply(embed = embd)
+        await ctx.reply('Command category does not exist bro.')
 
 fun.add_command(termino)
 moderation.add_command(termino)
