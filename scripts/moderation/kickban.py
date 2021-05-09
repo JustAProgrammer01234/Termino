@@ -1,5 +1,4 @@
 import discord
-from discord.errors import *
 from discord.ext import commands
 
 @commands.command()

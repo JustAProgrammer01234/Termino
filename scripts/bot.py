@@ -33,12 +33,16 @@ async def on_command_error(ctx, error):
 async def on_member_join(member: discord.Member):
     data = get_server_data('data.json')
     welcome_channel = termino.get_channel(data[str(member.guild.id)]['join_announcement_channel'])
+    welcome_embed = discord.Embed(title = f'Looks like someone joined the server!', description = f'Welcome {member.mention}!', color = discord.Colour.green())
+    welcome_embed.add_field(name = 'Number of members:', value = f'`Total: {len(member.guild.members)}`\n`Not including bots: {len([member for member in member.guild.members if not member.bot])}`')
     await member.send('Welcome!')
+
     if data[str(member.guild.id)]['join_role'] is not None:
-        await member.add_roles(data[str(member.guild.id)]['join_role'])
+        await member.add_roles(member.guild.get_role(data[str(member.guild.id)]['join_role']))
+
     if data[str(member.guild.id)]['join_announcement_channel'] is not None:
         welcome_channel = termino.get_channel(data[str(member.guild.id)]['join_announcement_channel'])
-        await welcome_channel.send(f'{member.mention} has joined the server!')
+        await welcome_channel.send(embed = welcome_embed)
 
 @termino.command()
 async def initialize(ctx):

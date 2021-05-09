@@ -2,6 +2,20 @@
 
 2. `$kick <member> <reason>` - Kicks <member> because of <reason>.
 
-3. `$Mute <member>` - Mutes <member>.
+3. `$Unban <member>` - Unbans <member>.
 
-4. `$Unban <member>` - Unbans <member>.
+4. `$initialize` - Initializes the bot in the server. Do this in order for the last 5 commands to work.
+
+5. `$add_mute_role <mute_role>` - Tells the bot to add <mute_role> to its database.
+
+5. `$mute <member>` - Mutes <member> by adding the mute role to <member> from the bot's database.
+
+6. `$unmute <member>` - Unmutes <member>.
+
+7. `$set_join_role <role>` - Automatically gives a new member the role <role>.
+
+8. `$set_channel_join <channel>` - Tells the bot to say welcome messages in <channel>.
+
+9. `$delete_join_role` - Tells the bot to stop sending roles to whoever joins the server.
+
+10. `$delete_join_channel` - Tells the bot to stop sending welcome messages.
