@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+from noncoroutines.funcs import *
 
 @commands.command()
 @commands.has_permissions(manage_roles = True)

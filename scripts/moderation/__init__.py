@@ -8,7 +8,7 @@ def add_command(bot):
     bot.add_command(delete_join_role)
     bot.add_command(delete_join_channel)
     bot.add_command(add_mute_role)
-    bot.add_commsand(mute)
+    bot.add_command(mute)
     bot.add_command(unmute)
     bot.add_command(kick)
     bot.add_command(ban)

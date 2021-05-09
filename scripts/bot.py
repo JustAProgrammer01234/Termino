@@ -20,9 +20,9 @@ async def on_ready():
 @termino.event
 async def on_command_error(ctx, error):
     if isinstance(error, CommandNotFound):
-        await ctx.reply('Error: Command not found')
+        await ctx.reply("Well, couldn't find that command mate. Try typing $help so you would know.")
     elif isinstance(error, MissingPermissions):
-        await ctx.reply('Error: Permission Denied')
+        await ctx.reply('Bro you do not have permissions to do that command. Try contacting the staff of this server or something I dunno.')
     elif isinstance(error, Forbidden):
         await ctx.reply('Error: I do not have permissions to do that command.')
     else:
@@ -35,11 +35,9 @@ async def on_member_join(member: discord.Member):
     welcome_channel = termino.get_channel(data[str(member.guild.id)]['join_announcement_channel'])
     welcome_embed = discord.Embed(title = f'Looks like someone joined the server!', description = f'Welcome {member.mention}!', color = discord.Colour.green())
     welcome_embed.add_field(name = 'Number of members:', value = f'`Total: {len(member.guild.members)}`\n`Not including bots: {len([member for member in member.guild.members if not member.bot])}`')
-    await member.send('Welcome!')
-
+    await member.send(f'Congratulations for joining in the {member.guild} discord server! Have fun :)')
     if data[str(member.guild.id)]['join_role'] is not None:
         await member.add_roles(member.guild.get_role(data[str(member.guild.id)]['join_role']))
-
     if data[str(member.guild.id)]['join_announcement_channel'] is not None:
         welcome_channel = termino.get_channel(data[str(member.guild.id)]['join_announcement_channel'])
         await welcome_channel.send(embed = welcome_embed)
@@ -48,7 +46,7 @@ async def on_member_join(member: discord.Member):
 async def initialize(ctx):
     data = get_server_data('data.json')
     if str(ctx.guild.id) in data:
-        await ctx.send('Bot already initialized')
+        await ctx.reply('Bot already initialized')
     else:
         data[str(ctx.guild.id)] = {"mute_role":None, "join_announcement_channel": None, "join_role": None}
         change_server_data('data.json',data)
@@ -69,6 +67,8 @@ async def help(ctx, cmd_category = None):
         embd = discord.Embed(title = 'These are the commands for discord mods to use!')
         embd.add_field(name = 'Here:', value = get_help_mod(), inline = False)
         embd.set_footer(text = 'Still in development!')
+    else:
+        ctx.reply('Command category does not exist bro.')
     await ctx.reply(embed = embd)
 
 fun.add_command(termino)
