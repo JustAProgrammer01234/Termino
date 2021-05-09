@@ -595,3 +595,5 @@ bot.py:74: RuntimeWarning: coroutine 'Context.reply' was never awaited
 RuntimeWarning: Enable tracemalloc to get the object allocation traceback
 Termino is ready to go.
 -----------------------------------
+Termino is ready to go.
+-----------------------------------

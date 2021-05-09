@@ -20,7 +20,7 @@ async def mute(ctx, member: discord.Member):
     if str(ctx.guild.id) in data:
         mute_role = data[str(ctx.guild.id)]['mute_role']
         if mute_role != None:
-            member.add_roles(member.guild.get_role(mute_role))
+            await member.add_roles(member.guild.get_role(mute_role))
         else:
             await ctx.reply("The bot doesn't know which mute role to add, have you tried the $add_mute_role command?")
     else:
@@ -31,9 +31,9 @@ async def mute(ctx, member: discord.Member):
 async def unmute(ctx, member: discord.Member):
     data = get_server_data('data.json')
     if str(ctx.guild.id) in data:
-        mute_role = data[str(ctx.guild.id)]['mute_role']
+        mute_role = member.guild.get_role(data[str(ctx.guild.id)]['mute_role'])
         if mute_role in member.roles:
-            await member.remove_roles(member.guild.get_role(mute_role))
+            await member.remove_roles(member.guild.get_role(mute_role.id))
         else:
             await ctx.reply('Member is not muted.')
     else:
