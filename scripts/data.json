@@ -1,7 +1,7 @@
 {
   "783937004571590656": {
     "mute_role": 839301535716474890,
-    "join_announcement_channel": 816850842421428294,
+    "join_announcement_channel": 841134620246409246,
     "join_role": 817311566889746432
   },
   "823025092434591744": {
@@ -18,5 +18,10 @@
     "mute_role": null,
     "join_announcement_channel": 840752617915285514,
     "join_role": 840753404002304052
+  },
+  "843329596459581510": {
+    "mute_role": 843638500267917373,
+    "join_announcement_channel": 843622417054040087,
+    "join_role": null
   }
 }
