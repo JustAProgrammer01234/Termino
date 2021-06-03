@@ -32,19 +32,19 @@ async def ban(ctx, member: discord.Member, *, reason = None):
         await send_embed_message
         await ban_member
 
-@commands.command()
-@commands.has_permissions(ban_members = True)
-async def unban(ctx, *, member):
-    bans = await ctx.guild.bans()
-    user, discriminator = member.split('#')
-    for ban in bans:
-        banned_user = ban.user
-        if f'{banned_user.name}#{banned_user.discriminator}' == user + '#' + discriminator:
-            await ctx.guild.unban(member)
-            unbanned_member = f'{banned_user.name}#{banned_user.discriminator}'
-    unban_embed = discord.Embed(title = f'Unbanned {unbanned_member}')
-    await ctx.send(embed = unban_embed)
-
+#Commented this out because it's not working yet.
+# @commands.command()
+# @commands.has_permissions(ban_members = True)
+# async def unban(ctx, *, member):
+#     bans = await ctx.guild.bans()
+#     user, discriminator = member.split('#')
+#     for ban in bans:
+#         banned_user = ban.user
+#         if f'{banned_user.name}#{banned_user.discriminator}' == user + '#' + discriminator:
+#             await ctx.guild.unban(member)
+#             unbanned_member = f'{banned_user.name}#{banned_user.discriminator}'
+#     unban_embed = discord.Embed(title = f'Unbanned {unbanned_member}')
+#     await ctx.send(embed = unban_embed)
 
 def add_command(bot):
     bot.add_command(kick)
