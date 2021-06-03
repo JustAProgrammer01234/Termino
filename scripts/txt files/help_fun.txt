@@ -2,7 +2,7 @@
 
 2. `$randomnum <start> stop>` - Returns a random number from <start> to <stop>.
 
-3. `$add <addend1> <addend2>` - Returns the sum of <addend1> and <addend2> in decimal form.
+3. `$solve <equation>` - Solves <equation>.
 
 4. `$randomslap <reason>` - Slap a random member in a discord server because of <reason>.
 
@@ -11,3 +11,7 @@
 6. `$iseven <num>` - Tells you if <num> is even or not.
 
 7. `$slap <member> <reason>` - Slaps <member> because of <reason>.
+
+8. `$hack <member>` - Hacks a member. (This is not real)
+
+9. `$dice` - Wanna play dice with a bot? Then this is the command for you.
