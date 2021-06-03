@@ -4,7 +4,7 @@
 
 3. `$Unban <member>` - Unbans <member>.
 
-4. `$initialize` - Initializes the bot in the server. Do this in order for the last 5 commands to work.
+4. `$initialize` - Initializes the bot in the server. Do this in order for the last 7 commands to work.
 
 5. `$add_mute_role <mute_role>` - Tells the bot to add <mute_role> to its database.
 
@@ -19,3 +19,7 @@
 9. `$delete_join_role` - Tells the bot to stop sending roles to whoever joins the server.
 
 10. `$delete_join_channel` - Tells the bot to stop sending welcome messages.
+
+11. `welcome_dm_message <message>` - Tells the bot to send a welcome dm.
+
+12. `delete_dm_message <message>` - Tells the bot to stop sending welcome dm.
