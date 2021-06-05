@@ -75,7 +75,8 @@ async def hack(ctx, member: discord.Member):
         await asyncio.sleep(1)
         await hack_message.edit(content = message_dict[i])
     await asyncio.sleep(1)
-    await hack_message.edit(embed = hack_embed_message)
+    await hack_message.delete()
+    await ctx.send(embed = hack_embed_message)
 
 @commands.command()
 async def dice(ctx):
