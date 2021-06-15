@@ -1,6 +1,3 @@
-'''
-All non courotine objects are here.
-'''
 import json
 
 def get_help():
@@ -8,15 +5,31 @@ def get_help():
         return f.read()
 
 def get_help_fun():
-    with open('txt files/help_fun.txt','r') as f:
+    with open('help/funcommands.txt','r') as f:
         return f.read()
 
 def get_help_mod():
-    with open('txt files/help_moderation.txt','r') as f:
+    with open('help/mod.txt','r') as f:
         return f.read()
 
-def get_token():
-    with open('txt files/token.txt','r') as f:
+def get_help_util_welcome():
+    with open('help/utils/welcome.txt','r') as f:
+        return f.read()
+
+def get_help_util_mute():
+    with open('help/utils/mute.txt','r') as f:
+        return f.read()
+
+def get_help_game():
+    with open('help/games.txt') as f:
+        return f.read()
+
+def get_invite_link():
+    with open('invitelink.txt') as f:
+        return f.read()
+
+def get_token(token_file):
+    with open(token_file,'r') as f:
         return f.read()
 
 def get_server_data(json_file):

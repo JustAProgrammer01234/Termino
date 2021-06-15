@@ -1,8 +1,6 @@
-from . import mute
-from . import joinsettings
-from . import kickban
+from .kickban import KickBan
+from .mute import Mute
 
-def add_command(bot):
-    mute.add_command(bot)
-    joinsettings.add_command(bot)
-    kickban.add_command(bot)
+def setup(bot):
+    bot.add_cog(KickBan(bot))
+    bot.add_cog(Mute(bot))

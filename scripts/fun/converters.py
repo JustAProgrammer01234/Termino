@@ -1,4 +1,11 @@
 import random
+from discord.ext import commands
+
+class SlapSomeone(commands.Converter):
+    async def convert(self, ctx, reason):
+        member_list = ctx.guild.members
+        slapped_member = random.choice(member_list)
+        return f'{ctx.author.mention} slapped {slapped_member.mention} because of {reason}.'
 
 def eightball(question):
     messages = [
