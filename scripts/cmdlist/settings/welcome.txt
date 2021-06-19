@@ -1,0 +1,6 @@
+:one: `$set-join-role <role>` 
+:two: `$set-join-channel <channel>` 
+:three: `$welcome-dm-message <message>` 
+:four: `$remove-join-role`
+:five: `$remove-join-channel`
+:six: `$remove-dm-message`

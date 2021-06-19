@@ -1,0 +1,6 @@
+:one: `$ban <member> <reason>`
+:two: `$kick <member> <reason>`
+:three: `$unban <member>` 
+:four: `$mute <member>`
+:five: `$unmute <member>` 
+:six: `$banlist`

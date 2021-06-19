@@ -5,23 +5,23 @@ def get_help():
         return f.read()
 
 def get_help_fun():
-    with open('help/funcommands.txt','r') as f:
+    with open('cmdlist/funcommands.txt','r') as f:
         return f.read()
 
 def get_help_mod():
-    with open('help/mod.txt','r') as f:
+    with open('cmdlist/mod.txt','r') as f:
         return f.read()
 
 def get_help_util_welcome():
-    with open('help/utils/welcome.txt','r') as f:
+    with open('cmdlist/settings/welcome.txt','r') as f:
         return f.read()
 
 def get_help_util_mute():
-    with open('help/utils/mute.txt','r') as f:
+    with open('cmdlist/settings/mute.txt','r') as f:
         return f.read()
 
 def get_help_game():
-    with open('help/games.txt') as f:
+    with open('cmdlist/games.txt') as f:
         return f.read()
 
 def get_invite_link():

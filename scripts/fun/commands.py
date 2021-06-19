@@ -4,8 +4,12 @@ import asyncio
 import discord
 from .converters import *
 from discord.ext import commands
+from discord.ext.commands import errors
 
 class Fun(commands.Cog):
+    '''
+    Commands related to fun.
+    '''
     def __init__(self, bot):
         self.bot = bot
         self.gif_url =[
@@ -57,7 +61,7 @@ class Fun(commands.Cog):
 
     @commands.command()
     async def slap(self, ctx, member: discord.Member, *, reason):
-        embd = discord.Embed(description = f'**{ctx.author.mention} slapped {member.mention} because of {reason}**')
+        embd = discord.Embed(description = f'**{ctx.author.mention} slapped {member.mention} because of `{reason}`**')
         embd.set_image(url = random.choice(self.gif_url))
         await ctx.send(embed = embd)
 

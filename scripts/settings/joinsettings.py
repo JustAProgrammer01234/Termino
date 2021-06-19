@@ -3,20 +3,11 @@ from discord.ext import commands
 from noncoroutines import change_server_data, UtilClass
 
 class JoinSettings(UtilClass, commands.Cog):
+    '''
+    Commands related to welcome settings.
+    '''
     def __init__(self, bot):
         super().__init__(bot)
-        self.mp_manage_channels = discord.Embed(title = ':no_entry: Permission denied! :no_entry:',
-            description = 'You are missing the `Manage Channels` permission.',
-            color = discord.Colour.red()
-        )
-        self.mp_manage_messages = discord.Embed(title = ':no_entry: Permission denied! :no_entry:',
-            description = 'You are missing the `Manage Messages` permission.',
-            color = discord.Colour.red()
-        )
-        self.mp_manage_roles = discord.Embed(title = ':no_entry: Permission denied! :no_entry:',
-            description = 'You are missing the `Manage Roles` permission.',
-            color = discord.Colour.red()
-        )
 
     @commands.Cog.listener()
     async def on_member_join(self, member):
@@ -30,6 +21,9 @@ class JoinSettings(UtilClass, commands.Cog):
         welcome_embed.add_field(
             name = 'Number of members:',
             value = f'`Total: {len(member.guild.members)}`\n`Not including bots: {len([member for member in member.guild.members if not member.bot])}`')
+        welcome_embed.set_image(
+            url = member.avatar_url
+        )
 
         if join_announcement_channel != None:
             await self.bot.get_channel(join_announcement_channel).send(embed = welcome_embed)
@@ -38,7 +32,7 @@ class JoinSettings(UtilClass, commands.Cog):
             await member.send(welcome_dm)
 
         if join_role != None:
-            await member.add_roles(self.bot.get_role(join_role))
+            await member.add_roles(member.guild.get_role(join_role))
 
     @commands.Cog.listener()
     async def on_guild_join(self, guild):
@@ -46,10 +40,10 @@ class JoinSettings(UtilClass, commands.Cog):
             self.server_data[str(guild.id)] = {"mute_role":None, "join_announcement_channel": None, "join_role": None, "welcome_dm": None}
             change_server_data('data.json', self.server_data)
 
-    @commands.command(name = 'set-channel-join')
+    @commands.command(name = 'set-join-channel')
     @commands.guild_only()
     @commands.has_permissions(manage_channels = True)
-    async def set_channel_join(self, ctx, channel: discord.TextChannel):
+    async def set_join_channel(self, ctx, channel: commands.TextChannelConverter):
         self.server_data[str(ctx.guild.id)]['join_announcement_channel'] = channel.id
         change_server_data('data.json', self.server_data)
         await ctx.reply(f'Bot will send messages at {channel.mention} whenever a new member joins the server.')
@@ -68,7 +62,7 @@ class JoinSettings(UtilClass, commands.Cog):
     @commands.command(name = 'welcome-dm-message')
     @commands.guild_only()
     @commands.has_permissions(manage_messages = True)
-    async def welcome_dm_message(self, ctx, message):
+    async def welcome_dm_message(self, ctx, *, message):
         self.server_data[str(ctx.guild.id)]['welcome_dm'] = message
         change_server_data('data.json', self.server_data)
         await ctx.reply('Bot will now dm this message when a member joins this server.')
@@ -97,7 +91,7 @@ class JoinSettings(UtilClass, commands.Cog):
         change_server_data('data.json', self.server_data)
         await ctx.reply('Bot will stop sending direct messages to users who joins this server.')
 
-    @set_channel_join.error
+    @set_join_channel.error
     async def set_channel_join_error(self, ctx, error):
         if isinstance(error, commands.MissingPermissions):
             await ctx.send(embed = self.mp_manage_channels)

@@ -4,6 +4,9 @@ from discord.ext import commands
 from noncoroutines import get_server_data
 
 class Mute(commands.Cog):
+    '''
+    Commands related to muting members from guild.
+    '''
     def __init__(self, bot):
         self.bot = bot
         self.mp_mute = discord.Embed(title = ':no_entry: Permission denied! :no_entry:', description = 'You are missing the `Manage Roles` permission!', color = discord.Colour.red())

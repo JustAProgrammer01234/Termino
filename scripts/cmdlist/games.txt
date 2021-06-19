@@ -1,0 +1,2 @@
+:one: `$rock-paper-scissors <hand>` 
+:two: `$dice` 

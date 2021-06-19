@@ -3,6 +3,9 @@ import asyncio
 from discord.ext import commands
 
 class KickBan(commands.Cog):
+    '''
+    Commands related to kicking and banning members from guild.
+    '''
     def __init__(self, bot):
         self.bot = bot
         self.mp_kick = discord.Embed(title = ':no_entry: Permission denied! :no_entry:', description = 'You are missing the `Kick Members` permission.', color = discord.Colour.red())
@@ -65,6 +68,7 @@ class KickBan(commands.Cog):
 
     @commands.command()
     @commands.guild_only()
+    @commands.has_permissions(ban_members = True)
     async def banlist(self, ctx):
         ban_list = await ctx.guild.bans()
         bans_label = ''
@@ -76,7 +80,10 @@ class KickBan(commands.Cog):
             description = f'```{bans_label}```',
             color = discord.Colour.red())
         await message.delete()
-        await ctx.send(embed = banlist_embed)
+        if bans_label == '':
+            await ctx.send('Looks like I found no banned members.')
+        else:
+            await ctx.send(embed = banlist_embed)
 
     @kick.error
     async def kick_error(self, ctx, error):
@@ -90,5 +97,10 @@ class KickBan(commands.Cog):
 
     @unban.error
     async def unban_error(self, ctx, error):
+        if isinstance(error, commands.MissingPermissions):
+            await ctx.send(embed = self.mp_ban)
+
+    @banlist.error 
+    async def banlist_error(self, ctx, error):
         if isinstance(error, commands.MissingPermissions):
             await ctx.send(embed = self.mp_ban)

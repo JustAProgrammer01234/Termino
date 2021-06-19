@@ -1,0 +1,8 @@
+:one: `$display <mode> <message>`
+:two: `$randomnum <start> stop>`
+:three: `$solve <equation>` 
+:four: `$randomslap <reason>`
+:five: `$8ball <question>`
+:six: `$iseven <num>`
+:seven: `$slap <member> <reason>` 
+:eight: `$hack <member>`

@@ -1,1 +1,0 @@
-1. `add-mute-role <mute_role>` - Tells the bot to give <mute_role> to someone when $mute command is called.

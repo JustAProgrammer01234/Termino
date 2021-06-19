@@ -1,0 +1,71 @@
+{
+    "display": {
+        "description": ""
+    },
+    "randomnum": {
+        "description": ""
+    },
+    "solve": {
+        "description": ""
+    },
+    "randomslap": {
+        "description": ""
+    },
+    "8ball": {
+        "description": ""
+    },
+    "iseven": {
+        "description": ""
+    },
+    "slap": {
+        "description": ""
+    },
+    "hack":{
+        "description": ""
+    },
+    "ban":{
+        "description": ""
+    },
+    "kick":{
+        "description": ""
+    },
+    "unban":{
+        "description": ""
+    },
+    "mute":{
+        "description": ""
+    },
+    "unmute":{
+        "description": ""
+    },
+    "banlist":{
+        "description": ""
+    },
+    "set-join-role":{
+        "description": ""
+    },
+    "set-join-channel":{
+        "description": ""
+    },
+    "welcome-dm-message":{
+        "description": ""
+    },
+    "remove-join-role":{
+        "description": ""
+    },
+    "remove-join-channel":{
+        "description": ""
+    },
+    "remove-dm-message":{
+        "description": ""
+    },
+    "add-mute-role":{
+        "description": ""
+    },
+    "rock-paper-scissors":{
+        "description": ""
+    },
+    "dice":{
+        "description": ""
+    }
+}
