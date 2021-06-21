@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-from noncoroutines import change_server_data, UtilClass
+from noncoroutines import change_json_data, UtilClass
 
 class JoinSettings(UtilClass, commands.Cog):
     '''
@@ -38,14 +38,14 @@ class JoinSettings(UtilClass, commands.Cog):
     async def on_guild_join(self, guild):
         if str(guild.id) not in self.server_data:
             self.server_data[str(guild.id)] = {"mute_role":None, "join_announcement_channel": None, "join_role": None, "welcome_dm": None}
-            change_server_data('data.json', self.server_data)
+            change_json_data('data.json', self.server_data)
 
     @commands.command(name = 'set-join-channel')
     @commands.guild_only()
     @commands.has_permissions(manage_channels = True)
     async def set_join_channel(self, ctx, channel: commands.TextChannelConverter):
         self.server_data[str(ctx.guild.id)]['join_announcement_channel'] = channel.id
-        change_server_data('data.json', self.server_data)
+        change_json_data('data.json', self.server_data)
         await ctx.reply(f'Bot will send messages at {channel.mention} whenever a new member joins the server.')
 
     @commands.command(name = 'set-join-role')
@@ -54,7 +54,7 @@ class JoinSettings(UtilClass, commands.Cog):
     async def set_join_role(self, ctx, role: commands.RoleConverter):
         if role in ctx.guild.roles:
             self.server_data[str(ctx.guild.id)]['join_role'] = role.id
-            change_server_data('data.json', self.server_data)
+            change_json_data('data.json', self.server_data)
             await ctx.reply(f'Bot will now add {role} to any user who joins the server.')
         else:
             await ctx.reply(f'Error: {role} does not exist in this server.')
@@ -64,7 +64,7 @@ class JoinSettings(UtilClass, commands.Cog):
     @commands.has_permissions(manage_messages = True)
     async def welcome_dm_message(self, ctx, *, message):
         self.server_data[str(ctx.guild.id)]['welcome_dm'] = message
-        change_server_data('data.json', self.server_data)
+        change_json_data('data.json', self.server_data)
         await ctx.reply('Bot will now dm this message when a member joins this server.')
 
     @commands.command(name = 'remove-join-role')
@@ -72,7 +72,7 @@ class JoinSettings(UtilClass, commands.Cog):
     @commands.has_permissions(manage_roles = True)
     async def remove_join_role(self, ctx):
         self.server_data[str(ctx.guild.id)]['join_role'] = None
-        change_server_data('data.json', self.server_data)
+        change_json_data('data.json', self.server_data)
         await ctx.reply('Join role deleted.')
 
     @commands.command(name = 'remove-join-channel')
@@ -80,7 +80,7 @@ class JoinSettings(UtilClass, commands.Cog):
     @commands.has_permissions(manage_channels = True)
     async def remove_join_channel(self, ctx):
         self.server_data[str(ctx.guild.id)]['join_announcement_channel'] = None
-        change_server_data('data.json', self.server_data)
+        change_json_data('data.json', self.server_data)
         await ctx.reply(f'Bot will stop sending welcome messages in server.')
 
     @commands.command(name = 'remove-dm-message')
@@ -88,7 +88,7 @@ class JoinSettings(UtilClass, commands.Cog):
     @commands.has_permissions(manage_messages = True)
     async def remove_dm_message(self, ctx):
         self.server_data[str(ctx.guild.id)]['welcome_dm'] = None
-        change_server_data('data.json', self.server_data)
+        change_json_data('data.json', self.server_data)
         await ctx.reply('Bot will stop sending direct messages to users who joins this server.')
 
     @set_join_channel.error

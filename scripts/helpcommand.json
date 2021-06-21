@@ -1,71 +1,71 @@
 {
     "display": {
-        "description": ""
+        "description": "Just tells the bot to copy your message using plain text or embed."
     },
     "randomnum": {
-        "description": ""
+        "description": "Returns a random number."
     },
     "solve": {
-        "description": ""
+        "description": "Solves an equation for you."
     },
     "randomslap": {
-        "description": ""
+        "description": "Slaps a random member in a server."
     },
     "8ball": {
-        "description": ""
+        "description": "An implementation of the 8ball fortune teller toy."
     },
     "iseven": {
-        "description": ""
+        "description": "Checks if a number is even or not."
     },
     "slap": {
-        "description": ""
+        "description": "Slaps a member in a server."
     },
     "hack":{
-        "description": ""
+        "description": "Hacks a member in a server."
     },
     "ban":{
-        "description": ""
+        "description": "Bans a member in a server."
     },
     "kick":{
-        "description": ""
+        "description": "Kicks a member in a server."
     },
     "unban":{
-        "description": ""
-    },
-    "mute":{
-        "description": ""
-    },
-    "unmute":{
-        "description": ""
+        "description": "Unbans a member in a server."
     },
     "banlist":{
-        "description": ""
+        "description": "Returns a list of banned members in a server."
+    },
+    "mute":{
+        "description": "Mutes a member in a server."
+    },
+    "unmute":{
+        "description": "Unmutes a member in a server."
     },
     "set-join-role":{
-        "description": ""
+        "description": "Adds role to users who joins the server."
     },
     "set-join-channel":{
-        "description": ""
+        "description": "Tells the bot to send welcome messages in a certain channel in the server."
     },
     "welcome-dm-message":{
-        "description": ""
+        "description": "Tells the bot to dm a user who joins a server."
     },
     "remove-join-role":{
-        "description": ""
+        "description": "Tells the bot to stop adding roles to users who joins the server."
     },
     "remove-join-channel":{
-        "description": ""
+        "description": "Tells the bot to stop sending welcome messages."
     },
     "remove-dm-message":{
-        "description": ""
+        "description": "Tells the bot to stop dming users who joins the server."
     },
     "add-mute-role":{
-        "description": ""
+        "description": "Tells the bot to add a mute role."
     },
     "rock-paper-scissors":{
-        "description": ""
+        "description": "Wanna play rock paper scissors with a bot then this is the command for you."
     },
     "dice":{
-        "description": ""
+        "description": "A dice game for you and termino."
     }
 }

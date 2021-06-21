@@ -15,33 +15,25 @@ class KickBan(commands.Cog):
     @commands.guild_only()
     @commands.has_permissions(kick_members = True)
     async def kick(self, ctx, member: discord.Member, *, reason = None):
-        embd = discord.Embed(title = f'Kicking {member.name}', color = discord.Colour.gold())
-        send_embed_message = asyncio.create_task(ctx.send(embed = embd))
+        embd = discord.Embed(title = f'Kicked {member.name}', color = discord.Colour.gold())
         if reason is None:
-            kick_member = asyncio.create_task(member.kick(reason = "Didn't provide a reason."))
-            await send_embed_message
-            await kick_member
+            await member.kick(reason = "Didn't provide a reason.")
+            await ctx.send(embed = embd)
         else:
-            kick_member = asyncio.create_task(member.kick(reason = "Didn't provide a reason."))
-            await send_embed_message
-            await kick_member
+            await member.kick(reason = reason)
+            await ctx.send(embed = embd)
 
     @commands.command()
     @commands.guild_only()
     @commands.has_permissions(ban_members = True)
     async def ban(self, ctx, member: discord.Member, *, reason = None):
-        embd = discord.Embed(title = f'Banning {member.name}', color = discord.Colour.red())
-        send_embed_message = asyncio.create_task(ctx.send(embed = embd))
+        embd = discord.Embed(title = f'Banned {member.name}', color = discord.Colour.gold())
         if reason is None:
-            ban_member = asyncio.create_task(member.ban(reason = "Didn't provide a reason."))
             await member.ban(reason = "Didn't provide a reason.")
-            await send_embed_message
-            await ban_member
-
+            await ctx.send(embed = embd)
         else:
-            ban_member = asyncio.create_task(member.ban(reason = reason))
-            await send_embed_message
-            await ban_member
+            await member.ban(reason = reason)
+            await ctx.send(embed = embd)
 
     @commands.command()
     @commands.guild_only()
@@ -50,7 +42,6 @@ class KickBan(commands.Cog):
         ban_list = await ctx.guild.bans()
         name, discriminator = member.split('#')
         message = await ctx.send('Hold on this may take a while.')
-        unban_embed = discord.Embed(title = f'{name}#{discriminator} has been unbanned.', color = discord.Colour.green())
         found_member = False
 
         for ban_entry in ban_list:

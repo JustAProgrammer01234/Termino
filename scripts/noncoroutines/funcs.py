@@ -32,10 +32,10 @@ def get_token(token_file):
     with open(token_file,'r') as f:
         return f.read()
 
-def get_server_data(json_file):
+def get_json_data(json_file):
     with open(json_file, 'r') as f:
         return json.load(f)
 
-def change_server_data(json_file, data):
+def change_json_data(json_file, data):
     with open(json_file, 'w') as f:
         json.dump(data, f, indent = 2)

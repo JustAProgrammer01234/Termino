@@ -1,5 +1,5 @@
 from discord.ext import commands
-from noncoroutines import change_server_data, UtilClass
+from noncoroutines import change_json_data, UtilClass
 
 class MuteSettings(UtilClass, commands.Cog):
     '''
@@ -13,7 +13,7 @@ class MuteSettings(UtilClass, commands.Cog):
     @commands.has_permissions(manage_roles = True)
     async def add_mute_role(self, ctx, mute_role: commands.RoleConverter):
         self.server_data[str(ctx.guild.id)]['mute_role'] = mute_role.id
-        change_server_data(self.server_data)
+        change_json_data(self.server_data)
         ctx.send("Mute role has now been added.")
 
     @commands.command(name = 'remove-mute-role')
@@ -21,7 +21,7 @@ class MuteSettings(UtilClass, commands.Cog):
     @commands.has_permissions(manage_roles = True)
     async def remove_mute_role(self, ctx):
         self.server_data[str(ctx.guild.id)]['mute_role'] = None
-        change_server_data(self.server_data)
+        change_json_data(self.server_data)
         ctx.send("Mute role has been removed.")
     
     @add_mute_role.error 
