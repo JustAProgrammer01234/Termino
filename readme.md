@@ -56,22 +56,22 @@ python3 -m pip install -U discord.py
 
 ### 4. Running the script:
 
-First, to run the script (bot.py), you will need to create token.txt in scripts/txt files/. Then you will put the token needed for your bot in token.txt.
+First, to run the script (run.py), you will need to create token.txt in the scripts directory. Then put the token needed for your bot in token.txt.
 
-Second, you will need to create data.json in the scripts directory.
+Second, you will need to create data.json in the same directory you put the token.txt file in.
 
 Lastly, all you have to do is to type the following in the command line (Make sure your in the scripts directory):
 
 In windows:
 
 ```bash
-python bot.py
+python run.py
 ```
 
 In Linux/Mac:
 
 ```bash
-python3 bot.py
+python3 run.py
 ```
 
 # Alright! Now you're all set and your bot is now ready to go!
