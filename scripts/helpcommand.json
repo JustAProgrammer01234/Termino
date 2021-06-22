@@ -1,71 +1,94 @@
 {
     "display": {
-        "description": "Just tells the bot to copy your message using plain text or embed."
+        "description": "Just tells the bot to copy your message using plain text or embed.",
+        "aliases": "`disp`"
     },
     "randomnum": {
-        "description": "Returns a random number."
+        "description": "Returns a random number.",
+        "aliases": "No aliases are found in this command."
     },
     "solve": {
-        "description": "Solves an equation for you."
+        "description": "Solves an equation for you.",
+        "aliases": "No aliases are found in this command."
     },
     "randomslap": {
-        "description": "Slaps a random member in a server."
+        "description": "Slaps a random member in a server.",
+        "aliases": "No aliases are found in this command."
     },
     "8ball": {
-        "description": "An implementation of the 8ball fortune teller toy."
+        "description": "An implementation of the 8ball fortune teller toy.",
+        "aliases": "`8b`"
     },
     "iseven": {
-        "description": "Checks if a number is even or not."
+        "description": "Checks if a number is even or not.",
+        "aliases": "No aliases are found in this command."
     },
     "slap": {
-        "description": "Slaps a member in a server."
+        "description": "Slaps a member in a server.",
+        "aliases": "No aliases are found in this command."
     },
     "hack":{
-        "description": "Hacks a member in a server."
+        "description": "Hacks a member in a server.",
+        "aliases": "No aliases are found in this command."
     },
     "ban":{
-        "description": "Bans a member in a server."
+        "description": "Bans a member in a server.",
+        "aliases": "No aliases are found in this command."
     },
     "kick":{
-        "description": "Kicks a member in a server."
+        "description": "Kicks a member in a server.",
+        "aliases": "No aliases are found in this command."
     },
     "unban":{
-        "description": "Unbans a member in a server."
+        "description": "Unbans a member in a server.",
+        "aliases": "No aliases are found in this command."
     },
     "banlist":{
-        "description": "Returns a list of banned members in a server."
+        "description": "Returns a list of banned members in a server.",
+        "aliases": "No aliases are found in this command."
     },
     "mute":{
-        "description": "Mutes a member in a server."
+        "description": "Mutes a member in a server.",
+        "aliases": "No aliases are found in this command."
     },
     "unmute":{
-        "description": "Unmutes a member in a server."
+        "description": "Unmutes a member in a server.",
+        "aliases": "No aliases are found in this command."
     },
     "set-join-role":{
-        "description": "Adds role to users who joins the server."
+        "description": "Adds role to users who joins the server.",
+        "aliases": "No aliases are found in this command."
     },
     "set-join-channel":{
-        "description": "Tells the bot to send welcome messages in a certain channel in the server."
+        "description": "Tells the bot to send welcome messages in a certain channel in the server.",
+        "aliases": "No aliases are found in this command."
     },
     "welcome-dm-message":{
-        "description": "Tells the bot to dm a user who joins a server."
+        "description": "Tells the bot to dm a user who joins a server.",
+        "aliases": "No aliases are found in this command."
     },
     "remove-join-role":{
-        "description": "Tells the bot to stop adding roles to users who joins the server."
+        "description": "Tells the bot to stop adding roles to users who joins the server.",
+        "aliases": "No aliases are found in this command."
     },
     "remove-join-channel":{
-        "description": "Tells the bot to stop sending welcome messages."
+        "description": "Tells the bot to stop sending welcome messages.",
+        "aliases": "No aliases are found in this command."
     },
     "remove-dm-message":{
-        "description": "Tells the bot to stop dming users who joins the server."
+        "description": "Tells the bot to stop dming users who joins the server.",
+        "aliases": "No aliases are found in this command."
     },
     "add-mute-role":{
-        "description": "Tells the bot to add a mute role."
+        "description": "Tells the bot to add a mute role.",
+        "aliases": "No aliases are found in this command."
     },
     "rock-paper-scissors":{
-        "description": "Wanna play rock paper scissors with a bot then this is the command for you."
+        "description": "Wanna play rock paper scissors with a bot then this is the command for you.",
+        "aliases": "`rps`"
     },
     "dice":{
-        "description": "A dice game for you and termino."
+        "description": "A dice game for you and termino.",
+        "aliases": "No aliases are found in this command."
     }
 }

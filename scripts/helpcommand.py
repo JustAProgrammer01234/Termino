@@ -9,14 +9,13 @@ class Help(commands.Cog):
 
     @commands.group(invoke_without_command = True)
     async def help(self, ctx):
-        embd = discord.Embed(title = 'Need help? Refer down below!',
-                description = 'Check out the commands!',
+        embd = discord.Embed(title = 'Need help? Refer down below to see the commands!',
+                description = '**Tip:**\n Type $help then a command for more details about it like this\n `$help <command>`',
                 color = discord.Colour.green())
         embd.add_field(name = ':basketball: For fun :basketball:', value = '`$help fun`',  inline = False)
         embd.add_field(name = ':shield: For moderation :shield:',value = '`$help mod`', inline = False)
         embd.add_field(name = ':gear: For settings :gear:',value = '`$help settings`', inline = False)
         embd.add_field(name = ':video_game: Games :video_game:', value = '`$help games`', inline = False)
-        embd.set_footer(text =  'Tip: Type $help then a command for more details about it.')
         await ctx.send(embed = embd)
 
     @help.command()
@@ -47,7 +46,8 @@ class Help(commands.Cog):
         embd = discord.Embed(title = 'Command: display', 
                             colour = discord.Colour.green()
                             )
-        embd.add_field(name = 'Description:', value = self.command_details['display']['description'])
+        embd.add_field(name = 'Description:', value = self.command_details['display']['description'], inline = False)
+        embd.add_field(name = 'Aliases:', value = self.command_details['display']['aliases'], inline = False)
         await ctx.send(embed = embd)
 
     @help.command()
@@ -55,7 +55,8 @@ class Help(commands.Cog):
         embd = discord.Embed(title = 'Command: randomnum', 
                             colour = discord.Colour.green()
                             )
-        embd.add_field(name = 'Description:', value = self.command_details['randomnum']['description'])
+        embd.add_field(name = 'Description:', value = self.command_details['randomnum']['description'], inline = False)
+        embd.add_field(name = 'Aliases:', value = self.command_details['randomnum']['aliases'], inline = False)
         await ctx.send(embed = embd)
 
     @help.command()
@@ -63,7 +64,8 @@ class Help(commands.Cog):
         embd = discord.Embed(title = 'Command: solve', 
                             colour = discord.Colour.green()
                             )
-        embd.add_field(name = 'Description:', value = self.command_details['solve']['description'])
+        embd.add_field(name = 'Description:', value = self.command_details['solve']['description'], inline = False)
+        embd.add_field(name = 'Aliases:', value = self.command_details['solve']['aliases'], inline = False)
         await ctx.send(embed = embd) 
 
     @help.command()
@@ -71,7 +73,8 @@ class Help(commands.Cog):
         embd = discord.Embed(title = 'Command: randomslap', 
                             colour = discord.Colour.green()
                             )
-        embd.add_field(name = 'Description:', value = self.command_details['randomslap']['description'])
+        embd.add_field(name = 'Description:', value = self.command_details['randomslap']['description'], inline = False)
+        embd.add_field(name = 'Aliases:', value = self.command_details['randomslap']['aliases'], inline = False)
         await ctx.send(embed = embd) 
 
     @help.command(name = '8ball')
@@ -79,7 +82,8 @@ class Help(commands.Cog):
         embd = discord.Embed(title = 'Command: 8ball', 
                             colour = discord.Colour.green()
                             )
-        embd.add_field(name = 'Description:', value = self.command_details['8ball']['description'])
+        embd.add_field(name = 'Description:', value = self.command_details['8ball']['description'], inline = False)
+        embd.add_field(name = 'Aliases:', value = self.command_details['8ball']['aliases'], inline = False)
         await ctx.send(embed = embd) 
 
     @help.command()
@@ -87,7 +91,8 @@ class Help(commands.Cog):
         embd = discord.Embed(title = 'Command: iseven', 
                             colour = discord.Colour.green()
                             )
-        embd.add_field(name = 'Description:', value = self.command_details['iseven']['description'])
+        embd.add_field(name = 'Description:', value = self.command_details['iseven']['description'], inline = False)
+        embd.add_field(name = 'Aliases:', value = self.command_details['iseven']['aliases'], inline = False)
         await ctx.send(embed = embd)
 
     @help.command()
@@ -95,7 +100,8 @@ class Help(commands.Cog):
         embd = discord.Embed(title = 'Command: hack', 
                             colour = discord.Colour.green()
                             )
-        embd.add_field(name = 'Description:', value = self.command_details['hack']['description'])
+        embd.add_field(name = 'Description:', value = self.command_details['hack']['description'], inline = False)
+        embd.add_field(name = 'Aliases:', value = self.command_details['hack']['aliases'], inline = False)
         await ctx.send(embed = embd) 
 
     @help.command()
@@ -103,7 +109,8 @@ class Help(commands.Cog):
         embd = discord.Embed(title = 'Command: kick', 
                             colour = discord.Colour.green()
                             )
-        embd.add_field(name = 'Description:', value = self.command_details['kick']['description'])
+        embd.add_field(name = 'Description:', value = self.command_details['kick']['description'], inline = False)
+        embd.add_field(name = 'Aliases:', value = self.command_details['kick']['aliases'], inline = False)
         await ctx.send(embed = embd) 
 
     @help.command()
@@ -111,7 +118,8 @@ class Help(commands.Cog):
         embd = discord.Embed(title = 'Command: ban', 
                             colour = discord.Colour.green()
                             )
-        embd.add_field(name = 'Description:', value = self.command_details['ban']['description'])
+        embd.add_field(name = 'Description:', value = self.command_details['ban']['description'], inline = False)
+        embd.add_field(name = 'Aliases:', value = self.command_details['ban']['aliases'], inline = False)
         await ctx.send(embed = embd) 
 
     @help.command()
@@ -119,7 +127,8 @@ class Help(commands.Cog):
         embd = discord.Embed(title = 'Command: unban', 
                             colour = discord.Colour.green()
                             )
-        embd.add_field(name = 'Description:', value = self.command_details['unban']['description'])
+        embd.add_field(name = 'Description:', value = self.command_details['unban']['description'], inline = False)
+        embd.add_field(name = 'Aliases:', value = self.command_details['unban']['aliases'], inline = False)
         await ctx.send(embed = embd) 
 
     @help.command()
@@ -127,7 +136,8 @@ class Help(commands.Cog):
         embd = discord.Embed(title = 'Command: mute', 
                             colour = discord.Colour.green()
                             )
-        embd.add_field(name = 'Description:', value = self.command_details['mute']['description'])
+        embd.add_field(name = 'Description:', value = self.command_details['mute']['description'], inline = False)
+        embd.add_field(name = 'Aliases:', value = self.command_details['mute']['aliases'], inline = False)
         await ctx.send(embed = embd)
 
     @help.command()
@@ -135,7 +145,8 @@ class Help(commands.Cog):
         embd = discord.Embed(title = 'Command: banlist', 
                             colour = discord.Colour.green()
                             )
-        embd.add_field(name = 'Description:', value = self.command_details['banlist']['description'])
+        embd.add_field(name = 'Description:', value = self.command_details['banlist']['description'], inline = False)
+        embd.add_field(name = 'Aliases:', value = self.command_details['banlist']['aliases'], inline = False)
         await ctx.send(embed = embd)
 
     @help.command(name = 'set-join-role')
@@ -143,7 +154,8 @@ class Help(commands.Cog):
         embd = discord.Embed(title = 'Command: set-join-role', 
                             colour = discord.Colour.green()
                             )
-        embd.add_field(name = 'Description:', value = self.command_details['set-join-role']['description'])
+        embd.add_field(name = 'Description:', value = self.command_details['set-join-role']['description'], inline = False)
+        embd.add_field(name = 'Aliases:', value = self.command_details['set-join-role']['aliases'], inline = False)
         await ctx.send(embed = embd)
 
     @help.command(name = 'set-join-channel')
@@ -151,7 +163,8 @@ class Help(commands.Cog):
         embd = discord.Embed(title = 'Command: set-join-channel', 
                             colour = discord.Colour.green()
                             )
-        embd.add_field(name = 'Description:', value = self.command_details['set-join-channel']['description'])
+        embd.add_field(name = 'Description:', value = self.command_details['set-join-channel']['description'], inline = False)
+        embd.add_field(name = 'Aliases:', value = self.command_details['set-join-channel']['aliases'], inline = False)
         await ctx.send(embed = embd)
 
     @help.command(name = 'welcome-dm-message')
@@ -159,7 +172,8 @@ class Help(commands.Cog):
         embd = discord.Embed(title = 'Command: welcome-dm-message', 
                             colour = discord.Colour.green()
                             )
-        embd.add_field(name = 'Description:', value = self.command_details['welcome-dm-message']['description'])
+        embd.add_field(name = 'Description:', value = self.command_details['welcome-dm-message']['description'], inline = False)
+        embd.add_field(name = 'Aliases:', value = self.command_details['welcome-dm-message']['aliases'], inline = False)
         await ctx.send(embed = embd)
 
     @help.command(name = 'add-mute-role')
@@ -167,7 +181,8 @@ class Help(commands.Cog):
         embd = discord.Embed(title = 'Command: add-mute-role', 
                             colour = discord.Colour.green()
                             )
-        embd.add_field(name = 'Description:', value = self.command_details['add-mute-role']['description'])
+        embd.add_field(name = 'Description:', value = self.command_details['add-mute-role']['description'], inline = False)
+        embd.add_field(name = 'Aliases:', value = self.command_details['add-mute-role']['aliases'], inline = False)
         await ctx.send(embed = embd)
 
     @help.command(aliases = ['rock-paper-scissors'])
@@ -175,7 +190,8 @@ class Help(commands.Cog):
         embd = discord.Embed(title = 'Command: rock-paper-scissors', 
                             colour = discord.Colour.green()
                             )
-        embd.add_field(name = 'Description:', value = self.command_details['rock-paper-scissors']['description'])
+        embd.add_field(name = 'Description:', value = self.command_details['rock-paper-scissors']['description'], inline = False)
+        embd.add_field(name = 'Aliases:', value = self.command_details['rock-paper-scissors']['aliases'], inline = False)
         await ctx.send(embed = embd)
 
     @help.command()
@@ -183,7 +199,8 @@ class Help(commands.Cog):
         embd = discord.Embed(title = 'Command: dice', 
                             colour = discord.Colour.green()
                             )
-        embd.add_field(name = 'Description:', value = self.command_details['dice']['description'])
+        embd.add_field(name = 'Description:', value = self.command_details['dice']['description'], inline = False)
+        embd.add_field(name = 'Aliases:', value = self.command_details['dice']['aliases'], inline = False)
         await ctx.send(embed = embd)
 
 def setup(bot):
