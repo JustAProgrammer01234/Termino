@@ -22,7 +22,7 @@ class Mute(commands.Cog):
             member.add_roles(ctx.guild.get_role(mute_role))
             await ctx.send(embed = embd)
         else:
-            await ctx.reply("The bot doesn't know which mute role to add, have you tried the $add_mute_role command?")
+            await ctx.reply("The bot doesn't know which mute role to add, have you tried the $add-mute-role command?")
 
     @commands.command()
     @commands.guild_only()

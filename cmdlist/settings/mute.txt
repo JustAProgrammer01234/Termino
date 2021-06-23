@@ -1,2 +1,2 @@
-:one: `add-mute-role <mute_role>`
-:two: `remove-mute-role`
+:one: `$add-mute-role <mute_role>`
+:two: `$remove-mute-role`
