@@ -191,7 +191,7 @@ class Help(commands.Cog):
                             colour = discord.Colour.green()
                             )
         embd.add_field(name = 'Description:', value = self.command_details['remove-mute-role']['description'], inline = False)
-        embd.add_field(name = 'Aliases:', value = self.commnand_details['remove-mute-role']['aliases'], inline = False)
+        embd.add_field(name = 'Aliases:', value = self.command_details['remove-mute-role']['aliases'], inline = False)
         await ctx.send(embed = embd)
 
     @help.command(aliases = ['rock-paper-scissors'])
