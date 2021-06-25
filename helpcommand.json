@@ -83,6 +83,10 @@
         "description": "Tells the bot to add a mute role.",
         "aliases": "No aliases are found in this command."
     },
+    "remove-mute-role":{
+	"description": "Tells the bot to remove mute role.",
+	"aliases": "No aliases are found in this command."
+    },
     "rock-paper-scissors":{
         "description": "Wanna play rock paper scissors with a bot then this is the command for you.",
         "aliases": "`rps`"

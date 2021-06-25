@@ -185,6 +185,15 @@ class Help(commands.Cog):
         embd.add_field(name = 'Aliases:', value = self.command_details['add-mute-role']['aliases'], inline = False)
         await ctx.send(embed = embd)
 
+    @help.command(name = 'remove-mute-role')
+    async def remove_mute_role(self, ctx):
+        embd = discord.Embed(title = 'Command: remove-mute-role',
+                            colour = discord.Colour.green()
+                            )
+        embd.add_field(name = 'Description:', value = self.command_details['remove-mute-role']['description'], inline = False)
+        embd.add_field(name = 'Aliases:', value = self.command_details['remove-mute-role']['aliases'], inline = False)
+        await ctx.send(embed = embd)
+
     @help.command(aliases = ['rock-paper-scissors'])
     async def rock_paper_scissors(self, ctx):
         embd = discord.Embed(title = 'Command: rock-paper-scissors', 
