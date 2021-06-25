@@ -39,12 +39,12 @@ class JoinSettings(UtilClass, commands.Cog):
         if str(guild.id) not in self.server_data:
             self.server_data[str(guild.id)] = {"mute_role":None, "join_announcement_channel": None, "join_role": None, "welcome_dm": None}
             change_json_data('data.json', self.server_data)
+            print('Success')
 
     @commands.command(name = 'set-join-channel')
     @commands.guild_only()
     @commands.has_permissions(manage_channels = True)
     async def set_join_channel(self, ctx, channel: commands.TextChannelConverter):
-        print(self.server_data)
         self.server_data[str(ctx.guild.id)]['join_announcement_channel'] = channel.id
         change_json_data('data.json', self.server_data)
         await ctx.reply(f'Bot will send messages at {channel.mention} whenever a new member joins the server.')
