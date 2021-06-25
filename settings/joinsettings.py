@@ -39,7 +39,6 @@ class JoinSettings(UtilClass, commands.Cog):
         if str(guild.id) not in self.server_data:
             self.server_data[str(guild.id)] = {"mute_role":None, "join_announcement_channel": None, "join_role": None, "welcome_dm": None}
             change_json_data('data.json', self.server_data)
-            print('Success')
 
     @commands.command(name = 'set-join-channel')
     @commands.guild_only()
