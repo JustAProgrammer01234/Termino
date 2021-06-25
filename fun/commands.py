@@ -61,7 +61,7 @@ class Fun(commands.Cog):
 
     @commands.command()
     async def slap(self, ctx, member: discord.Member, *, reason):
-        embd = discord.Embed(description = f'**{ctx.author.mention} slapped {member.mention} because of `{reason}`**')
+        embd = discord.Embed(description = f'{ctx.author.mention} slapped {member.mention} because of **{reason}**')
         embd.set_image(url = random.choice(self.gif_url))
         await ctx.send(embed = embd)
 
