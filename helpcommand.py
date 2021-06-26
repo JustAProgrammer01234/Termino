@@ -96,6 +96,15 @@ class Help(commands.Cog):
         await ctx.send(embed = embd)
 
     @help.command()
+    async def slap(self, ctx):
+        embd = discord.Embed(title = 'Command: slap', 
+                            colour = discord.Colour.green()
+                            )
+        embd.add_field(name = 'Description:', value = self.command_details['slap']['description'], inline = False)
+        embd.add_field(name = 'Aliases:', value = self.command_details['slap']['aliases'], inline = False)
+        await ctx.send(embed = embd)
+
+    @help.command()
     async def hack(self, ctx):
         embd = discord.Embed(title = 'Command: hack', 
                             colour = discord.Colour.green()
