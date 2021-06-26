@@ -27,22 +27,6 @@ class Main(commands.Cog):
             #for debugging purposes
             print(error)
 
-    # @commands.command()
-    # async def ping(self, ctx):
-    #     await ctx.send(f':ping_pong: Pong! `{self.bot.latency *1000:.2f}` ms')
-
-    # @commands.command()
-    # async def botinfo(self, ctx):
-    #     pass 
-
-    # @commands.command()
-    # async def serverinfo(self, ctx):
-    #     pass 
-
-    # @commands.command()
-    # async def userinfo(self, ctx):
-    #     pass
-
 
 def setup(bot):
     bot.add_cog(Main(bot))
