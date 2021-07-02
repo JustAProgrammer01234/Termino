@@ -79,6 +79,10 @@
         "description": "Tells the bot to stop dming users who joins the server.",
         "aliases": "No aliases are found in this command."
     },
+    "remove-mute-role":{
+        "description": "Tells the bot to remove a mute role.",
+        "aliases": "No aliases are found in this command."
+    },
     "add-mute-role":{
         "description": "Tells the bot to add a mute role.",
         "aliases": "No aliases are found in this command."

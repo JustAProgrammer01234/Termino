@@ -10,7 +10,7 @@ class Help(commands.Cog):
     @commands.group(invoke_without_command = True)
     async def help(self, ctx):
         embd = discord.Embed(title = 'Need help? Refer down below to see the commands!',
-                description = '**Tip:**\n Type $help then a command for more details about it like this\n `$help <command>`',
+                description = '**Tip:**\n Type $help then a command for more details about it like this as shown below\n```$help <command>```',
                 color = discord.Colour.green())
         embd.add_field(name = ':basketball: For fun :basketball:', value = '`$help fun`',  inline = False)
         embd.add_field(name = ':shield: For moderation :shield:',value = '`$help mod`', inline = False)
@@ -194,9 +194,36 @@ class Help(commands.Cog):
         embd.add_field(name = 'Aliases:', value = self.command_details['add-mute-role']['aliases'], inline = False)
         await ctx.send(embed = embd)
 
+    @help.command(name = 'remove-join-role')
+    async def remove_join_role(self, ctx):
+        embd = discord.Embed(title = 'Command: add-mute-role', 
+                            colour = discord.Colour.green()
+                            )
+        embd.add_field(name = 'Description:', value = self.command_details['remove-join-role']['description'], inline = False)
+        embd.add_field(name = 'Aliases:', value = self.command_details['remove-join-role']['aliases'], inline = False)
+        await ctx.send(embed = embd)
+
+    @help.command(name = 'remove-join-channel')
+    async def remove_join_channel(self, ctx):
+        embd = discord.Embed(title = 'Command: remove-join-channel', 
+                            colour = discord.Colour.green()
+                            )
+        embd.add_field(name = 'Description:', value = self.command_details['remove-join-channel']['description'], inline = False)
+        embd.add_field(name = 'Aliases:', value = self.command_details['remove-join-channel']['aliases'], inline = False)
+        await ctx.send(embed = embd)
+
+    @help.command(name = 'remove-dm-message')
+    async def remove_dm_message(self, ctx):
+        embd = discord.Embed(title = 'Command: remove-dm-message', 
+                            colour = discord.Colour.green()
+                            )
+        embd.add_field(name = 'Description:', value = self.command_details['remove-dm-message']['description'], inline = False)
+        embd.add_field(name = 'Aliases:', value = self.command_details['remove-dm-message']['aliases'], inline = False)
+        await ctx.send(embed = embd)
+
     @help.command(name = 'remove-mute-role')
     async def remove_mute_role(self, ctx):
-        embd = discord.Embed(title = 'Command: remove-mute-role',
+        embd = discord.Embed(title = 'Command: remove-mute-role', 
                             colour = discord.Colour.green()
                             )
         embd.add_field(name = 'Description:', value = self.command_details['remove-mute-role']['description'], inline = False)
