@@ -196,7 +196,7 @@ class Help(commands.Cog):
 
     @help.command(name = 'remove-join-role')
     async def remove_join_role(self, ctx):
-        embd = discord.Embed(title = 'Command: add-mute-role', 
+        embd = discord.Embed(title = 'Command: remove-mute-role', 
                             colour = discord.Colour.green()
                             )
         embd.add_field(name = 'Description:', value = self.command_details['remove-join-role']['description'], inline = False)
