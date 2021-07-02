@@ -36,9 +36,9 @@ class Games(commands.Cog):
             elif choice == 'paper' and bot_choice == 'rock':
                 await ctx.send('**You win!**, I chose :rock:')
             elif choice == 'scissors' and bot_choice == 'paper':
-                await ctx.send('**You win!**, I chose :newspaper:')
+                await ctx.send('**You win!** I chose :newspaper:')
             elif choice == 'rock' and bot_choice == 'scissors':
-                await ctx.send('**You win!**, I chose :scissors:')
+                await ctx.send('**You win!** I chose :scissors:')
             else:
                 await ctx.send(f'**Ah crap, you lost**, I chose {choices_emoji[bot_choice]}')
         else:

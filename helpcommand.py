@@ -10,7 +10,7 @@ class Help(commands.Cog):
     @commands.group(invoke_without_command = True)
     async def help(self, ctx):
         embd = discord.Embed(title = 'Need help? Refer down below to see the commands!',
-                description = '**Tip:**\n Type $help then a command for more details about it like this as shown below\n```$help <command>```',
+                description = '**Tip:**\nFor more details about a command, type `$help <command>`',
                 color = discord.Colour.green())
         embd.add_field(name = ':basketball: For fun :basketball:', value = '`$help fun`',  inline = False)
         embd.add_field(name = ':shield: For moderation :shield:',value = '`$help mod`', inline = False)
@@ -34,6 +34,7 @@ class Help(commands.Cog):
         embd = discord.Embed(title = 'Termino utilities!', color = discord.Colour.green())
         embd.add_field(name = 'Welcomes:', value = get_help_util_welcome(), inline = False)
         embd.add_field(name = 'Mute command setup:', value = get_help_util_mute(), inline = False)
+        embd.set_footer(text = "Don't forget to sync my perms for them to work!")
         await ctx.send(embed = embd)
 
     @help.command()
