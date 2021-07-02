@@ -28,10 +28,6 @@ def get_invite_link():
     with open('invitelink.txt') as f:
         return f.read()
 
-def get_token(token_file):
-    with open(token_file,'r') as f:
-        return f.read()
-
 def get_json_data(json_file):
     with open(json_file, 'r') as f:
         return json.load(f)
