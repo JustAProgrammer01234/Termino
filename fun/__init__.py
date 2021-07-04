@@ -1,4 +1,4 @@
-from .commands import Fun
+from .fun import Fun
 from .games import Games
 
 def setup(bot):

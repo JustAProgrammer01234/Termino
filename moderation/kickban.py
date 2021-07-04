@@ -15,7 +15,7 @@ class KickBan(commands.Cog):
     @commands.guild_only()
     @commands.has_permissions(kick_members = True)
     async def kick(self, ctx, member: discord.Member, *, reason = None):
-        embd = discord.Embed(title = f'Kicked {member.name}', color = discord.Colour.gold())
+        embd = discord.Embed(title = f':mechanical_leg: Kicked {member.name}#{member.discriminator} :mechanical_leg:')
         if reason is None:
             await member.kick(reason = "Didn't provide a reason.")
             await ctx.send(embed = embd)
@@ -27,7 +27,7 @@ class KickBan(commands.Cog):
     @commands.guild_only()
     @commands.has_permissions(ban_members = True)
     async def ban(self, ctx, member: discord.Member, *, reason = None):
-        embd = discord.Embed(title = f'Banned {member.name}', color = discord.Colour.gold())
+        embd = discord.Embed(title = f':hammer: Banned {member.name}#{member.discriminator} :hammer:')
         if reason is None:
             await member.ban(reason = "Didn't provide a reason.")
             await ctx.send(embed = embd)
