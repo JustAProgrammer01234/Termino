@@ -9,7 +9,7 @@ class Help(commands.Cog):
 
     @commands.group(invoke_without_command = True)
     async def help(self, ctx):
-        embd = discord.Embed(title = 'Need help? Refer down below to see the commands!',
+        embd = discord.Embed(title = f'See the commands {self.bot.user.name} has down below!',
                 description = '**Tip:**\nFor more details about a command, type `$help <command>`',
                 color = discord.Colour.green())
         embd.add_field(name = ':basketball: For fun :basketball:', value = '`$help fun`',  inline = False)
@@ -25,13 +25,13 @@ class Help(commands.Cog):
 
     @help.command()
     async def mod(self, ctx):
-        embd = discord.Embed(title = 'Moderator commands!', description = get_help_mod(), color = discord.Colour.green())
+        embd = discord.Embed(title = 'Moderator commands.', description = get_help_mod(), color = discord.Colour.green())
         embd.set_footer(text = "Don't forget to sync my perms for them to work!")
         await ctx.send(embed = embd)
 
     @help.command()
     async def settings(self, ctx):
-        embd = discord.Embed(title = 'Termino utilities!', color = discord.Colour.green())
+        embd = discord.Embed(title = 'Termino settings.', color = discord.Colour.green())
         embd.add_field(name = 'Welcomes:', value = get_help_util_welcome(), inline = False)
         embd.add_field(name = 'Mute command setup:', value = get_help_util_mute(), inline = False)
         embd.set_footer(text = "Don't forget to sync my perms for them to work!")
@@ -39,7 +39,7 @@ class Help(commands.Cog):
 
     @help.command()
     async def games(self, ctx):
-        embd = discord.Embed(title = 'Games!', description = get_help_game(), color = discord.Colour.green())
+        embd = discord.Embed(title = 'Termino games.', description = get_help_game(), color = discord.Colour.green())
         await ctx.send(embed = embd)
 
     @help.command()
@@ -197,7 +197,7 @@ class Help(commands.Cog):
 
     @help.command(name = 'remove-join-role')
     async def remove_join_role(self, ctx):
-        embd = discord.Embed(title = 'Command: remove-mute-role', 
+        embd = discord.Embed(title = 'Command: remove-join-role', 
                             colour = discord.Colour.green()
                             )
         embd.add_field(name = 'Description:', value = self.command_details['remove-join-role']['description'], inline = False)
