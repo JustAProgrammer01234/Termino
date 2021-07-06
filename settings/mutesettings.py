@@ -12,19 +12,19 @@ class MuteSettings(UtilClass, commands.Cog):
     @commands.guild_only()
     @commands.has_permissions(manage_roles = True)
     async def add_mute_role(self, ctx, mute_role: commands.RoleConverter):
-        print(self.server_data)
-        self.server_data[str(ctx.guild.id)]['mute_role'] = mute_role.id
-        change_json_data('data.json', self.server_data)
-        await ctx.send("Mute role has now been added.")
+        # self.server_data[str(ctx.guild.id)]['mute_role'] = mute_role.id
+        # change_json_data('data.json', self.server_data)
+        # await ctx.send("Mute role has now been added.")
+        await ctx.send('This command is under maintenance.')
 
     @commands.command(name = 'remove-mute-role')
     @commands.guild_only()
     @commands.has_permissions(manage_roles = True)
     async def remove_mute_role(self, ctx):
-        print(self.server_data)
-        self.server_data[str(ctx.guild.id)]['mute_role'] = None
-        change_json_data('data.json', self.server_data)
-        await ctx.send("Mute role has been removed.")
+        # self.server_data[str(ctx.guild.id)]['mute_role'] = None
+        # change_json_data('data.json', self.server_data)
+        # await ctx.send("Mute role has been removed.")
+        await ctx.send('This command is under maintenance.')
     
     @add_mute_role.error 
     async def add_mute_role_error(self, ctx, error):

@@ -31,7 +31,7 @@ class Help(commands.Cog):
 
     @help.command()
     async def settings(self, ctx):
-        embd = discord.Embed(title = ':gear: For settings :gear:', color = discord.Colour.green())
+        embd = discord.Embed(title = ':gear: For settings :gear:', description = 'The commands below are under maintenance.', color = discord.Colour.green())
         embd.add_field(name = 'Welcomes:', value = get_help_util_welcome(), inline = False)
         embd.add_field(name = 'Mute command setup:', value = get_help_util_mute(), inline = False)
         embd.set_footer(text = "Don't forget to sync my perms for them to work!")

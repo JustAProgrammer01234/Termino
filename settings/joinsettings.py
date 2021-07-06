@@ -44,52 +44,59 @@ class JoinSettings(UtilClass, commands.Cog):
     @commands.guild_only()
     @commands.has_permissions(manage_channels = True)
     async def set_join_channel(self, ctx, channel: commands.TextChannelConverter):
-        self.server_data[str(ctx.guild.id)]['join_announcement_channel'] = channel.id
-        change_json_data('data.json', self.server_data)
-        await ctx.reply(f'Bot will send messages at {channel.mention} whenever a new member joins the server.')
+        # self.server_data[str(ctx.guild.id)]['join_announcement_channel'] = channel.id
+        # change_json_data('data.json', self.server_data)
+        # await ctx.reply(f'Bot will send messages at {channel.mention} whenever a new member joins the server.')
+        await ctx.send('This command is under maintenance.')
 
     @commands.command(name = 'set-join-role')
     @commands.guild_only()
     @commands.has_permissions(manage_roles = True)
     async def set_join_role(self, ctx, role: commands.RoleConverter):
-        if role in ctx.guild.roles:
-            self.server_data[str(ctx.guild.id)]['join_role'] = role.id
-            change_json_data('data.json', self.server_data)
-            await ctx.reply(f'Bot will now add {role} to any user who joins the server.')
-        else:
-            await ctx.reply(f'Error: {role} does not exist in this server.')
+        # if role in ctx.guild.roles:
+        #     self.server_data[str(ctx.guild.id)]['join_role'] = role.id
+        #     change_json_data('data.json', self.server_data)
+        #     await ctx.reply(f'Bot will now add {role} to any user who joins the server.')
+        # else:
+        #     await ctx.reply(f'Error: {role} does not exist in this server.')
+        await ctx.send('This command is under maintenance.')
 
     @commands.command(name = 'welcome-dm-message')
     @commands.guild_only()
     @commands.has_permissions(manage_messages = True)
     async def welcome_dm_message(self, ctx, *, message):
-        self.server_data[str(ctx.guild.id)]['welcome_dm'] = message
-        change_json_data('data.json', self.server_data)
-        await ctx.reply('Bot will now dm this message when a member joins this server.')
+        # self.server_data[str(ctx.guild.id)]['welcome_dm'] = message
+        # change_json_data('data.json', self.server_data)
+        # await ctx.reply('Bot will now dm this message when a member joins this server.')
+        await ctx.send('This command is under maintenance.')
 
     @commands.command(name = 'remove-join-role')
     @commands.guild_only()
     @commands.has_permissions(manage_roles = True)
     async def remove_join_role(self, ctx):
-        self.server_data[str(ctx.guild.id)]['join_role'] = None
-        change_json_data('data.json', self.server_data)
-        await ctx.reply('Join role deleted.')
+        # self.server_data[str(ctx.guild.id)]['join_role'] = None
+        # change_json_data('data.json', self.server_data)
+        # await ctx.reply('Join role deleted.')
+        await ctx.send('This command is under maintenance.')
 
     @commands.command(name = 'remove-join-channel')
     @commands.guild_only()
     @commands.has_permissions(manage_channels = True)
     async def remove_join_channel(self, ctx):
-        self.server_data[str(ctx.guild.id)]['join_announcement_channel'] = None
-        change_json_data('data.json', self.server_data)
-        await ctx.reply(f'Bot will stop sending welcome messages in server.')
+        # self.server_data[str(ctx.guild.id)]['join_announcement_channel'] = None
+        # change_json_data('data.json', self.server_data)
+        # await ctx.reply(f'Bot will stop sending welcome messages in server.')
+        await ctx.send('This command is under maintenance.')
 
     @commands.command(name = 'remove-dm-message')
     @commands.guild_only()
     @commands.has_permissions(manage_messages = True)
     async def remove_dm_message(self, ctx):
-        self.server_data[str(ctx.guild.id)]['welcome_dm'] = None
-        change_json_data('data.json', self.server_data)
-        await ctx.reply('Bot will stop sending direct messages to users who joins this server.')
+        # self.server_data[str(ctx.guild.id)]['welcome_dm'] = None
+        # change_json_data('data.json', self.server_data)
+        # await ctx.reply('Bot will stop sending direct messages to users who joins this server.')
+        await ctx.send('This command is under maintenance.')
+
 
     @set_join_channel.error
     async def set_channel_join_error(self, ctx, error):

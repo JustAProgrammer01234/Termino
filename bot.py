@@ -27,6 +27,5 @@ class Main(commands.Cog):
             #for debugging purposes
             print(error)
 
-
 def setup(bot):
     bot.add_cog(Main(bot))
