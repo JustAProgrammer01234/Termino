@@ -40,7 +40,7 @@ class Help(commands.Cog):
     @help.command()
     async def games(self, ctx):
         embd = discord.Embed(title = ':video_game: Games :video_game:', color = discord.Colour.green())
-        embd.add_field(name = 'Mini Games', values = get_help_mini_games())
+        embd.add_field(name = 'Mini Games', value = get_help_mini_games())
         await ctx.send(embed = embd)
 
     @help.command()
