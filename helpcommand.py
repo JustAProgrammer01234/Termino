@@ -1,6 +1,6 @@
 import discord 
 from discord.ext import commands 
-from noncoroutines import get_help_fun, get_help_mod, get_help_util_welcome, get_help_util_mute, get_help_game, get_json_data, get_help_mini_games
+from noncoroutines import get_help_fun, get_help_mod, get_help_util_welcome, get_help_util_mute, get_json_data, get_help_mini_games
 
 class Help(commands.Cog):
     def __init__(self, bot):

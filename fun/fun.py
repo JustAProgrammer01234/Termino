@@ -34,7 +34,7 @@ class Fun(commands.Cog):
     @commands.command()
     async def randomnum(self, ctx, start: int, stop: int):
         embd = discord.Embed(title = f'Generated random number from {start} to {stop}:',
-                description = random.randint(start, stop))
+                description = random.randint(start, stop), color = discord.Colour.green())
         await ctx.send(embed = embd)
 
     @commands.command()
@@ -43,14 +43,14 @@ class Fun(commands.Cog):
 
     @commands.command()
     async def randomslap(self, ctx, *, reason: SlapSomeone):
-        embd = discord.Embed(description = reason)
+        embd = discord.Embed(description = reason, color = discord.Colour.green())
         embd.set_image(url = random.choice(self.gif_url))
         await ctx.send(embed = embd)
 
     @commands.command(aliases = ['8ball', '8b'])
     async def _8ball(self, ctx, *, answer: eightball):
         embd = discord.Embed(title = '8ball says:',
-                description = answer[0])
+                description = answer[0], color = discord.Colour.green())
         embd.set_thumbnail(url = 'https://magic-8ball.com/assets/images/magicBallStart.png')
         embd.set_footer(text = f'Question: {answer[1]}')
         await ctx.send(embed = embd)
@@ -61,7 +61,7 @@ class Fun(commands.Cog):
 
     @commands.command()
     async def slap(self, ctx, member: discord.Member, *, reason):
-        embd = discord.Embed(description = f'{ctx.author.mention} slapped {member.mention} because of **{reason}**')
+        embd = discord.Embed(description = f'{ctx.author.mention} slapped {member.mention} because of **{reason}**', color = discord.Colour.green())
         embd.set_image(url = random.choice(self.gif_url))
         await ctx.send(embed = embd)
 
