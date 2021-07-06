@@ -2,7 +2,7 @@ import random
 import discord
 from discord.ext import commands
 
-class Games(commands.Cog):
+class MiniGames(commands.Cog):
     '''
     Commands related to games.
     '''

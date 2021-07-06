@@ -1,6 +1,6 @@
 import discord 
 from discord.ext import commands 
-from noncoroutines import get_help_fun, get_help_mod, get_help_util_welcome, get_help_util_mute, get_help_game, get_json_data
+from noncoroutines import get_help_fun, get_help_mod, get_help_util_welcome, get_help_util_mute, get_help_game, get_json_data, get_help_mini_games
 
 class Help(commands.Cog):
     def __init__(self, bot):
@@ -39,7 +39,8 @@ class Help(commands.Cog):
 
     @help.command()
     async def games(self, ctx):
-        embd = discord.Embed(title = ':video_game: Games :video_game:', description = get_help_game(), color = discord.Colour.green())
+        embd = discord.Embed(title = ':video_game: Games :video_game:', color = discord.Colour.green())
+        embd.add_field(name = 'Mini Games', values = get_help_mini_games())
         await ctx.send(embed = embd)
 
     @help.command()

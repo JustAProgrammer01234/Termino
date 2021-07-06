@@ -20,8 +20,8 @@ def get_help_util_mute():
     with open('cmdlist/settings/mute.txt','r') as f:
         return f.read()
 
-def get_help_game():
-    with open('cmdlist/games.txt') as f:
+def get_help_mini_games():
+    with open('cmdlist/games/minigames.txt') as f:
         return f.read()
 
 def get_invite_link():
