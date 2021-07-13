@@ -2,10 +2,7 @@ import random
 import discord
 from discord.ext import commands
 
-class MiniGames(commands.Cog):
-    '''
-    Commands related to games.
-    '''
+class Games(commands.Cog, name = ':video_game: games :video_game:'):
     def __init__(self, bot):
         self.bot = bot
 

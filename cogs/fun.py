@@ -6,10 +6,7 @@ from .converters import *
 from discord.ext import commands
 from discord.ext.commands import errors
 
-class Fun(commands.Cog):
-    '''
-    Commands related to fun.
-    '''
+class Fun(commands.Co, name = ':basketball: fun : basketball:'):
     def __init__(self, bot):
         self.bot = bot
         self.gif_url =[
@@ -84,3 +81,6 @@ class Fun(commands.Cog):
         await asyncio.sleep(1)
         await hack_message.delete()
         await ctx.send(embed = hack_embed_message)
+
+def setup(bot):
+    bot.add_cog(Fun(bot))

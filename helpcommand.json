@@ -1,98 +1,146 @@
 {
     "display": {
         "description": "Just tells the bot to copy your message using plain text or embed.",
+        "arguments": "`<mode>` ***=*** **-orig** if in plain text or **-embd** if in embed\n<message> ***=*** The messaged to be copied.",
+        "example": "> For displaying in plain text.\n```$display -orig hello world```\n> For displaying inside embed.\n```$display -embd hello world```",
         "aliases": "`disp`"
     },
     "randomnum": {
-        "description": "Returns a random number.",
+        "description": "Returns a random number.\n**+** For addition\n**-** For subtraction\n",
+        "arguments": "`<start>` ***=*** The number to start with.\n<stop> ***=*** The number to stop.",
+        "example": "> Checking if you get lucky or not.\n```$randomnum 6 7```",
         "aliases": "No aliases are found in this command."
     },
     "solve": {
         "description": "Solves an equation for you.",
+        "arguments": "`<equation>` ***=*** The equation to solve.",
+        "example": "> To solve the classic 1 + 1.\n$solve 1 + 1",
         "aliases": "No aliases are found in this command."
     },
     "randomslap": {
-        "description": "Slaps a random member in a server.",
+        "description": "Slaps a random member.",
+        "arguments": "`<reason>` ***=*** The reason why you slapped that member.",
+        "example": "> Just slapping a random member.\n```$randomslap just randomly slapping a member.```",
         "aliases": "No aliases are found in this command."
     },
     "8ball": {
         "description": "An implementation of the 8ball fortune teller toy.",
+        "arguments": "`<question>` ***=*** The question to be asked.",
+        "example": "> Asking if everyone is going to get good luck.\n```$8ball is everyone going to get good luck?```",
         "aliases": "`8b`"
     },
     "iseven": {
         "description": "Checks if a number is even or not.",
+        "arguments": "`<num>` ***=*** The number to be checked.",
+        "example": "> Checking if a number is even or not.\n```$iseven 10```",
         "aliases": "No aliases are found in this command."
     },
     "slap": {
         "description": "Slaps a specific member in a server.",
+        "arguments": "`<member>` ***=*** The member to be slapped. (It is recommended you ping your victim!)\n`<reason>` ***=*** The reason you slapped that member.",
+        "example": "> For displaying in plain text.\n```$display -orig hello world```\n> For displaying inside embed.\n```$display -embd hello world```",
         "aliases": "No aliases are found in this command."
     },
     "hack":{
         "description": "Hacks a member in a server.",
+        "arguments": "`<mode>` ***=*** **-orig** if in plain text or **-embd** if in embed\n<message> ***=*** The messaged to be copied.",
+        "example": "> For displaying in plain text.\n```$display -orig hello world```\n> For displaying inside embed.\n```$display -embd hello world```",
         "aliases": "No aliases are found in this command."
     },
     "ban":{
         "description": "Bans a member in a server.",
+        "arguments": "`<mode>` ***=*** **-orig** if in plain text or **-embd** if in embed\n<message> ***=*** The messaged to be copied.",
+        "example": "> For displaying in plain text.\n```$display -orig hello world```\n> For displaying inside embed.\n```$display -embd hello world```",
         "aliases": "No aliases are found in this command."
     },
     "kick":{
         "description": "Kicks a member in a server.",
+        "arguments": "`<mode>` ***=*** **-orig** if in plain text or **-embd** if in embed\n<message> ***=*** The messaged to be copied.",
+        "example": "> For displaying in plain text.\n```$display -orig hello world```\n> For displaying inside embed.\n```$display -embd hello world```",
         "aliases": "No aliases are found in this command."
     },
     "unban":{
         "description": "Unbans a member in a server.",
+        "arguments": "`<mode>` ***=*** **-orig** if in plain text or **-embd** if in embed\n<message> ***=*** The messaged to be copied.",
+        "example": "> For displaying in plain text.\n```$display -orig hello world```\n> For displaying inside embed.\n```$display -embd hello world```",
         "aliases": "No aliases are found in this command."
     },
     "banlist":{
         "description": "Returns a list of banned members in a server.",
+        "arguments": "`<mode>` ***=*** **-orig** if in plain text or **-embd** if in embed\n<message> ***=*** The messaged to be copied.",
+        "example": "> For displaying in plain text.\n```$display -orig hello world```\n> For displaying inside embed.\n```$display -embd hello world```",
         "aliases": "No aliases are found in this command."
     },
     "mute":{
         "description": "Mutes a member in a server.",
+        "arguments": "`<mode>` ***=*** **-orig** if in plain text or **-embd** if in embed\n<message> ***=*** The messaged to be copied.",
+        "example": "> For displaying in plain text.\n```$display -orig hello world```\n> For displaying inside embed.\n```$display -embd hello world```",
         "aliases": "No aliases are found in this command."
     },
     "unmute":{
         "description": "Unmutes a member in a server.",
+        "arguments": "`<mode>` ***=*** **-orig** if in plain text or **-embd** if in embed\n<message> ***=*** The messaged to be copied.",
+        "example": "> For displaying in plain text.\n```$display -orig hello world```\n> For displaying inside embed.\n```$display -embd hello world```",
         "aliases": "No aliases are found in this command."
     },
     "set-join-role":{
         "description": "Adds role to users who joins the server.",
+        "arguments": "`<mode>` ***=*** **-orig** if in plain text or **-embd** if in embed\n<message> ***=*** The messaged to be copied.",
+        "example": "```$display -orig hello world```\n```$display -embd hello world```",
         "aliases": "No aliases are found in this command."
     },
     "set-join-channel":{
         "description": "Tells the bot to send welcome messages in a certain channel in the server.",
+        "arguments": "`<mode>` ***=*** **-orig** if in plain text or **-embd** if in embed\n<message> ***=*** The messaged to be copied.",
+        "example": "> For displaying in plain text.\n```$display -orig hello world```\n> For displaying inside embed.\n```$display -embd hello world```",
         "aliases": "No aliases are found in this command."
     },
     "welcome-dm-message":{
         "description": "Tells the bot to dm a user who joins a server.",
+        "arguments": "`<mode>` ***=*** **-orig** if in plain text or **-embd** if in embed\n<message> ***=*** The messaged to be copied.",
+        "example": "> For displaying in plain text.\n```$display -orig hello world```\n> For displaying inside embed.\n```$display -embd hello world```",
         "aliases": "No aliases are found in this command."
     },
     "remove-join-role":{
         "description": "Tells the bot to stop adding roles to users who joins the server.",
+        "arguments": "`<mode>` ***=*** **-orig** if in plain text or **-embd** if in embed\n<message> ***=*** The messaged to be copied.",
+        "example": "> For displaying in plain text.\n```$display -orig hello world```\n> For displaying inside embed.\n```$display -embd hello world```",
         "aliases": "No aliases are found in this command."
     },
     "remove-join-channel":{
         "description": "Tells the bot to stop sending welcome messages.",
+        "arguments": "`<mode>` ***=*** **-orig** if in plain text or **-embd** if in embed\n<message> ***=*** The messaged to be copied.",
+        "example": "> For displaying in plain text.\n```$display -orig hello world```\n> For displaying inside embed.\n```$display -embd hello world```",
         "aliases": "No aliases are found in this command."
     },
     "remove-dm-message":{
         "description": "Tells the bot to stop dming users who joins the server.",
+        "arguments": "`<mode>` ***=*** **-orig** if in plain text or **-embd** if in embed\n<message> ***=*** The messaged to be copied.",
+        "example": "> For displaying in plain text.\n```$display -orig hello world```\n> For displaying inside embed.\n```$display -embd hello world```",
         "aliases": "No aliases are found in this command."
     },
     "remove-mute-role":{
         "description": "Tells the bot to remove a mute role.",
+        "arguments": "`<mode>` ***=*** **-orig** if in plain text or **-embd** if in embed\n<message> ***=*** The messaged to be copied.",
+        "example": "> For displaying in plain text.\n```$display -orig hello world```\n> For displaying inside embed.\n```$display -embd hello world```",
         "aliases": "No aliases are found in this command."
     },
     "add-mute-role":{
         "description": "Tells the bot to add a mute role.",
+        "arguments": "`<mode>` ***=*** **-orig** if in plain text or **-embd** if in embed\n<message> ***=*** The messaged to be copied.",
+        "example": "> For displaying in plain text.\n```$display -orig hello world```\n> For displaying inside embed.\n```$display -embd hello world```",
         "aliases": "No aliases are found in this command."
     },
     "rock-paper-scissors":{
         "description": "Wanna play rock paper scissors with a bot then this is the command for you.",
+        "arguments": "`<mode>` ***=*** **-orig** if in plain text or **-embd** if in embed\n<message> ***=*** The messaged to be copied.",
+        "example": "> For displaying in plain text.\n```$display -orig hello world```\n> For displaying inside embed.\n```$display -embd hello world```",
         "aliases": "`rps`"
     },
     "dice":{
         "description": "A dice game for you and termino.",
+        "arguments": "`<mode>` ***=*** **-orig** if in plain text or **-embd** if in embed\n<message> ***=*** The messaged to be copied.",
+        "example": "> For displaying in plain text.\n```$display -orig hello world```\n> For displaying inside embed.\n```$display -embd hello world```",
         "aliases": "No aliases are found in this command."
     }
 }

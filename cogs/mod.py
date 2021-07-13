@@ -1,15 +1,14 @@
-import discord
-import asyncio
-from discord.ext import commands
+import discord 
+from discord.ext import commands 
 
-class KickBan(commands.Cog):
-    '''
-    Commands related to kicking and banning members from guild.
-    '''
+class Mod(commands.Cog, name = ':shield: mod :shield:'):
+
     def __init__(self, bot):
-        self.bot = bot
+        self.bot = bot 
         self.mp_kick = discord.Embed(title = ':no_entry: Permission denied! :no_entry:', description = 'You are missing the `Kick Members` permission.', color = discord.Colour.red())
         self.mp_ban = discord.Embed(title = ':no_entry: Permission denied! :no_entry:', description = 'You are missing the `Ban Members` permission.', color = discord.Colour.red())
+        self.mp_ban = discord.Embed(title = ':no_entry: Permission denied! :no_entry:', description = 'You are missing the `Ban Members` permission.', color = discord.Colour.red())
+        self.mp_mute = discord.Embed(title = ':no_entry: Permission denied! :no_entry:', description = 'You are missing the `Manage Roles` permission.', color = discord.Colour.red())
 
     @commands.command()
     @commands.guild_only()
@@ -76,6 +75,34 @@ class KickBan(commands.Cog):
         else:
             await ctx.send(embed = banlist_embed)
 
+    @commands.command()
+    @commands.guild_only()
+    @commands.has_permissions(manage_roles = True)
+    async def mute(self, ctx, member: discord.Member):
+        # data = self.server_data
+        # embd = discord.Embed(title = f'{member.name} has been muted', color = discord.Colour.purple())
+        # mute_role = data[str(ctx.guild.id)]['mute_role']
+        # if mute_role != None:
+        #     member.add_roles(ctx.guild.get_role(mute_role))
+        #     await ctx.send(embed = embd)
+        # else:
+        #     await ctx.reply("The bot doesn't know which mute role to add, have you tried the $add-mute-role command?")
+        await ctx.send('This command is under maintenance.')
+
+    @commands.command()
+    @commands.guild_only()
+    @commands.has_permissions(manage_roles = True)
+    async def unmute(self, ctx, member: discord.Member):
+        # data = self.server_data
+        # embd = discord.Embed(title = f'{member.name} has been unmuted.', color = discord.Colour.orange())
+        # mute_role = data[str(ctx.guild.id)]['mute_role']
+        # if member.guild.get_role(mute_role) in member.roles:
+        #     await member.remove_roles(ctx.guild.get_role(mute_role)) 
+        #     await ctx.send(embed = embd)
+        # else:
+        #     await ctx.reply('Member is not muted.')
+        await ctx.send('This command is under maintenance.')
+
     @kick.error
     async def kick_error(self, ctx, error):
         if isinstance(error, commands.MissingPermissions):
@@ -95,3 +122,13 @@ class KickBan(commands.Cog):
     async def banlist_error(self, ctx, error):
         if isinstance(error, commands.MissingPermissions):
             await ctx.send(embed = self.mp_ban)
+
+    @mute.error
+    async def mute_error(self, ctx, error):
+        if isinstance(error, commands.MissingPermissions):
+            await ctx.send(embed = self.mp_mute)
+
+    @unmute.error
+    async def unmute_error(self, ctx, error):
+        if isinstance(error, commands.MissingPermissions):
+            await ctx.send(embed = self.mp_mute)
