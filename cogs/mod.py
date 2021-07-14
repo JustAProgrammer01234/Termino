@@ -1,19 +1,25 @@
 import discord 
 from discord.ext import commands 
 
-class Mod(commands.Cog, name = ':shield: mod :shield:'):
+class Mod(commands.Cog, name = 'mod'):
 
     def __init__(self, bot):
         self.bot = bot 
-        self.mp_kick = discord.Embed(title = ':no_entry: Permission denied! :no_entry:', description = 'You are missing the `Kick Members` permission.', color = discord.Colour.red())
-        self.mp_ban = discord.Embed(title = ':no_entry: Permission denied! :no_entry:', description = 'You are missing the `Ban Members` permission.', color = discord.Colour.red())
-        self.mp_ban = discord.Embed(title = ':no_entry: Permission denied! :no_entry:', description = 'You are missing the `Ban Members` permission.', color = discord.Colour.red())
-        self.mp_mute = discord.Embed(title = ':no_entry: Permission denied! :no_entry:', description = 'You are missing the `Manage Roles` permission.', color = discord.Colour.red())
+        self.mp_user = discord.Embed(title = ':no_entry: Permission denied! :no_entry:', color = discord.Colour.red())
+        self.mp_bot = discord.Embed(title = ':warning: Bot has missing perms! :warning:', color = discord.Colour.red())
 
     @commands.command()
     @commands.guild_only()
     @commands.has_permissions(kick_members = True)
     async def kick(self, ctx, member: discord.Member, *, reason = None):
+        '''
+        __**Description:**__
+        Kicks a member.
+
+        __**Arguments:**__
+        **1.** `<member>` - The member to be kicked. (This argument must only contain a member id or a ping.)
+        **2.** `<reason>` - The reason why that member was kicked.
+        '''
         embd = discord.Embed(title = f':mechanical_leg: Kicked {member.name}#{member.discriminator} :mechanical_leg:')
         if reason is None:
             await member.kick(reason = "Didn't provide a reason.")
@@ -26,6 +32,14 @@ class Mod(commands.Cog, name = ':shield: mod :shield:'):
     @commands.guild_only()
     @commands.has_permissions(ban_members = True)
     async def ban(self, ctx, member: discord.Member, *, reason = None):
+        '''
+        __**Description:**__
+        Bans a member.
+
+        __**Arguments:**__
+        **1.** `<member>` - The member to be banned. (This argument must only contain a member id or a ping.)
+        **2.** `<reason>` - The reason why that member was banned.
+        '''
         embd = discord.Embed(title = f':hammer: Banned {member.name}#{member.discriminator} :hammer:')
         if reason is None:
             await member.ban(reason = "Didn't provide a reason.")
@@ -38,6 +52,13 @@ class Mod(commands.Cog, name = ':shield: mod :shield:'):
     @commands.guild_only()
     @commands.has_permissions(ban_members = True)
     async def unban(self, ctx, *, member):
+        '''
+        __**Description:**__
+        Unbans a member
+
+        __**Arguments:**__
+        **1.** `<member>` - The member to be banned. (You should include the username and the discriminator like this -> testuser#3404)
+        '''
         ban_list = await ctx.guild.bans()
         name, discriminator = member.split('#')
         message = await ctx.send('Hold on this may take a while.')
@@ -60,16 +81,24 @@ class Mod(commands.Cog, name = ':shield: mod :shield:'):
     @commands.guild_only()
     @commands.has_permissions(ban_members = True)
     async def banlist(self, ctx):
-        ban_list = await ctx.guild.bans()
+        '''
+        __**Description:**__
+        Sends a list of banned members.
+
+        __**Arguments:**__
+        No arguments are found in this command.
+        '''
         bans_label = ''
+        ban_list = await ctx.guild.bans()
         message = await ctx.send('Hold on this may take a while.')
+        banlist_embed = discord.Embed(title = f'Banned members in {ctx.guild}:', color = discord.Colour.red())
+
         for ban_entry in ban_list:
             user = ban_entry.user
             bans_label += f'{user.name}#{user.discriminator}\n'
-        banlist_embed = discord.Embed(title = f'Banned members in {ctx.guild}:',
-            description = f'```{bans_label}```',
-            color = discord.Colour.red())
         await message.delete()
+        banlist_embed.description = f'```{bans_label}```'
+        
         if bans_label == '':
             await ctx.send('Looks like I found no banned members.')
         else:
@@ -79,6 +108,13 @@ class Mod(commands.Cog, name = ':shield: mod :shield:'):
     @commands.guild_only()
     @commands.has_permissions(manage_roles = True)
     async def mute(self, ctx, member: discord.Member):
+        '''
+        __**Description:**__
+        Mutes a member in both text and voice channels.
+
+        __**Arguments:**__
+        **1.** `<member>` - The member to be muted. (This argument must only contain a member id or a ping.)
+        '''
         # data = self.server_data
         # embd = discord.Embed(title = f'{member.name} has been muted', color = discord.Colour.purple())
         # mute_role = data[str(ctx.guild.id)]['mute_role']
@@ -93,6 +129,13 @@ class Mod(commands.Cog, name = ':shield: mod :shield:'):
     @commands.guild_only()
     @commands.has_permissions(manage_roles = True)
     async def unmute(self, ctx, member: discord.Member):
+        '''
+        __**Description:**__
+        Unmutes a member in both text and voice channels.
+
+        __**Arguments:**__
+        **1.** `<member>` - The member to be unmuted. (This argument must only contain a member id or a ping.)
+        '''
         # data = self.server_data
         # embd = discord.Embed(title = f'{member.name} has been unmuted.', color = discord.Colour.orange())
         # mute_role = data[str(ctx.guild.id)]['mute_role']
@@ -105,30 +148,57 @@ class Mod(commands.Cog, name = ':shield: mod :shield:'):
 
     @kick.error
     async def kick_error(self, ctx, error):
-        if isinstance(error, commands.MissingPermissions):
-            await ctx.send(embed = self.mp_kick)
+        if isinstance(error, commands.MissingPermissions): 
+            self.mp_user.description = "You are missing the `Kick Members` permission!"
+            await ctx.send(embed = self.mp_user)
+        elif isinstance(error, discord.Forbidden):
+            self.mp_bot.description = "The bot is missing the `Kick Members` permission!" 
+            await ctx.send(embed = self.mp_bot)
 
     @ban.error
     async def ban_error(self, ctx, error):
         if isinstance(error, commands.MissingPermissions):
-            await ctx.send(embed = self.mp_ban)
+            self.mp_user.description = "You are missing the `Ban Members` permission!"
+            await ctx.send(embed = self.mp_user)
+        elif isinstance(error, discord.Forbidden):
+            self.mp_bot.description = "The bot is missing the `Ban Members` permission!" 
+            await ctx.send(embed = self.mp_bot)
 
     @unban.error
     async def unban_error(self, ctx, error):
         if isinstance(error, commands.MissingPermissions):
-            await ctx.send(embed = self.mp_ban)
+            self.mp_user.description = "You are missing the `Ban Members` permission!"
+            await ctx.send(embed = self.mp_user)
+        elif isinstance(error, discord.Forbidden):
+            self.mp_bot.description = "The bot is missing the `Ban Members` permission!" 
+            await ctx.send(embed = self.mp_bot)
 
     @banlist.error 
     async def banlist_error(self, ctx, error):
         if isinstance(error, commands.MissingPermissions):
-            await ctx.send(embed = self.mp_ban)
+            self.mp_user.description = "You are missing the `Ban Members` permission!"
+            await ctx.send(embed = self.mp_user)
+        elif isinstance(error, discord.Forbidden):
+            self.mp_bot.description = "The bot is missing the `Ban Members` permission!" 
+            await ctx.send(embed = self.mp_bot)
 
     @mute.error
     async def mute_error(self, ctx, error):
         if isinstance(error, commands.MissingPermissions):
-            await ctx.send(embed = self.mp_mute)
+            self.mp_user.description = "You are missing the `Manage Roles` permission!"
+            await ctx.send(embed = self.mp_user)
+        elif isinstance(error, discord.Forbidden):
+            self.mp_bot.description = "The bot is missing the `Manage Roles` permission!" 
+            await ctx.send(embed = self.mp_bot)
 
     @unmute.error
     async def unmute_error(self, ctx, error):
         if isinstance(error, commands.MissingPermissions):
-            await ctx.send(embed = self.mp_mute)
+            self.mp_user.description = "You are missing the `Manage Roles` permission!"
+            await ctx.send(embed = self.mp_user)
+        elif isinstance(error, discord.Forbidden):
+            self.mp_bot.description = "The bot is missing the `Manage Roles` permission!" 
+            await ctx.send(embed = self.mp_bot)
+
+def setup(bot):
+    bot.add_cog(Mod(bot))

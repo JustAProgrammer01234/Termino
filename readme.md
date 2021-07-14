@@ -1,1 +1,1 @@
-# Termino for heroku.
+# Termino

@@ -1,19 +1,5 @@
-import discord
-from .funcs import get_json_data
-
-class UtilClass:
-    def __init__(self, bot):
-        self.bot = bot
-        self.server_data = get_json_data('data.json')
-        self.mp_manage_channels = discord.Embed(title = ':no_entry: Permission denied! :no_entry:',
-            description = 'You are missing the `Manage Channels` permission.',
-            color = discord.Colour.red()
-        )
-        self.mp_manage_messages = discord.Embed(title = ':no_entry: Permission denied! :no_entry:',
-            description = 'You are missing the `Manage Messages` permission.',
-            color = discord.Colour.red()
-        )
-        self.mp_manage_roles = discord.Embed(title = ':no_entry: Permission denied! :no_entry:',
-            description = 'You are missing the `Manage Roles` permission.',
-            color = discord.Colour.red()
-        )
+class Database:
+    '''
+    Going to add stuff inside this class after I learn about postgres :)
+    '''
+    pass

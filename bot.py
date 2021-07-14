@@ -1,31 +1,34 @@
+import os
 import discord
 from discord import Forbidden
 from discord.ext import commands
 from discord.ext.commands.errors import CommandNotFound, MissingPermissions, NoPrivateMessage
 
-intents = discord.Intents.all()
-termino = commands.Bot(command_prefix = '$', help_command = None, intents = intents, activity = discord.Game(name = 'for $help'))
+class TerminoHelp(commands.HelpCommand):
+    async def send_bot_help(self, mapping):
+        await self.context.send("This is help")
+       
+    async def send_command_help(self, command):
+        await self.context.send("This is help command")
+      
+    async def send_group_help(self, group):
+        await self.context.send("This is help group")
+    
+    async def send_cog_help(self, cog):
+        await self.context.send("This is help cog")
 
-class Main(commands.Cog):
-    def __init__(self, bot):
-        self.bot = bot 
+class Bot(commands.Bot):
+    def __init__(self):      
+        for cog in os.listdir('./cogs'):
+            if os.path.isfile(cog):
+                self.load_extension(cog)
 
-    @commands.Cog.listener()
-    async def on_ready(self):
-        print(f'{self.bot.user.name} is ready to go.')
-        print('-----------------------------------')
+        super().__init__(command_prefix = '$',
+        help_command = TerminoHelp(),
+        intents = discord.Intents.all(),
+        activity = discord.Game(name = 'for $help'))
 
-    @commands.Cog.listener()
-    async def on_command_error(self, ctx, error):
-        if isinstance(error, CommandNotFound):
-            await ctx.reply("Well, couldn't find that command. Try typing $help so you would see the commands.")
-        elif isinstance(error, Forbidden):
-            await ctx.reply('I do not have permissions to do that command.')
-        elif isinstance(error, NoPrivateMessage):
-            await ctx.reply('That command cannot be used in dm.')
-        else:
-            #for debugging purposes
-            print(error)
 
-def setup(bot):
-    bot.add_cog(Main(bot))
+        
+termino = Bot()
+termino.run(os.environ['BOT_TOKEN'])

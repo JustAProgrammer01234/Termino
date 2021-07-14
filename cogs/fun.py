@@ -2,11 +2,11 @@ import string
 import random
 import asyncio
 import discord
-from .converters import *
+from util import converters
 from discord.ext import commands
 from discord.ext.commands import errors
 
-class Fun(commands.Co, name = ':basketball: fun : basketball:'):
+class Fun(commands.Cog, name = 'fun'):
     def __init__(self, bot):
         self.bot = bot
         self.gif_url =[
@@ -18,8 +18,17 @@ class Fun(commands.Co, name = ':basketball: fun : basketball:'):
             'https://media1.tenor.com/images/49de17c6f21172b3abfaf5972fddf6d6/tenor.gif?itemid=10206784'
         ]
 
-    @commands.command(aliases = ['disp'])
-    async def display(self, ctx, mode, *, message):
+    @commands.command(aliases = ['print'])
+    async def copy(self, ctx, mode, *, message):
+        '''
+        __**Description:**__
+        Copies the message you sent in `<message>`
+
+        __**Arguments:**__
+        **1.** `<mode>` - Must be -orig if to be shown in plain text or -embd if to be shown inside an embed.
+        **2.** `<mesage>` - The message to be copied
+        '''
+
         if mode == '-orig':
             await ctx.send(message)
         elif mode == '-embd':
@@ -30,40 +39,101 @@ class Fun(commands.Co, name = ':basketball: fun : basketball:'):
 
     @commands.command()
     async def randomnum(self, ctx, start: int, stop: int):
+        '''
+        __**Description:**__
+        Generates a random number for you from `<start>` to `<stop>`.
+
+        __**Arguments:**__
+        **1.** `<start>` - The number to start. (Must be an integer like this -> 2)
+        **2.** `<stop>` - The number to stop. (Must be an integer like this -> 2)
+        '''
+
         embd = discord.Embed(title = f'Generated random number from {start} to {stop}:',
-                description = random.randint(start, stop), color = discord.Colour.green())
+        description = random.randint(start, stop), color = discord.Colour.green())
         await ctx.send(embed = embd)
 
     @commands.command()
     async def solve(self, ctx, *, equation):
+        '''
+        __**Description:**__
+        Sends the solution for `<equation>`
+
+        __**Arguments:**__
+        **1.** `<equation>` - The equation to be solved. (Must be mdas format like this -> 1/2+1*2-1)
+        '''
+
         await ctx.send(eval(equation))
 
-    @commands.command()
-    async def randomslap(self, ctx, *, reason: SlapSomeone):
-        embd = discord.Embed(description = reason, color = discord.Colour.green())
-        embd.set_image(url = random.choice(self.gif_url))
-        await ctx.send(embed = embd)
+    @commands.command(name = '8ball', aliases = ['8b','magic ball'])
+    async def _8ball(self, ctx, *, question: converters.eightball):
+        '''
+        __**Description:**__
+        An implementation of the 8ball fortune teller.
 
-    @commands.command(aliases = ['8ball', '8b'])
-    async def _8ball(self, ctx, *, answer: eightball):
+        __**Arguments:**__
+        **1.** `<question>` - The question to be answered by the 8ball command.
+        '''
+
         embd = discord.Embed(title = '8ball says:',
-                description = answer[0], color = discord.Colour.green())
+        description = question[0], color = discord.Colour.green())
         embd.set_thumbnail(url = 'https://magic-8ball.com/assets/images/magicBallStart.png')
-        embd.set_footer(text = f'Question: {answer[1]}')
+        embd.set_footer(text = f'Question: {question[1]}')
         await ctx.send(embed = embd)
 
     @commands.command()
-    async def iseven(self, ctx, number: is_even):
+    async def iseven(self, ctx, number: converters.is_even):
+        '''
+        __**Description:**__
+        Tells you if `<number>` is even or not.
+
+        __**Arguments:**__
+        **1.** `<number>` - The number to be checked. (Must be an integer like this -> 2)
+        '''
+
         await ctx.send(number)
 
     @commands.command()
+    @commands.guild_only()
     async def slap(self, ctx, member: discord.Member, *, reason):
+        '''
+        __**Description:**__
+        Slaps a specific member in a discord server.
+
+        __**Arguments:**__
+        **1.** `<member>` - The member to be slapped. (This argument must only contain a member id or a ping.)
+        **2.** `<reason>` - The reason you slapped that member.
+        '''
+
         embd = discord.Embed(description = f'{ctx.author.mention} slapped {member.mention} because of **{reason}**', color = discord.Colour.green())
         embd.set_image(url = random.choice(self.gif_url))
         await ctx.send(embed = embd)
 
     @commands.command()
+    @commands.guild_only()
+    async def randomslap(self, ctx, *, reason: converters.SlapSomeone):
+        '''
+        __**Description:**__
+        Randomly slaps a member in a discord server.
+
+        __**Arguments:**__
+        **1.** `<reason>` - The reason you slapped that member.
+        '''
+
+        embd = discord.Embed(description = reason, color = discord.Colour.green())
+        embd.set_image(url = random.choice(self.gif_url))
+        await ctx.send(embed = embd)
+
+    @commands.command()
+    @commands.guild_only()
     async def hack(self, ctx, member: discord.Member):
+        '''
+        __**Description:**__
+        A command that hacks a member. (This is not meant to be real so don't worry if you get hacked by this.)
+
+        __**Arguments:**__
+        **1.** `<member>` - The member to be slapped. (This argument must only contain a member id or a ping.)
+        '''
+
         password_chars = [char for char in string.ascii_letters + string.digits + string.punctuation]
         password_length = random.randint(5,10)
         password = [random.choice(password_chars) for _ in range(password_length)]
