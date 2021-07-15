@@ -2,11 +2,14 @@ import string
 import random
 import asyncio
 import discord
-from util import converters
+from .util import converters
 from discord.ext import commands
 from discord.ext.commands import errors
 
-class Fun(commands.Cog, name = 'fun'):
+class Fun(commands.Cog):
+    '''
+    This category contains all the fun commands you can do.
+    '''
     def __init__(self, bot):
         self.bot = bot
         self.gif_url =[
@@ -64,7 +67,7 @@ class Fun(commands.Cog, name = 'fun'):
 
         await ctx.send(eval(equation))
 
-    @commands.command(name = '8ball', aliases = ['8b','magic ball'])
+    @commands.command(name = '8ball', aliases = ['8b','magic_ball'])
     async def _8ball(self, ctx, *, question: converters.eightball):
         '''
         __**Description:**__
@@ -74,8 +77,7 @@ class Fun(commands.Cog, name = 'fun'):
         **1.** `<question>` - The question to be answered by the 8ball command.
         '''
 
-        embd = discord.Embed(title = '8ball says:',
-        description = question[0], color = discord.Colour.green())
+        embd = discord.Embed(title = '8ball says:', description = question[0], color = discord.Colour.green())
         embd.set_thumbnail(url = 'https://magic-8ball.com/assets/images/magicBallStart.png')
         embd.set_footer(text = f'Question: {question[1]}')
         await ctx.send(embed = embd)

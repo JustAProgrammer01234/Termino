@@ -1,9 +1,9 @@
 import discord 
 from discord.ext import commands 
 
-class Settings(commands.Cog, name = 'settings'):
+class Settings(commands.Cog):
     '''
-    Commands related to welcome settings.
+    This category contains all of the config commands.
     '''
     def __init__(self, bot):
         self.bot = bot

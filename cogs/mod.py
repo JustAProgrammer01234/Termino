@@ -1,8 +1,10 @@
 import discord 
 from discord.ext import commands 
 
-class Mod(commands.Cog, name = 'mod'):
-
+class Mod(commands.Cog):
+    '''
+    This command category contains all the moderator commands.
+    '''
     def __init__(self, bot):
         self.bot = bot 
         self.mp_user = discord.Embed(title = ':no_entry: Permission denied! :no_entry:', color = discord.Colour.red())
@@ -17,7 +19,7 @@ class Mod(commands.Cog, name = 'mod'):
         Kicks a member.
 
         __**Arguments:**__
-        **1.** `<member>` - The member to be kicked. (This argument must only contain a member id or a ping.)
+        **1.** `<member>` - The member to be kicked. (This argument must only contain a member id or a mention.)
         **2.** `<reason>` - The reason why that member was kicked.
         '''
         embd = discord.Embed(title = f':mechanical_leg: Kicked {member.name}#{member.discriminator} :mechanical_leg:')
@@ -37,7 +39,7 @@ class Mod(commands.Cog, name = 'mod'):
         Bans a member.
 
         __**Arguments:**__
-        **1.** `<member>` - The member to be banned. (This argument must only contain a member id or a ping.)
+        **1.** `<member>` - The member to be banned. (This argument must only contain a member id or a mention.)
         **2.** `<reason>` - The reason why that member was banned.
         '''
         embd = discord.Embed(title = f':hammer: Banned {member.name}#{member.discriminator} :hammer:')
@@ -57,7 +59,7 @@ class Mod(commands.Cog, name = 'mod'):
         Unbans a member
 
         __**Arguments:**__
-        **1.** `<member>` - The member to be banned. (You should include the username and the discriminator like this -> testuser#3404)
+        **1.** `<member>` - The member to be banned. (You should include the username and the discriminator like this -> testuser#3404.)
         '''
         ban_list = await ctx.guild.bans()
         name, discriminator = member.split('#')
@@ -113,7 +115,7 @@ class Mod(commands.Cog, name = 'mod'):
         Mutes a member in both text and voice channels.
 
         __**Arguments:**__
-        **1.** `<member>` - The member to be muted. (This argument must only contain a member id or a ping.)
+        **1.** `<member>` - The member to be muted. (This argument must only contain a member id or a mention.)
         '''
         # data = self.server_data
         # embd = discord.Embed(title = f'{member.name} has been muted', color = discord.Colour.purple())
@@ -134,7 +136,7 @@ class Mod(commands.Cog, name = 'mod'):
         Unmutes a member in both text and voice channels.
 
         __**Arguments:**__
-        **1.** `<member>` - The member to be unmuted. (This argument must only contain a member id or a ping.)
+        **1.** `<member>` - The member to be unmuted. (This argument must only contain a member id or a mention.)
         '''
         # data = self.server_data
         # embd = discord.Embed(title = f'{member.name} has been unmuted.', color = discord.Colour.orange())
