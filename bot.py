@@ -40,7 +40,7 @@ class TerminoHelp(commands.HelpCommand):
         help_embed = discord.Embed(title = f'Help for command: {command.name}', description = command.help, color = discord.Colour.red())
 
         if len(command.aliases) > 0: 
-            help_embed.add_field(name = '__**Aliases**__', value = f"`{','.join([f'{a}' for a in command.aliases])}`", inline = False)
+            help_embed.add_field(name = '__**Aliases**__', value = f"{'**,**'.join([f'`{a}`' for a in command.aliases])}", inline = False)
         else:
             help_embed.add_field(name = '__**Aliases**__', value = f'No aliases are found in this command.', inline = False)
         
