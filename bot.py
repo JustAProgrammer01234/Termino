@@ -86,4 +86,4 @@ if __name__ == '__main__':
         if cog.endswith('.py') and cog != '__init__.py':
             termino.load_extension(f'cogs.{cog[:-3]}')
 
-    termino.run('ODM1MDYyMzg5MDc4MjI5MDMy.YIJ-dA.D6n21ZgAsV7WQLv-6h9qnEUAtW8')
+    termino.run(os.getenv('BOT_TOKEN'))
