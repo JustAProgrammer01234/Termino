@@ -5,11 +5,17 @@ from discord.ext import commands
 from discord.ext.commands.errors import CommandNotFound, NoPrivateMessage
 
 class TerminoHelp(commands.HelpCommand):
+    def __init__(self, bot):
+        self.bot = bot 
+
     async def send_bot_help(self, mapping):
         destination = self.get_destination()
         help_embed = discord.Embed(title = 'See the commands Termino has down below by exploring each category!',
         description = '**Tip:** For more details about a command, type `$help <command>`.',
         colour = discord.Colour.green())
+        help_embed.set_author(name = f"Help provided by: {self.bot.user.name}", icon_url = self.bot.user.avatar_url)
+        help_embed.set_footer(text = f"Requested by: {self.context.author.name}#{self.context.author.discriminator}", icon_url = self.context.author.avatar_url)
+        help_embed.set_thumbnail(url = self.bot.user.avatar_url)
         index_count = 0
 
         for category in mapping:
@@ -63,7 +69,7 @@ class Bot(commands.Bot):
         super().__init__(command_prefix = '$',
         intents = discord.Intents.all(),
         activity = discord.Game(name = 'for $help'),
-        help_command = TerminoHelp()
+        help_command = TerminoHelp(self)
         )
 
 termino = Bot()
