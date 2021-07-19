@@ -32,7 +32,7 @@ class TerminoHelp(commands.HelpCommand):
         help_embed.set_thumbnail(url = self.context.me.avatar_url)
 
         for i in range(len(commands)):
-            command_list += f'**{i + 1}.** `{commands[i]}`\n'
+            command_list += f'**{i + 1}.** `{commands[i]}` - {commands[i].description}\n'
 
         help_embed.add_field(name = 'Commands:', value = command_list)
         await destination.send("**Note:**\nDon't forget to add $ before you type a command!")
