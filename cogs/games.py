@@ -12,11 +12,7 @@ class Games(commands.Cog):
     @commands.command()
     async def dice(self, ctx):
         '''
-        __**Description:**__
         A command that allows you to play dice with you and Termino.
-
-        __**Arguments:**__
-        No arguments are found in this command
         '''
         player_dice = random.randint(1,6)
         bot_dice = random.randint(1,6)
@@ -35,11 +31,7 @@ class Games(commands.Cog):
     @commands.command(aliases = ['rps', 'rock-paper-scissors'])
     async def rock_paper_scissors(self, ctx, choice):
         '''
-        __**Description:**__
         A command that allows you to play rock paper scissors with you and Termino.
-
-        __**Arguments:**__
-        **1.** `<choice>` - Choice must be either rock, paper, or scissors.
         '''
         choices = ['rock','paper','scissors']
         choices_emoji = {'rock':':rock:','paper':':newspaper:','scissors':':scissors:'}

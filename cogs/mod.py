@@ -15,12 +15,7 @@ class Mod(commands.Cog):
     @commands.has_permissions(kick_members = True)
     async def kick(self, ctx, member: discord.Member, *, reason = None):
         '''
-        __**Description:**__
         Kicks a member.
-
-        __**Arguments:**__
-        **1.** `<member>` - The member to be kicked. (This argument must only contain a member id or a mention.)
-        **2.** `<reason>` - The reason why that member was kicked.
         '''
         embd = discord.Embed(title = f':mechanical_leg: Kicked {member.name}#{member.discriminator} :mechanical_leg:')
         if reason is None:
@@ -35,12 +30,7 @@ class Mod(commands.Cog):
     @commands.has_permissions(ban_members = True)
     async def ban(self, ctx, member: discord.Member, *, reason = None):
         '''
-        __**Description:**__
         Bans a member.
-
-        __**Arguments:**__
-        **1.** `<member>` - The member to be banned. (This argument must only contain a member id or a mention.)
-        **2.** `<reason>` - The reason why that member was banned.
         '''
         embd = discord.Embed(title = f':hammer: Banned {member.name}#{member.discriminator} :hammer:')
         if reason is None:
@@ -55,11 +45,7 @@ class Mod(commands.Cog):
     @commands.has_permissions(ban_members = True)
     async def unban(self, ctx, *, member):
         '''
-        __**Description:**__
         Unbans a member
-
-        __**Arguments:**__
-        **1.** `<member>` - The member to be banned. (You should include the username and the discriminator like this -> testuser#3404.)
         '''
         ban_list = await ctx.guild.bans()
         name, discriminator = member.split('#')
@@ -84,11 +70,7 @@ class Mod(commands.Cog):
     @commands.has_permissions(ban_members = True)
     async def banlist(self, ctx):
         '''
-        __**Description:**__
         Sends a list of banned members.
-
-        __**Arguments:**__
-        No arguments are found in this command.
         '''
         bans_label = ''
         ban_list = await ctx.guild.bans()
@@ -111,11 +93,7 @@ class Mod(commands.Cog):
     @commands.has_permissions(manage_roles = True)
     async def mute(self, ctx, member: discord.Member):
         '''
-        __**Description:**__
         Mutes a member in both text and voice channels.
-
-        __**Arguments:**__
-        **1.** `<member>` - The member to be muted. (This argument must only contain a member id or a mention.)
         '''
         # data = self.server_data
         # embd = discord.Embed(title = f'{member.name} has been muted', color = discord.Colour.purple())
@@ -132,11 +110,7 @@ class Mod(commands.Cog):
     @commands.has_permissions(manage_roles = True)
     async def unmute(self, ctx, member: discord.Member):
         '''
-        __**Description:**__
         Unmutes a member in both text and voice channels.
-
-        __**Arguments:**__
-        **1.** `<member>` - The member to be unmuted. (This argument must only contain a member id or a mention.)
         '''
         # data = self.server_data
         # embd = discord.Embed(title = f'{member.name} has been unmuted.', color = discord.Colour.orange())

@@ -34,21 +34,23 @@ class TerminoHelp(commands.HelpCommand):
             command_list += f'**{i + 1}.** `{commands[i]}`\n'
 
         help_embed.add_field(name = 'Commands:', value = command_list)
+        await destination.send("**Note:**\nDon't forget to add $ before you type a command!")
         await destination.send(embed = help_embed)
 
     async def send_command_help(self, command):
         destination = self.get_destination()
-        help_embed = discord.Embed(title = f'Help for command: {command.name}', description = command.help, color = discord.Colour.red())
+        help_embed = discord.Embed(title = f'Help for command: {command.name}', color = discord.Colour.red())
         help_embed.set_author(name = f"Help provided by: {self.context.me.name}#{self.context.me.discriminator}", icon_url = self.context.me.avatar_url)
         help_embed.set_footer(text = f"Requested by: {self.context.author.name}#{self.context.author.discriminator}", icon_url = self.context.author.avatar_url)
         help_embed.set_thumbnail(url = self.context.me.avatar_url)
+        help_embed.add_field(name = "Description:", value = command.help, inline = False)
 
         if len(command.aliases) > 0: 
-            help_embed.add_field(name = '__**Aliases**__', value = f"{'**,**'.join([f'`{a}`' for a in command.aliases])}", inline = False)
+            help_embed.add_field(name = 'Aliases:', value = f"{'**,**'.join([f'`{a}`' for a in command.aliases])}", inline = False)
         else:
-            help_embed.add_field(name = '__**Aliases**__', value = f'No aliases are found in this command.', inline = False)
+            help_embed.add_field(name = 'Aliases:', value = f'No aliases are found in this command.', inline = False)
         
-        help_embed.add_field(name = '__**Syntax**__', value = f'`{self.get_command_signature(command)}`', inline = False)
+        help_embed.add_field(name = 'Syntax:', value = f'`{self.get_command_signature(command)}`', inline = False)
         await destination.send(embed = help_embed)
       
     async def send_group_help(self, group):
@@ -60,7 +62,8 @@ class Bot(commands.Bot):
         super().__init__(command_prefix = '$',
         intents = discord.Intents.all(),
         activity = discord.Game(name = 'for $help'),
-        help_command = TerminoHelp()
+        help_command = TerminoHelp(),
+        description = 'Just your average bot.'
         )
 
 termino = Bot()
