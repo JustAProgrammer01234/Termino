@@ -30,7 +30,7 @@ class Utility(commands.Cog):
         embd.title = f'Info about: {self.bot.user.name}#{self.bot.user.discriminator}'
         embd.description = self.bot.description
         embd.colour = discord.Colour.green()
-        embd.set_thumbnail(url = self.bot.avatar_url)
+        embd.set_thumbnail(url = self.bot.user.avatar_url)
         embd.add_field(name = 'Developer:', value = f'`{bot_dev.name}#{bot_dev.discriminator}`')
         embd.add_field(name = 'Library used:', value = f"Name: `discord.py`\nVersion: `{discord.__version__}`")
         await ctx.send(embed = embd)
