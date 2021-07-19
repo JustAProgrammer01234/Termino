@@ -11,11 +11,11 @@ class TerminoHelp(commands.HelpCommand):
         help_embed = discord.Embed(title = 'See the commands Termino has down below by exploring each category!',
         description = '**Tip:** For more details about a command, type `$help <command>`.',
         colour = discord.Colour.green())
-        help_embed.set_author(name = f"Help provided by: {self.context.me.user.name}#{self.context.me.user.discriminator}", icon_url = self.context.me.user.avatar_url)
+        help_embed.set_author(name = f"Help provided by: {self.context.me.name}#{self.context.me.discriminator}", icon_url = self.context.me.avatar_url)
         help_embed.set_footer(text = f"Requested by: {self.context.author.name}#{self.context.author.discriminator}", icon_url = self.context.author.avatar_url)
-        help_embed.set_thumbnail(url = self.context.me.user.avatar_url)
+        help_embed.set_thumbnail(url = self.context.me.avatar_url)
         index_count = 0
-        
+
         for category in mapping:
             if category != None:
                 if index_count % 3 == 0:
@@ -31,9 +31,9 @@ class TerminoHelp(commands.HelpCommand):
         commands = cog.get_commands()
         command_list = ''
         help_embed = discord.Embed(title = f'Info about category: {cog.qualified_name}', description = f'{cog.description}', colour = discord.Colour.blue())
-        help_embed.set_author(name = f"Help provided by: {self.context.me.user.name}#{self.context.me.user.discriminator}", icon_url = self.context.me.user.avatar_url)
+        help_embed.set_author(name = f"Help provided by: {self.context.me.name}#{self.context.me.discriminator}", icon_url = self.context.me.avatar_url)
         help_embed.set_footer(text = f"Requested by: {self.context.author.name}#{self.context.author.discriminator}", icon_url = self.context.author.avatar_url)
-        help_embed.set_thumbnail(url = self.context.me.user.avatar_url)
+        help_embed.set_thumbnail(url = self.context.me.avatar_url)
 
         for i in range(len(commands)):
             command_list += f'**{i + 1}.** `{commands[i]}`\n'
@@ -45,9 +45,9 @@ class TerminoHelp(commands.HelpCommand):
     async def send_command_help(self, command):
         destination = self.get_destination()
         help_embed = discord.Embed(title = f'Help for command: {command.name}', description = command.help, color = discord.Colour.red())
-        help_embed.set_author(name = f"Help provided by: {self.context.me.user.name}#{self.context.me.user.discriminator}", icon_url = self.context.me.user.avatar_url)
+        help_embed.set_author(name = f"Help provided by: {self.context.me.name}#{self.context.me.discriminator}", icon_url = self.context.me.avatar_url)
         help_embed.set_footer(text = f"Requested by: {self.context.author.name}#{self.context.author.discriminator}", icon_url = self.context.author.avatar_url)
-        help_embed.set_thumbnail(url = self.context.me.user.avatar_url)
+        help_embed.set_thumbnail(url = self.context.me.avatar_url)
 
         if len(command.aliases) > 0: 
             help_embed.add_field(name = '__**Aliases**__', value = f"{'**,**'.join([f'`{a}`' for a in command.aliases])}", inline = False)
