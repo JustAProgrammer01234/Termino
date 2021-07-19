@@ -16,16 +16,15 @@ class Games(commands.Cog):
         '''
         player_dice = random.randint(1,6)
         bot_dice = random.randint(1,6)
-        embed_color = random.randint(0x000000, 0xffffff)
         if player_dice == bot_dice:
             result_message = "Looks like it's a tie man."
         elif player_dice > bot_dice:
             result_message = 'Oh, looks like you won.'
         else:
             result_message = "LOL I won."
-        result_embed = discord.Embed(title = result_message, color = embed_color)
-        result_embed.add_field(name = 'You:', value = player_dice, inline = True)
-        result_embed.add_field(name = 'Termino:', value = bot_dice, inline = True)
+        result_embed = discord.Embed(title = result_message, color = discord.Colour.dark_theme())
+        result_embed.add_field(name = ':game_die: You: :game_die:', value = player_dice, inline = True)
+        result_embed.add_field(name = ':game_die: Termino: :game_die:', value = bot_dice, inline = True)
         await ctx.send(embed = result_embed)
 
     @commands.command(aliases = ['rps', 'rock-paper-scissors'])
