@@ -17,7 +17,7 @@ class Mod(commands.Cog):
         '''
         Kicks a member.
         '''
-        embd = discord.Embed(title = f':mechanical_leg: Kicked {member.name}#{member.discriminator} :mechanical_leg:')
+        embd = discord.Embed(title = f':mechanical_leg: Kicked {member.name}#{member.discriminator} :mechanical_leg:', colour = discord.Colour(0xFFFF))
         if reason is None:
             await member.kick(reason = "Didn't provide a reason.")
             await ctx.send(embed = embd)
@@ -32,7 +32,7 @@ class Mod(commands.Cog):
         '''
         Bans a member.
         '''
-        embd = discord.Embed(title = f':hammer: Banned {member.name}#{member.discriminator} :hammer:')
+        embd = discord.Embed(title = f':hammer: Banned {member.name}#{member.discriminator} :hammer:', colour = discord.Colour(0xFFFF))
         if reason is None:
             await member.ban(reason = "Didn't provide a reason.")
             await ctx.send(embed = embd)
@@ -75,7 +75,7 @@ class Mod(commands.Cog):
         bans_label = ''
         ban_list = await ctx.guild.bans()
         message = await ctx.send('Hold on this may take a while.')
-        banlist_embed = discord.Embed(title = f'Banned members in {ctx.guild}:', color = discord.Colour.red())
+        banlist_embed = discord.Embed(title = f'Banned members in {ctx.guild}:', color = discord.Colour(0xFFFF))
 
         for ban_entry in ban_list:
             user = ban_entry.user

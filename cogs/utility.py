@@ -15,7 +15,7 @@ class Utility(commands.Cog):
         '''
         Returns the latency of the bot
         '''
-        embd = discord.Embed(title = 'Pong!', colour = discord.Colour.dark_theme())
+        embd = discord.Embed(title = 'Pong!', colour = discord.Colour(0xFFFF))
         embd.set_thumbnail(url = self.pong_url)
         embd.add_field(name = 'Latency:', value = f'`{self.bot.latency * 1000:.2f}ms`')
         await ctx.send(embed = embd)
