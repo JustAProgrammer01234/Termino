@@ -8,7 +8,9 @@ class TerminoHelp(commands.HelpCommand):
 
     async def send_bot_help(self, mapping):
         destination = self.get_destination()
-        help_embed = discord.Embed(title = 'Termino help.', colour = discord.Colour.green())
+        help_embed = discord.Embed(title = 'Termino help.', 
+        description = 'See the commands Termino has down below by exploring each category!',
+        colour = discord.Colour.green())
         help_embed.set_author(name = f"Help provided by: {self.context.me.name}#{self.context.me.discriminator}", icon_url = self.context.me.avatar_url)
         help_embed.set_footer(text = f"Requested by: {self.context.author.name}#{self.context.author.discriminator}", icon_url = self.context.author.avatar_url)
         help_embed.set_thumbnail(url = self.context.me.avatar_url)
