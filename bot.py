@@ -14,15 +14,10 @@ class TerminoHelp(commands.HelpCommand):
         help_embed.set_author(name = f"Help provided by: {self.context.me.name}#{self.context.me.discriminator}", icon_url = self.context.me.avatar_url)
         help_embed.set_footer(text = f"Requested by: {self.context.author.name}#{self.context.author.discriminator}", icon_url = self.context.author.avatar_url)
         help_embed.set_thumbnail(url = self.context.me.avatar_url)
-        index_count = 0
 
         for category in mapping:
             if category != None:
-                if index_count % 2 == 0:
-                    help_embed.add_field(name = f'{category.qualified_name}', value = f'`$help {category.qualified_name}`', inline = False)
-                else:
-                    help_embed.add_field(name = f'{category.qualified_name}', value = f'`$help {category.qualified_name}`', inline = True)
-            index_count += 1
+                help_embed.add_field(name = f'{category.qualified_name}', value = f'`$help {category.qualified_name}`', inline = True)
 
         await destination.send(embed = help_embed)
 
