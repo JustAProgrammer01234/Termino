@@ -6,6 +6,7 @@ from discord.ext.commands.errors import CommandNotFound, NoPrivateMessage
 
 class TerminoHelp(commands.HelpCommand):
     def __init__(self, bot):
+        super().__init__()
         self.bot = bot 
 
     async def send_bot_help(self, mapping):
