@@ -22,7 +22,7 @@ class TerminoHelp(commands.HelpCommand):
                     help_embed.add_field(name = f'{category.qualified_name}', value = f'`$help {category.qualified_name}`', inline = False)
                 else:
                     help_embed.add_field(name = f'{category.qualified_name}', value = f'`$help {category.qualified_name}`', inline = True)
-                index_count += 1
+            index_count += 1
 
         await destination.send(embed = help_embed)
 
