@@ -15,7 +15,7 @@ class Utility(commands.Cog):
         '''
         Returns the latency of the bot
         '''
-        embd = discord.Embed(title = 'Pong!', colour = discord.Colour(0xFFFF))
+        embd = discord.Embed(title = 'Pong!', color = 0xFFFF)
         embd.set_thumbnail(url = self.pong_url)
         embd.add_field(name = 'Latency:', value = f'`{self.bot.latency * 1000:.2f}ms`')
         await ctx.send(embed = embd)
@@ -29,7 +29,7 @@ class Utility(commands.Cog):
         embd = discord.Embed()
         embd.title = f'Info about: {self.bot.user.name}#{self.bot.user.discriminator}'
         embd.description = self.bot.description
-        embd.colour = discord.Colour.dark_theme()
+        embd.color = 0xFFFF
         embd.set_thumbnail(url = self.bot.user.avatar_url)
         embd.add_field(name = 'Developer:', value = f'`{bot_dev.name}#{bot_dev.discriminator}`')
         embd.add_field(name = 'Library used:', value = f"Name: `discord.py`\nVersion: `{discord.__version__}`")
