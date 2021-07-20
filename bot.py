@@ -59,12 +59,13 @@ class TerminoHelp(commands.HelpCommand):
         await destination.send('This is help group.')
 
 class Bot(commands.Bot):
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         super().__init__(command_prefix = '$',
         intents = discord.Intents.all(),
         activity = discord.Game(name = 'for $help'),
         help_command = TerminoHelp(),
-        description = 'Just your average bot.'
+        description = 'Just your average bot.',
+        owner_id = 790767157523775518
         )
 
 termino = Bot()
