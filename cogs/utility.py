@@ -1,7 +1,8 @@
 import discord 
+import platform
 from discord.ext import commands 
 
-class Utility(commands.Cog):
+class Useful(commands.Cog):
     '''
     This command category contains all useful commands.
     '''
@@ -30,9 +31,10 @@ class Utility(commands.Cog):
 
         embd = discord.Embed(title = f'Info about: {self.bot.user.name}#{self.bot.user.discriminator}', description = self.bot.description, color = 0xFFFF)
         embd.set_thumbnail(url = self.bot.user.avatar_url)
-        embd.add_field(name = 'Developer:', value = f'`{bot_dev.name}#{bot_dev.discriminator}`', inline = False)
-        embd.add_field(name = 'Library used:', value = f"`Name: discord.py`\n`Version: {discord.__version__}`", inline = False)
-        embd.add_field(name = 'Servers joined:', value = f'`{len(self.bot.guilds)}`', inline = False)
+        embd.add_field(name = 'Developer:', value = f'**Username:** `{bot_dev.name}#{bot_dev.discriminator}`\n**ID:** `{bot_dev.id}`', inline = False)
+        embd.add_field(name = 'General info:', value = f'**Prefix:** `{self.bot.command_prefix}`\n**Servers joined:** `{len(self.bot.guilds)}`')
+        embd.add_field(name = 'Library used:', value = f'**Name:** `discord.py`\n**Version:** `{discord.__version__}`', inline = False)
+        embd.add_field(name = 'Programming language used:', value = f'**Name:** `Python`\n**Version:** `{platform.python_version()}`')
 
         await ctx.send(embed = embd)
 
@@ -50,31 +52,39 @@ class Utility(commands.Cog):
         len_emojis = len(ctx.guild.emojis)
         server_owner = self.bot.get_user(ctx.guild.owner_id)
 
-        embd = discord.Embed(title = f'Info about: {ctx.guild}', description = f'Server description:\n{ctx.guild.description}', color = 0xFFFF) 
+        embd = discord.Embed(title = f'Info about server: {ctx.guild}', description = f'Server description:\n{ctx.guild.description}', color = 0xFFFF) 
         embd.set_thumbnail(url = ctx.guild.icon_url)
-        embd.add_field(name = 'Owner:', value = f'`Username: {server_owner.name}#{server_owner.discriminator}`\n`Id: {server_owner.id}`', inline = False)
-        embd.add_field(name = 'General info:', value = f'`Server created at: {ctx.guild.created_at}`\n`Server ID: {ctx.guild.id}`\n`Region: {ctx.guild.region}`', inline = False)
-        embd.add_field(name = 'Channel count:', value = f'`Text Channels: {len_text}`\n`Voice Channels: {len_voice}`\n`Total: {len_text + len_voice}`', inline = False)
-        embd.add_field(name = 'Member count:', value = f'`Users: {len_users}`\n`Bots: {len_bots}`\n`Total: {ctx.guild.member_count}`', inline = False)
-        embd.add_field(name = 'Emoji count:', value = f'`Emoji limit: {ctx.guild.emoji_limit}`\n`Emojis: {len_emojis}`', inline = False)
+        embd.add_field(name = 'Owner:', value = f'**Username:** `{server_owner.name}#{server_owner.discriminator}`\n**Id:** `{server_owner.id}`', inline = False)
+        embd.add_field(name = 'General info:', value = f'**Server created at:** `{ctx.guild.created_at}`\n**Server ID**: `{ctx.guild.id}`\n**Region:** `{ctx.guild.region}`', inline = False)
+        embd.add_field(name = 'Channel count:', value = f'**Text Channels:** `{len_text}`\n**Voice Channels:** `{len_voice}`\n**Total:** `{len_text + len_voice}`', inline = False)
+        embd.add_field(name = 'Member count:', value = f'**Users:** `{len_users}`\n**Bots:** `{len_bots}`\n**Total:** `{ctx.guild.member_count}`', inline = False)
+        embd.add_field(name = 'Emoji count:', value = f'**Emoji limit:** `{ctx.guild.emoji_limit}`\n**Emojis:** `{len_emojis}`', inline = False)
 
         await ctx.send(embed = embd)
 
     @commands.command()
+    @commands.guild_only()
+    async def invitelink(self, ctx):
+        '''
+        Returns the bot's invite link.
+        '''
+        invite_url = discord.utils.oauth_url(client_id = '835062389078229032', permissions = discord.Permissions.all())
+        await ctx.send(invite_url)
+
+    @commands.command()
     @commands.guild_only() 
-    async def memberinfo(self, ctx, user: commands.MemberConverter):
+    async def memberinfo(self, ctx, member: commands.MemberConverter):
         '''
         Returns info about a member.
         '''
-        pass 
+        member_roles = '\n'.join([role.mention for role in member.roles])
 
-    @commands.command() 
-    @commands.guild_only()
-    async def roleinfo(self, ctx, role: commands.RoleConverter):
-        '''
-        Returns info about a role.
-        '''
-        pass 
+        embd = discord.Embed(title = f'Info about member: {member.name}#{member.discriminator}', color = 0xFFFF)
+        embd.set_thumbnail(url = member.avatar_url)
+        embd.add_field(name = 'General info:', value = f'**User created at:** `{member.created_at}`\n**User joined at:** `{member.joined_at}`\n**Member id:** `{member.id}`\n**Status:** `{member.status}`', inline = False)
+        embd.add_field(name = 'Roles assigned:', value = f'{member_roles}')
+
+        await ctx.send(embed = embd)
 
 def setup(bot):
-    bot.add_cog(Utility(bot))
+    bot.add_cog(Useful(bot))
