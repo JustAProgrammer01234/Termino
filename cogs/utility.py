@@ -53,7 +53,7 @@ class Utility(commands.Cog):
         embd = discord.Embed(title = f'Info about: {ctx.guild}', description = f'Server description:\n{ctx.guild.description}', color = 0xFFFF) 
         embd.set_thumbnail(url = ctx.guild.icon_url)
         embd.add_field(name = 'Owner:', value = f'`Username: {server_owner.name}#{server_owner.discriminator}`\n`Id: {server_owner.id}`', inline = False)
-        embd.add_field(name = 'General info:', value = f'`Server creation at: {ctx.guild.created_at}`\n`Server ID: {ctx.guild.id}`\n`Region: {ctx.guild.region}`', inline = False)
+        embd.add_field(name = 'General info:', value = f'`Server created at: {ctx.guild.created_at}`\n`Server ID: {ctx.guild.id}`\n`Region: {ctx.guild.region}`', inline = False)
         embd.add_field(name = 'Channel count:', value = f'`Text Channels: {len_text}`\n`Voice Channels: {len_voice}`\n`Total: {len_text + len_voice}`', inline = False)
         embd.add_field(name = 'Member count:', value = f'`Users: {len_users}`\n`Bots: {len_bots}`\n`Total: {ctx.guild.member_count}`', inline = False)
         embd.add_field(name = 'Emoji count:', value = f'`Emoji limit: {ctx.guild.emoji_limit}`\n`Emojis: {len_emojis}`', inline = False)
