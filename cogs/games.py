@@ -23,7 +23,7 @@ class Games(commands.Cog):
         else:
             result_message = "LOL I won."
         result_embed = discord.Embed(title = result_message, color = 0xFFFF)
-        result_embed.add_field(name = ':game_die: You: :game_die:', value = player_dice, inline = True)
+        result_embed.add_field(name = 'You:', value = player_dice, inline = True)
         result_embed.add_field(name = ':game_die: Termino: :game_die:', value = bot_dice, inline = True)
         await ctx.send(embed = result_embed)
 
