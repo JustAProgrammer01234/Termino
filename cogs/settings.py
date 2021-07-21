@@ -60,11 +60,7 @@ class Settings(commands.Cog):
     @commands.has_permissions(manage_channels = True)
     async def set_join_channel(self, ctx, channel: discord.TextChannel):
         '''
-        __**Description:**__
         Tells the bot to send welcome messages to users who joins the server in `<channel>`
-
-        __**Arguments:**__
-        **1.** `<channel>` - The channel to send welcome messages in. (This argument must contain the channel's id or a channel mention and must be a text channel.)
         '''
         # self.server_data[str(ctx.guild.id)]['join_announcement_channel'] = channel.id
         # change_json_data('data.json', self.server_data)
@@ -76,11 +72,7 @@ class Settings(commands.Cog):
     @commands.has_permissions(manage_roles = True)
     async def set_join_role(self, ctx, role: commands.RoleConverter):
         '''
-        __**Description:**__
         Tells the bot to add `<role>` to users who joins the server.
-
-        __**Arguments:**__
-        **1.** `<role>` - The role the bot will add. (It is not required that you ping the role for `<role>`,  but it is recommended that you put the role's id for the bot to know which specific role to add.)
         '''
         # if role in ctx.guild.roles:
         #     self.server_data[str(ctx.guild.id)]['join_role'] = role.id
@@ -95,11 +87,7 @@ class Settings(commands.Cog):
     @commands.has_permissions(manage_messages = True)
     async def welcome_dm_message(self, ctx, *, message):
         '''
-        __**Description:**__
         Tells the bot to dm users `<message>` who joins the server.
-
-        __**Arguments:**__
-        **1.** `<message>` - The message to dm.
         '''
         # self.server_data[str(ctx.guild.id)]['welcome_dm'] = message
         # change_json_data('data.json', self.server_data)
@@ -111,11 +99,7 @@ class Settings(commands.Cog):
     @commands.has_permissions(manage_roles = True)
     async def add_no_role(self, ctx):
         '''
-        __**Description:**__
         Tells the bot to stop adding roles to users who join the server.
-
-        __**Arguments:**__
-        No arguments are found in this command.
         '''
         # self.server_data[str(ctx.guild.id)]['join_role'] = None
         # change_json_data('data.json', self.server_data)
@@ -127,11 +111,7 @@ class Settings(commands.Cog):
     @commands.has_permissions(manage_channels = True)
     async def no_welcome(self, ctx):
         '''
-        __**Description:**__
         Tells the bot to stop sending welcome messages.
-
-        __**Arguments:**__
-        No arguments are found in this command.
         '''
         # self.server_data[str(ctx.guild.id)]['join_announcement_channel'] = None
         # change_json_data('data.json', self.server_data)
@@ -143,11 +123,7 @@ class Settings(commands.Cog):
     @commands.has_permissions(manage_messages = True)
     async def no_welcome_dm(self, ctx):
         '''
-        __**Description:**__
         Tells the bot to stop sending welcome dms.
-
-        __**Arguments:**__
-        No arguments are found in this command.
         '''
         # self.server_data[str(ctx.guild.id)]['welcome_dm'] = None
         # change_json_data('data.json', self.server_data)
@@ -159,11 +135,7 @@ class Settings(commands.Cog):
     @commands.has_permissions(manage_roles = True)
     async def select_mute_role(self, ctx, mute_role: commands.RoleConverter):
         '''
-        __**Description:**__
-        This command allows you to select a mute role. (This is for servers who already have a mute role included!)
-
-        __**Arguments:**__
-        **1.** `<mute_role>` - The mute role to be selected. (It is not required that you ping the role for `<mute_role>`,  but it is recommended that you put the role's id for the bot to know which specific role to add.)
+        This command allows you to select an existing mute role. (This is for servers who already have a mute role included!)
         '''
         # self.server_data[str(ctx.guild.id)]['mute_role'] = mute_role.id
         # change_json_data('data.json', self.server_data)
