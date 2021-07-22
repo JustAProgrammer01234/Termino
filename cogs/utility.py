@@ -2,7 +2,7 @@ import discord
 import platform
 from discord.ext import commands 
 
-class Useful(commands.Cog):
+class Utility(commands.Cog):
     '''
     This command category contains all useful commands.
     '''
@@ -87,4 +87,4 @@ class Useful(commands.Cog):
         await ctx.send(embed = embd)
 
 def setup(bot):
-    bot.add_cog(Useful(bot))
+    bot.add_cog(Utility(bot))
