@@ -137,7 +137,7 @@ class Mod(commands.Cog):
         if isinstance(error, commands.MissingPermissions): 
             self.mp_user.description = "You are missing the `Kick Members` permission!"
             await ctx.send(embed = self.mp_user)
-        elif isinstance(error, commands.CommandInvokeError):
+        elif isinstance(error.original, discord.Forbidden):
             self.mp_bot.description = "The bot is missing the `Kick Members` permission!" 
             await ctx.send(embed = self.mp_bot)
 
@@ -146,7 +146,7 @@ class Mod(commands.Cog):
         if isinstance(error, commands.MissingPermissions):
             self.mp_user.description = "You are missing the `Ban Members` permission!"
             await ctx.send(embed = self.mp_user)
-        elif isinstance(error, commands.CommandInvokeError):
+        elif isinstance(error.original, discord.Forbidden):
             self.mp_bot.description = "The bot is missing the `Ban Members` permission!" 
             await ctx.send(embed = self.mp_bot)
 
@@ -155,7 +155,7 @@ class Mod(commands.Cog):
         if isinstance(error, commands.MissingPermissions):
             self.mp_user.description = "You are missing the `Ban Members` permission!"
             await ctx.send(embed = self.mp_user)
-        elif isinstance(error, commands.CommandInvokeError):
+        elif isinstance(error.original, discord.Forbidden):
             self.mp_bot.description = "The bot is missing the `Ban Members` permission!" 
             await ctx.send(embed = self.mp_bot)
 
@@ -164,7 +164,7 @@ class Mod(commands.Cog):
         if isinstance(error, commands.MissingPermissions):
             self.mp_user.description = "You are missing the `Ban Members` permission!"
             await ctx.send(embed = self.mp_user)
-        elif isinstance(error, commands.CommandInvokeError):
+        elif isinstance(error.original, discord.Forbidden):
             self.mp_bot.description = "The bot is missing the `Ban Members` permission!" 
             await ctx.send(embed = self.mp_bot)
 
@@ -173,7 +173,7 @@ class Mod(commands.Cog):
         if isinstance(error, commands.MissingPermissions):
             self.mp_user.description = "You are missing the `Manage Roles` permission!"
             await ctx.send(embed = self.mp_user)
-        elif isinstance(error, commands.CommandInvokeError):
+        elif isinstance(error.original, discord.Forbidden):
             self.mp_bot.description = "The bot is missing the `Manage Roles` permission!" 
             await ctx.send(embed = self.mp_bot)
 
@@ -182,7 +182,7 @@ class Mod(commands.Cog):
         if isinstance(error, commands.MissingPermissions):
             self.mp_user.description = "You are missing the `Manage Roles` permission!"
             await ctx.send(embed = self.mp_user)
-        elif isinstance(error, commands.CommandInvokeError):
+        elif isinstance(error.original, discord.Forbidden):
             self.mp_bot.description = "The bot is missing the `Manage Roles` permission!" 
             await ctx.send(embed = self.mp_bot)
 

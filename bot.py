@@ -74,6 +74,13 @@ termino = Bot()
 async def on_ready():
     print(f"{termino.user.name} is now ready to go.")
 
+@termino.listen()
+async def on_command_error(ctx, error):
+    command_error_embed = discord.Embed(title = "Whoops! An error occured...", 
+    description = f'```{error}```',
+    color = discord.Colour.red())
+    await ctx.send(embed = command_error_embed)
+        
 if __name__ == '__main__':
     for cog in os.listdir('./cogs'):
         if cog.endswith('.py') and cog != '__init__.py':
