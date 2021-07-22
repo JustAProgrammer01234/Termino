@@ -1,5 +1,5 @@
 import discord 
-from discord.ext import commands 
+from discord.ext import commands
 
 class Mod(commands.Cog):
     '''
@@ -9,6 +9,9 @@ class Mod(commands.Cog):
         self.bot = bot 
         self.mp_user = discord.Embed(title = ':no_entry: Permission denied! :no_entry:', color = discord.Colour.red())
         self.mp_bot = discord.Embed(title = ':warning: Bot has missing perms! :warning:', color = discord.Colour.red())
+        self.kick_gif = 'https://media1.tenor.com/images/e4e4730bdc422c5f75b1126926077485/tenor.gif?itemid=4799973'
+        self.ban_gif = 'https://media.tenor.com/images/76f50d3ec6888dd3552db1d074435022/tenor.gif'
+        self.mute_gif = 'https://media1.tenor.com/images/b54c8e343c06dc160c4fc270f8ff0ae8/tenor.gif?itemid=17545855'
 
     @commands.command()
     @commands.guild_only()
@@ -17,11 +20,14 @@ class Mod(commands.Cog):
         '''
         Kicks a member.
         '''
-        embd = discord.Embed(title = f':mechanical_leg: Kicked {member.name}#{member.discriminator} :mechanical_leg:', color = 0xFFFF)
+        embd = discord.Embed(title = f':mechanical_leg: Kicked {member.name}#{member.discriminator} :mechanical_leg:', color = discord.Colour.green())
+        embd.set_thumbnail(url = self.kick_gif)
         if reason is None:
+            embd.add_field(name = 'Reason for kick:', value = "Didn't provide a reason.")
             await member.kick(reason = "Didn't provide a reason.")
             await ctx.send(embed = embd)
         else:
+            embd.add_field(name = 'Reason for kick:', value = reason)
             await member.kick(reason = reason)
             await ctx.send(embed = embd)
 
@@ -32,11 +38,14 @@ class Mod(commands.Cog):
         '''
         Bans a member.
         '''
-        embd = discord.Embed(title = f':hammer: Banned {member.name}#{member.discriminator} :hammer:', color = 0xFFFF)
+        embd = discord.Embed(title = f':hammer: Banned {member.name}#{member.discriminator} :hammer:', color = discord.Colour.green())
+        embd.set_thumbnail(url = self.ban_gif)
         if reason is None:
+            embd.add_field(name = 'Reason for ban:', value = "Didn't provide a reason.")
             await member.ban(reason = "Didn't provide a reason.")
             await ctx.send(embed = embd)
         else:
+            embd.add_field(name = 'Reason for ban:', value = reason)
             await member.ban(reason = reason)
             await ctx.send(embed = embd)
 
@@ -127,7 +136,7 @@ class Mod(commands.Cog):
         if isinstance(error, commands.MissingPermissions): 
             self.mp_user.description = "You are missing the `Kick Members` permission!"
             await ctx.send(embed = self.mp_user)
-        elif isinstance(error, discord.Forbidden):
+        elif isinstance(error, commands.CommandInvokeError):
             self.mp_bot.description = "The bot is missing the `Kick Members` permission!" 
             await ctx.send(embed = self.mp_bot)
 
@@ -136,7 +145,7 @@ class Mod(commands.Cog):
         if isinstance(error, commands.MissingPermissions):
             self.mp_user.description = "You are missing the `Ban Members` permission!"
             await ctx.send(embed = self.mp_user)
-        elif isinstance(error, discord.Forbidden):
+        elif isinstance(error, commands.CommandInvokeError):
             self.mp_bot.description = "The bot is missing the `Ban Members` permission!" 
             await ctx.send(embed = self.mp_bot)
 
@@ -145,7 +154,7 @@ class Mod(commands.Cog):
         if isinstance(error, commands.MissingPermissions):
             self.mp_user.description = "You are missing the `Ban Members` permission!"
             await ctx.send(embed = self.mp_user)
-        elif isinstance(error, discord.Forbidden):
+        elif isinstance(error, commands.CommandInvokeError):
             self.mp_bot.description = "The bot is missing the `Ban Members` permission!" 
             await ctx.send(embed = self.mp_bot)
 
@@ -154,7 +163,7 @@ class Mod(commands.Cog):
         if isinstance(error, commands.MissingPermissions):
             self.mp_user.description = "You are missing the `Ban Members` permission!"
             await ctx.send(embed = self.mp_user)
-        elif isinstance(error, discord.Forbidden):
+        elif isinstance(error, commands.CommandInvokeError):
             self.mp_bot.description = "The bot is missing the `Ban Members` permission!" 
             await ctx.send(embed = self.mp_bot)
 
@@ -163,7 +172,7 @@ class Mod(commands.Cog):
         if isinstance(error, commands.MissingPermissions):
             self.mp_user.description = "You are missing the `Manage Roles` permission!"
             await ctx.send(embed = self.mp_user)
-        elif isinstance(error, discord.Forbidden):
+        elif isinstance(error, commands.CommandInvokeError):
             self.mp_bot.description = "The bot is missing the `Manage Roles` permission!" 
             await ctx.send(embed = self.mp_bot)
 
@@ -172,7 +181,7 @@ class Mod(commands.Cog):
         if isinstance(error, commands.MissingPermissions):
             self.mp_user.description = "You are missing the `Manage Roles` permission!"
             await ctx.send(embed = self.mp_user)
-        elif isinstance(error, discord.Forbidden):
+        elif isinstance(error, commands.CommandInvokeError):
             self.mp_bot.description = "The bot is missing the `Manage Roles` permission!" 
             await ctx.send(embed = self.mp_bot)
 

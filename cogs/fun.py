@@ -27,7 +27,7 @@ class Fun(commands.Cog):
         Generates a random number for you from `<start>` to `<stop>`.
         '''
         embd = discord.Embed(title = f'Generated random number from {start} to {stop}:',
-        description = random.randint(start, stop), color = 0xFFFF)
+        description = random.randint(start, stop), color = discord.Colour.from_rgb(255,255,255))
         await ctx.send(embed = embd) 
 
     @commands.command()
@@ -42,7 +42,7 @@ class Fun(commands.Cog):
         '''
         An implementation of the 8ball fortune teller.
         '''
-        embd = discord.Embed(title = '8ball says:', description = question[0], color = 0xFFFF)
+        embd = discord.Embed(title = '8ball says:', description = question[0], color = discord.Colour.from_rgb(255,255,255))
         embd.set_thumbnail(url = 'https://magic-8ball.com/assets/images/magicBallStart.png')
         embd.set_footer(text = f'Question: {question[1]}')
         await ctx.send(embed = embd)
@@ -60,7 +60,7 @@ class Fun(commands.Cog):
         '''
         Slaps a specific member in a discord server.
         '''
-        embd = discord.Embed(description = f'{ctx.author.mention} slapped {member.mention} because of **{reason}**', color = 0xFFFF)
+        embd = discord.Embed(description = f'{ctx.author.mention} slapped {member.mention} because of **{reason}**', color = discord.Colour.from_rgb(255,255,255))
         embd.set_image(url = random.choice(self.gif_url))
         await ctx.send(embed = embd)
 
@@ -70,7 +70,7 @@ class Fun(commands.Cog):
         '''
         Slaps a random member in a discord server.
         '''
-        embd = discord.Embed(description = reason, color = 0xFFFF)
+        embd = discord.Embed(description = reason, color = discord.Colour.from_rgb(255,255,255))
         embd.set_image(url = random.choice(self.gif_url))
         await ctx.send(embed = embd)
 
@@ -84,7 +84,7 @@ class Fun(commands.Cog):
         password_length = random.randint(5,10)
         password = [random.choice(password_chars) for _ in range(password_length)]
         hack_message = await ctx.send(f'Hacking {member.mention}')
-        hack_embed_message = discord.Embed(title = f'Credentials of {member.name}#{member.discriminator}', color = 0xFFFF)
+        hack_embed_message = discord.Embed(title = f'Credentials of {member.name}#{member.discriminator}', color = discord.Colour.from_rgb(255,255,255))
         hack_embed_message.add_field(name = 'Ip address:', value = f'{random.randint(0, 255)}.{random.randint(0, 255)}.{random.randint(0, 255)}.{random.randint(0, 255)}', inline = False)
         hack_embed_message.add_field(name = 'Email:', value = f'{member.name}@gmail.com', inline = False)
         hack_embed_message.add_field(name = 'Password:',value = f"{''.join(password)}", inline = False)

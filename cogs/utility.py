@@ -16,7 +16,7 @@ class Useful(commands.Cog):
         '''
         Returns the latency of the bot
         '''
-        embd = discord.Embed(title = 'Pong!', color = 0xFFFF)
+        embd = discord.Embed(title = 'Pong!', color = discord.Colour.from_rgb(255,255,255))
         embd.set_thumbnail(url = self.pong_url)
         embd.add_field(name = 'Latency:', value = f'`{self.bot.latency * 1000:.2f}ms`')
 
@@ -29,7 +29,7 @@ class Useful(commands.Cog):
         '''
         bot_dev = self.bot.get_user(self.bot.owner_id)
 
-        embd = discord.Embed(title = f'Info about: {self.bot.user.name}#{self.bot.user.discriminator}', description = self.bot.description, color = 0xFFFF)
+        embd = discord.Embed(title = f'Info about: {self.bot.user.name}#{self.bot.user.discriminator}', description = self.bot.description, color = discord.Colour.from_rgb(255,255,255))
         embd.set_thumbnail(url = self.bot.user.avatar_url)
         embd.add_field(name = 'Developer:', value = f'**Username:** `{bot_dev.name}#{bot_dev.discriminator}`\n**ID:** `{bot_dev.id}`', inline = False)
         embd.add_field(name = 'General info:', value = f'**Prefix:** `{self.bot.command_prefix}`\n**Servers joined:** `{len(self.bot.guilds)}`')
@@ -52,7 +52,7 @@ class Useful(commands.Cog):
         len_emojis = len(ctx.guild.emojis)
         server_owner = self.bot.get_user(ctx.guild.owner_id)
 
-        embd = discord.Embed(title = f'Info about server: {ctx.guild}', description = f'Server description:\n{ctx.guild.description}', color = 0xFFFF) 
+        embd = discord.Embed(title = f'Info about server: {ctx.guild}', description = f'Server description:\n{ctx.guild.description}', color = discord.Colour.from_rgb(255,255,255)) 
         embd.set_thumbnail(url = ctx.guild.icon_url)
         embd.add_field(name = 'Owner:', value = f'**Username:** `{server_owner.name}#{server_owner.discriminator}`\n**Id:** `{server_owner.id}`', inline = False)
         embd.add_field(name = 'General info:', value = f'**Server created at:** `{ctx.guild.created_at}`\n**Server ID**: `{ctx.guild.id}`\n**Region:** `{ctx.guild.region}`', inline = False)
@@ -79,7 +79,7 @@ class Useful(commands.Cog):
         '''
         member_roles = '\n'.join([role.mention for role in member.roles])
 
-        embd = discord.Embed(title = f'Info about member: {member.name}#{member.discriminator}', color = 0xFFFF)
+        embd = discord.Embed(title = f'Info about member: {member.name}#{member.discriminator}', color = discord.Colour.from_rgb(255,255,255))
         embd.set_thumbnail(url = member.avatar_url)
         embd.add_field(name = 'General info:', value = f'**User created at:** `{member.created_at}`\n**User joined at:** `{member.joined_at}`\n**Member id:** `{member.id}`\n**Status:** `{member.status}`', inline = False)
         embd.add_field(name = 'Roles assigned:', value = f'{member_roles}')

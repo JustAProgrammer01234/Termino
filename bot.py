@@ -10,7 +10,7 @@ class TerminoHelp(commands.HelpCommand):
         destination = self.get_destination()
         help_embed = discord.Embed(title = 'Termino help.', 
         description = 'See the commands Termino has down below by exploring each category!',
-        colour = discord.Colour.green())
+        colour = discord.Colour.from_rgb(255,255,0))
         help_embed.set_author(name = f"Help provided by: {self.context.me.name}#{self.context.me.discriminator}", icon_url = self.context.me.avatar_url)
         help_embed.set_footer(text = f"Requested by: {self.context.author.name}#{self.context.author.discriminator}", icon_url = self.context.author.avatar_url)
         help_embed.set_thumbnail(url = self.context.me.avatar_url)
@@ -73,15 +73,6 @@ termino = Bot()
 @termino.listen()
 async def on_ready():
     print(f"{termino.user.name} is now ready to go.")
-
-@termino.listen()
-async def on_command_error(ctx, error):
-    if isinstance(error, CommandNotFound):
-        await ctx.reply("Looks like I couldn't find that command. Try typing $help so you will know all the lists of commands I have.")
-    elif isinstance(error, NoPrivateMessage):
-        await ctx.reply("That command cannot be used in dm.")
-    else:
-        print(error)
 
 if __name__ == '__main__':
     for cog in os.listdir('./cogs'):
