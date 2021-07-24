@@ -137,18 +137,20 @@ class Mod(commands.Cog):
         if isinstance(error, commands.MissingPermissions): 
             self.mp_user.description = "You are missing the `Kick Members` permission!"
             await ctx.send(embed = self.mp_user)
-        elif isinstance(error.original, discord.Forbidden):
-            self.mp_bot.description = "The bot is missing the `Kick Members` permission!" 
-            await ctx.send(embed = self.mp_bot)
+        elif hasattr(error, 'original'):
+            if isinstance(error.original, discord.Forbidden):
+                self.mp_bot.description = "The bot is missing the `Kick Members` permission!" 
+                await ctx.send(embed = self.mp_bot)
 
     @ban.error
     async def ban_error(self, ctx, error):
         if isinstance(error, commands.MissingPermissions):
             self.mp_user.description = "You are missing the `Ban Members` permission!"
             await ctx.send(embed = self.mp_user)
-        elif isinstance(error.original, discord.Forbidden):
-            self.mp_bot.description = "The bot is missing the `Ban Members` permission!" 
-            await ctx.send(embed = self.mp_bot)
+        elif hasattr(error, 'original'):
+            if isinstance(error.original, discord.Forbidden):
+                self.mp_bot.description = "The bot is missing the `Ban Members` permission!" 
+                await ctx.send(embed = self.mp_bot)
 
     @unban.error
     async def unban_error(self, ctx, error):
@@ -164,27 +166,30 @@ class Mod(commands.Cog):
         if isinstance(error, commands.MissingPermissions):
             self.mp_user.description = "You are missing the `Ban Members` permission!"
             await ctx.send(embed = self.mp_user)
-        elif isinstance(error.original, discord.Forbidden):
-            self.mp_bot.description = "The bot is missing the `Ban Members` permission!" 
-            await ctx.send(embed = self.mp_bot)
+        elif hasattr(error, 'original'):
+            if isinstance(error.original, discord.Forbidden):
+                self.mp_bot.description = "The bot is missing the `Ban Members` permission!" 
+                await ctx.send(embed = self.mp_bot)
 
     @mute.error
     async def mute_error(self, ctx, error):
         if isinstance(error, commands.MissingPermissions):
             self.mp_user.description = "You are missing the `Manage Roles` permission!"
             await ctx.send(embed = self.mp_user)
-        elif isinstance(error.original, discord.Forbidden):
-            self.mp_bot.description = "The bot is missing the `Manage Roles` permission!" 
-            await ctx.send(embed = self.mp_bot)
+        elif hasattr(error, 'original'):
+            if isinstance(error.original, discord.Forbidden):
+                self.mp_bot.description = "The bot is missing the `Manage Roles` permission!" 
+                await ctx.send(embed = self.mp_bot)
 
     @unmute.error
     async def unmute_error(self, ctx, error):
         if isinstance(error, commands.MissingPermissions):
             self.mp_user.description = "You are missing the `Manage Roles` permission!"
             await ctx.send(embed = self.mp_user)
-        elif isinstance(error.original, discord.Forbidden):
-            self.mp_bot.description = "The bot is missing the `Manage Roles` permission!" 
-            await ctx.send(embed = self.mp_bot)
+        elif hasattr(error, 'original'):
+            if isinstance(error.original, discord.Forbidden):
+                self.mp_bot.description = "The bot is missing the `Manage Roles` permission!" 
+                await ctx.send(embed = self.mp_bot)
 
 def setup(bot):
     bot.add_cog(Mod(bot))
