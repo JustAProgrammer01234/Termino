@@ -1,7 +1,7 @@
 import discord 
 from discord.ext import commands 
 
-class Settings(commands.Cog):
+class Settings(commands.Cog, name = 'settings'):
     '''
     This category contains all of the config commands.
     '''

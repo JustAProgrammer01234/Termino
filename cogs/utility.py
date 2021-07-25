@@ -2,7 +2,7 @@ import discord
 import platform
 from discord.ext import commands 
 
-class Utility(commands.Cog):
+class Utility(commands.Cog, name = 'utility'):
     '''
     This command category contains all useful commands.
     '''
@@ -14,7 +14,7 @@ class Utility(commands.Cog):
     @commands.command()
     async def ping(self, ctx):
         '''
-        Returns the latency of the bot
+        Sends the latency of the bot
         '''
         embd = discord.Embed(title = 'Pong!', color = discord.Colour.from_rgb(255,255,255))
         embd.set_thumbnail(url = self.pong_url)
@@ -25,7 +25,7 @@ class Utility(commands.Cog):
     @commands.command()
     async def botinfo(self, ctx):
         '''
-        Returns info about the bot.
+        Sends info about the bot.
         '''
         bot_dev = self.bot.get_user(self.bot.owner_id)
 
@@ -43,7 +43,7 @@ class Utility(commands.Cog):
     @commands.guild_only()
     async def serverinfo(self, ctx):
         '''
-        Returns info about the server. 
+        Sends info about the server. 
         '''
         len_text = len(ctx.guild.text_channels)
         len_voice = len(ctx.guild.voice_channels)
@@ -66,7 +66,7 @@ class Utility(commands.Cog):
     @commands.guild_only()
     async def invitelink(self, ctx):
         '''
-        Returns the bot's invite link.
+        Sends the bot's invite link.
         '''
         invite_url = discord.utils.oauth_url(client_id = '835062389078229032', permissions = discord.Permissions.all())
         await ctx.send(invite_url)
@@ -75,7 +75,7 @@ class Utility(commands.Cog):
     @commands.guild_only() 
     async def memberinfo(self, ctx, member: commands.MemberConverter):
         '''
-        Returns info about a member.
+        Sends info about a member.
         '''
         member_roles = '\n'.join([role.mention for role in member.roles])
 

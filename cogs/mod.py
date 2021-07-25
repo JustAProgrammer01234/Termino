@@ -1,7 +1,7 @@
 import discord 
 from discord.ext import commands
 
-class Mod(commands.Cog):
+class Mod(commands.Cog, name = 'mod'):
     '''
     This command category contains all the moderator commands.
     '''

@@ -17,7 +17,7 @@ class TerminoHelp(commands.HelpCommand):
 
         for category in mapping:
             if category != None:
-                help_embed.add_field(name = f'{category.qualified_name}', value = f'`$help {category.qualified_name}`', inline = True)
+                help_embed.add_field(name = f'{category.qualified_name.title()}', value = f'`$help {category.qualified_name}`', inline = True)
 
         await destination.send(embed = tip_embed)
         await destination.send(embed = help_embed)
@@ -28,7 +28,7 @@ class TerminoHelp(commands.HelpCommand):
         command_list = ''
 
         note_embed = discord.Embed(title = 'Note:', description = "Don't forget to add `$` before you type a command.", color = 0xFFFF)
-        help_embed = discord.Embed(title = f'Info about category: {cog.qualified_name}', description = f'{cog.description}', color = 0xFFFF)
+        help_embed = discord.Embed(title = f'Info about category: {cog.qualified_name.title()}', description = f'{cog.description}', color = 0xFFFF)
         help_embed.set_author(name = f"Help provided by: {self.context.me.name}#{self.context.me.discriminator}", icon_url = self.context.me.avatar_url)
         help_embed.set_footer(text = f"Requested by: {self.context.author.name}#{self.context.author.discriminator}", icon_url = self.context.author.avatar_url)
         help_embed.set_thumbnail(url = self.context.me.avatar_url)
@@ -55,10 +55,6 @@ class TerminoHelp(commands.HelpCommand):
         
         help_embed.add_field(name = 'Syntax:', value = f'`{self.get_command_signature(command)}`', inline = False)
         await destination.send(embed = help_embed)
-      
-    async def send_group_help(self, group): 
-        destination = self.get_destination()
-        await destination.send('This is help group.')
 
 class Bot(commands.Bot):
     def __init__(self, *args, **kwargs):

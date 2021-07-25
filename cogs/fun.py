@@ -6,7 +6,7 @@ from .util import converters
 from discord.ext import commands
 from discord.ext.commands import errors
 
-class Fun(commands.Cog):
+class Fun(commands.Cog, name = 'fun'):
     '''
     This category contains all the fun commands you can do.
     '''

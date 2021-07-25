@@ -3,7 +3,38 @@ import discord
 import asyncio
 from discord.ext import commands
 
-class Games(commands.Cog):
+# Concept for the board class of the tictactoe command.
+
+# class Board:
+#     def __init__(self):
+#         self.board = []
+#         for i in range(3):
+#             self.board.append([' ' for i in range(3)])
+        
+#     def check(self):
+#         for i in range(3):
+#             if self.board[i][0] == self.board[i][1] == self.board[i][2]:
+#                 return True 
+#             elif self.board[0][i] == self.board[1][i] == self.board[2][i]:
+#                 return True
+#         return False
+
+#     def add(self, position, mark):
+#         if not self.board[position].isspace():
+#             if mark in ['X','O']:
+#                 self.board[position] = mark 
+#             else:
+#                 return "Your marker must be an X or O"
+#         else:
+#             return "That position is already taken."
+
+#     def is_full(self):
+#         for row in self.board:
+#             if ' ' in row:
+#                 return False 
+#         return True 
+
+class Games(commands.Cog, name = 'games'):
     '''
     This category contains games.
     '''
