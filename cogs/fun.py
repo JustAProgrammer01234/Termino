@@ -3,8 +3,8 @@ import random
 import aiohttp
 import asyncio
 import discord
-from .util import converters
 from discord.ext import commands
+from .util import converters, reddit
 from discord.ext.commands import errors
 
 class Fun(commands.Cog, name = 'fun'):
@@ -60,14 +60,10 @@ class Fun(commands.Cog, name = 'fun'):
         '''
         Sends a random meme from r/memes
         '''
-        meme_embed = discord.Embed(color = discord.Colour.from_rgb(255,255,255))
-        async with aiohttp.ClientSession() as session:
-            async with session.get('https://www.reddit.com/r/memes.json') as resp:
-                json_request = await resp.json()
-                some_meme = random.choice(json_request['data']['children'])
-                meme_embed.title = some_meme['data']['title']
-                meme_embed.set_image(url = some_meme['data']['preview']['images'][0]['source']['url'])
-                await ctx.send(embed = meme_embed)
+        meme_title, meme_url = await reddit.TerminoReddit().get_meme()
+        meme_embed = discord.Embed(title = meme_title, color = discord.Colour.from_rgb(255,255,255))
+        meme_embed.set_image(url = meme_url)
+        await ctx.send(embed = meme_embed)
     
     @commands.command()
     @commands.guild_only()
