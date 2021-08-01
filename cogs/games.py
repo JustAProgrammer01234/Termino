@@ -107,32 +107,42 @@ class Games(commands.Cog, name = 'games'):
         '''
         hidden_number = random.randint(1, 10)
         num_of_chances = 0
+        has_won = None
 
         def message_check(message):
             return message.author == ctx.author and message.channel == ctx.channel 
 
         while num_of_chances <= chances:
-            waitiing_for_input = await ctx.send(f"Guess a number from 1 - 10, I'll be waiting for 1 minute only. **(You got __{chances - num_of_chances} chance(s)__ left!)**")
+            chances_left = chances - num_of_chances
+            if chances_left == 0:
+                waitiing_for_input = await ctx.send(f"Guess a number from 1 - 10, I'll be waiting for 1 minute only. **(You got __no chances__ left!)**")
+            else: 
+                waitiing_for_input = await ctx.send(f"Guess a number from 1 - 10, I'll be waiting for 1 minute only. **(You got __{chances_left} chance(s)__ left!)**")
             try:
                 number = await self.bot.wait_for('message', timeout = 60.0, check = message_check)
             except asyncio.TimeoutError:
                 await waitiing_for_input.delete()
-                await ctx.send(f"It took you a while to guess your number, it's {hidden_number}")
+                await ctx.send(f"It took you a while to guess your number, it was **{hidden_number}**")
                 break 
             else:
                 try:
-                    int(number.content)
+                    num = int(number.content)
                 except ValueError:
-                    await ctx.send("Your message must be a number.")
+                    await ctx.send("Your message must be a **number**.")
                 else:
-                    if int(number.content) == hidden_number:
-                        await ctx.send("Wow, you guessed the number!")
-                        break
-                    elif int(number.content) < 1 or int(number.content) > 10:
+                    has_won = False
+                    if num < 1 or num > 10:
                         await ctx.send("Your number must be from 1 - 10.")
-                    elif int(number.content) != hidden_number:
-                        await ctx.send("The number you guessed is **WRONG!**")
-                    num_of_chances += 1
+                    elif num != hidden_number:
+                        await ctx.send("The number you guessed was **WRONG!**") 
+                    elif num == hidden_number:
+                        await ctx.send("Wow, you guessed the number! **CONGRATULATIONS!**")
+                        has_won = True
+                        break
+                num_of_chances += 1
+
+        if not has_won and has_won != None:
+            await ctx.send(f'The number was **{hidden_number}**!')
         
 def setup(bot):
     bot.add_cog(Games(bot))
