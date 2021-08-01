@@ -42,11 +42,14 @@ class TerminoHelp(commands.HelpCommand):
 
     async def send_command_help(self, command):
         destination = self.get_destination()
+
         help_embed = discord.Embed(title = f'Help for command: {command.name}', color = 0xFFFF)
         help_embed.set_author(name = f"Help provided by: {self.context.me.name}#{self.context.me.discriminator}", icon_url = self.context.me.avatar_url)
         help_embed.set_footer(text = f"Requested by: {self.context.author.name}#{self.context.author.discriminator}", icon_url = self.context.author.avatar_url)
         help_embed.set_thumbnail(url = self.context.me.avatar_url)
         help_embed.add_field(name = "Description:", value = command.help, inline = False)
+
+        reminder_embed = discord.Embed(title = 'A friendly reminder:', description = "If you see any arguments that are inside `[]` then that means it's optional.", color = 0xFFFF)
 
         if len(command.aliases) > 0: 
             help_embed.add_field(name = 'Aliases:', value = f"{'**,**'.join([f'`{a}`' for a in command.aliases])}", inline = False)
@@ -55,6 +58,7 @@ class TerminoHelp(commands.HelpCommand):
         
         help_embed.add_field(name = 'Syntax:', value = f'`{self.get_command_signature(command)}`', inline = False)
         await destination.send(embed = help_embed)
+        await destination.send(embed = reminder_embed)
 
 class Bot(commands.Bot):
     def __init__(self, *args, **kwargs):
@@ -79,9 +83,11 @@ async def on_command_error(ctx, error):
         await ctx.send(embed = cmd_not_found_embed)
     elif not hasattr(error, 'original'):
         command_error_embed = discord.Embed(title = "Whoops! An error occured...", 
-        description = f'```{error}```',
+        description = f'```python\n{error}```',
         color = discord.Colour.red())
         await ctx.send(embed = command_error_embed)
+    else:
+        print(error)
         
 if __name__ == '__main__':
     for cog in os.listdir('./cogs'):

@@ -3,37 +3,6 @@ import discord
 import asyncio
 from discord.ext import commands
 
-# Concept for the board class of the tictactoe command.
-
-# class Board:
-#     def __init__(self):
-#         self.board = []
-#         for i in range(3):
-#             self.board.append([' ' for i in range(3)])
-        
-#     def check(self):
-#         for i in range(3):
-#             if self.board[i][0] == self.board[i][1] == self.board[i][2]:
-#                 return True 
-#             elif self.board[0][i] == self.board[1][i] == self.board[2][i]:
-#                 return True
-#         return False
-
-#     def add(self, position, mark):
-#         if not self.board[position].isspace():
-#             if mark in ['X','O']:
-#                 self.board[position] = mark 
-#             else:
-#                 return "Your marker must be an X or O"
-#         else:
-#             return "That position is already taken."
-
-#     def is_full(self):
-#         for row in self.board:
-#             if ' ' in row:
-#                 return False 
-#         return True 
-
 class Games(commands.Cog, name = 'games'):
     '''
     This category contains games.
@@ -130,6 +99,40 @@ class Games(commands.Cog, name = 'games'):
                 result_embed.add_field(name = f'{self.bot.user.name}#{self.bot.user.discriminator}', value = f'Choice picked:\n`{bot_choice}` :{bot_choice}:')
             
             await ctx.send(embed = result_embed)
+
+    @commands.command(name = 'number-guessing-game', aliases = ['ngg'])
+    async def number_guessing_game(self, ctx, chances: int):
+        '''
+        A number guessing game where you have to guess the right int from 1 - 10
+        '''
+        hidden_number = random.randint(1, 10)
+        num_of_chances = 0
+
+        def message_check(message):
+            return message.author == ctx.author and message.channel == ctx.channel 
+
+        while num_of_chances <= chances:
+            waitiing_for_input = await ctx.send(f"Guess a number from 1 - 10, I'll be waiting for 1 minute only. **(You got __{chances - num_of_chances} chance(s)__ left!)**")
+            try:
+                number = await self.bot.wait_for('message', timeout = 60.0, check = message_check)
+            except asyncio.TimeoutError:
+                await waitiing_for_input.delete()
+                await ctx.send(f"It took you a while to guess your number, it's {hidden_number}")
+                break 
+            else:
+                try:
+                    int(number.content)
+                except ValueError:
+                    await ctx.send("Your message must be a number.")
+                else:
+                    if int(number.content) == hidden_number:
+                        await ctx.send("Wow, you guessed the number!")
+                        break
+                    elif int(number.content) < 1 or int(number.content) > 10:
+                        await ctx.send("Your number must be from 1 - 10.")
+                    elif int(number.content) != hidden_number:
+                        await ctx.send("The number you guessed is **WRONG!**")
+                    num_of_chances += 1
         
 def setup(bot):
     bot.add_cog(Games(bot))

@@ -1,5 +1,6 @@
 import string
 import random
+import aiohttp
 import asyncio
 import discord
 from .util import converters
@@ -38,7 +39,7 @@ class Fun(commands.Cog, name = 'fun'):
         await ctx.send(eval(equation))
 
     @commands.command(name = '8ball', aliases = ['8b','magic_ball'])
-    async def _8ball(self, ctx, *, question: converters.eightball):
+    async def _8ball(self, ctx, *, question: converters.EightBall):
         '''
         An implementation of the 8ball fortune teller.
         '''
@@ -48,12 +49,26 @@ class Fun(commands.Cog, name = 'fun'):
         await ctx.send(embed = embd)
 
     @commands.command()
-    async def iseven(self, ctx, number: converters.is_even):
+    async def iseven(self, ctx, number: converters.IsEven):
         '''
         Tells you if `<number>` is even or not.
         '''
         await ctx.send(number)
 
+    @commands.command()
+    async def meme(self, ctx):
+        '''
+        Sends a random meme from r/memes
+        '''
+        meme_embed = discord.Embed(color = discord.Colour.from_rgb(255,255,255))
+        async with aiohttp.ClientSession() as session:
+            async with session.get('https://www.reddit.com/r/memes.json') as resp:
+                json_request = await resp.json()
+                some_meme = random.choice(json_request['data']['children'])
+                meme_embed.title = some_meme['data']['title']
+                meme_embed.set_image(url = some_meme['data']['preview']['images'][0]['source']['url'])
+                await ctx.send(embed = meme_embed)
+    
     @commands.command()
     @commands.guild_only()
     async def slap(self, ctx, member: discord.Member, *, reason):
