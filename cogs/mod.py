@@ -37,33 +37,15 @@ class Mod(commands.Cog, name = 'mod'):
     @commands.command()
     @commands.guild_only()
     @commands.has_permissions(ban_members = True)
-    async def ban(self, ctx, member: commands.MemberConverter, *, reason = None):
+    async def ban(self, ctx, member: commands.MemberConverter, *, reason = None, duration: converters.DurationConverter = None):
         '''
-        Instantly bans a member.
-        '''
-        embd = discord.Embed(title = f':hammer: Banned {member.name}#{member.discriminator} :hammer:', color = discord.Colour.green())
-        embd.set_thumbnail(url = self.ban_gif)
-        if reason is None:
-            embd.add_field(name = 'Reason for ban:', value = "Didn't provide a reason.")
-            await member.ban(reason = "Didn't provide a reason.")
-            await ctx.send(embed = embd)
-        else:
-            embd.add_field(name = 'Reason for ban:', value = reason)
-            await member.ban(reason = reason)
-            await ctx.send(embed = embd)
-
-    @commands.command()
-    @commands.guild_only()
-    @commands.has_permissions(ban_members = True)
-    async def tempban(self, ctx, member: commands.MemberConverter, duration: converters.DurationConverter, *, reason = None):
-        '''
-        Temporarily bans a member.
+        Bans a member.
         '''
         member_id = member.id
-        embd = discord.Embed(title = f':hammer: {member.name}#{member.discriminator} has been temporarily banned. :hammer:', color = discord.Colour.green())
+        embd = discord.Embed(title = f':hammer: Banned {member.name}#{member.discriminator} :hammer:', color = discord.Colour.green())
         embd.set_thumbnail(url = self.ban_gif)
 
-        if reason is None:
+        if reason == None:
             embd.add_field(name = 'Reason for ban:', value = "Didn't provide a reason.")
             await member.ban(reason = "Didn't provide a reason.")
             await ctx.send(embed = embd)
@@ -72,9 +54,9 @@ class Mod(commands.Cog, name = 'mod'):
             await member.ban(reason = reason)
             await ctx.send(embed = embd)
 
-        await asyncio.sleep(duration)
-        await ctx.guild.unban(member_id, reason = 'Temporary ban already ended.')
-        await member.send(f"You are free from temporary ban in {ctx.guild}.")
+        if duration != None:
+            await asyncio.sleep(duration)
+            await ctx.guild.unban(member_id, reason = 'Temporary ban already ended.')
 
     @commands.command()
     @commands.guild_only()
@@ -100,22 +82,41 @@ class Mod(commands.Cog, name = 'mod'):
         if not found_member:
             await message.delete()
             await ctx.send("Couldn't find banned member.")
+
+    @commands.command()
+    @commands.guild_only()
+    @commands.has_permissions(ban_members = True)
+    async def banlist(self, ctx):
+        '''
+        Sends a list of banned members.
+        '''
+        bans_label = ''
+        ban_list = await ctx.guild.bans()
+        banlist_embed = discord.Embed(title = f'Banned users in {ctx.guild}:', color = discord.Colour.from_rgb(255,255,255))
+        greater_than_one = len(ban_list) > 1
+
+        if len(ban_list) > 0:
+            if greater_than_one:
+                message = await ctx.send(f'I found **{len(ban_list)}** users banned, listing them one by one.')
+
+            for ban_entry in ban_list:
+                user = ban_entry.user
+                bans_label += f'{user.name}#{user.discriminator}\n'
+
+            if greater_than_one:
+                await message.delete()
+                
+            banlist_embed.description = f'```{bans_label}```'
+            await ctx.send(embed = banlist_embed)
+        else:
+            await ctx.send("This server has no banned members.")
     
     @commands.command()
     @commands.guild_only()
     @commands.has_permissions(manage_roles = True)
-    async def mute(self, ctx, member: commands.MemberConverter):
+    async def mute(self, ctx, member: commands.MemberConverter, duration: converters.DurationConverter = None, reason = None):
         '''
-        Instantly mutes a member in both text and voice channels.
-        '''
-        await ctx.send('This command is under maintenance.')
-
-    @commands.command()
-    @commands.guild_only()
-    @commands.has_permissions(manage_roles = True)
-    async def tempmute(self, ctx, member: commands.MemberConverter):
-        '''
-        Temporarily mutes a member in both text and voice channels.
+        Mutes a member in both text and voice channels.
         '''
         await ctx.send('This command is under maintenance.')
 
@@ -127,29 +128,6 @@ class Mod(commands.Cog, name = 'mod'):
         Unmutes a member in both text and voice channels.
         '''
         await ctx.send('This command is under maintenance.')
-
-    @commands.command()
-    @commands.guild_only()
-    @commands.has_permissions(ban_members = True)
-    async def banlist(self, ctx):
-        '''
-        Sends a list of banned members.
-        '''
-        bans_label = ''
-        ban_list = await ctx.guild.bans()
-        message = await ctx.send('Hold on this may take a while.')
-        banlist_embed = discord.Embed(title = f'Banned members in {ctx.guild}:', color = discord.Colour.from_rgb(255,255,255))
-
-        for ban_entry in ban_list:
-            user = ban_entry.user
-            bans_label += f'{user.name}#{user.discriminator}\n'
-        await message.delete()
-        banlist_embed.description = f'```{bans_label}```'
-        
-        if bans_label == '':
-            await ctx.send('Looks like I found no banned members.')
-        else:
-            await ctx.send(embed = banlist_embed)
 
     @kick.error
     async def kick_error(self, ctx, error):
@@ -163,16 +141,6 @@ class Mod(commands.Cog, name = 'mod'):
 
     @ban.error
     async def ban_error(self, ctx, error):
-        if isinstance(error, commands.MissingPermissions):
-            self.mp_user.description = "You are missing the `Ban Members` permission!"
-            await ctx.send(embed = self.mp_user)
-        elif hasattr(error, 'original'):
-            if isinstance(error.original, discord.Forbidden):
-                self.mp_bot.description = "The bot is missing the `Ban Members` permission!" 
-                await ctx.send(embed = self.mp_bot)
-
-    @tempban.error
-    async def tempban_error(self, ctx, error):
         if isinstance(error, commands.MissingPermissions):
             self.mp_user.description = "You are missing the `Ban Members` permission!"
             await ctx.send(embed = self.mp_user)
@@ -202,16 +170,6 @@ class Mod(commands.Cog, name = 'mod'):
 
     @mute.error
     async def mute_error(self, ctx, error):
-        if isinstance(error, commands.MissingPermissions):
-            self.mp_user.description = "You are missing the `Manage Roles` permission!"
-            await ctx.send(embed = self.mp_user)
-        elif hasattr(error, 'original'):
-            if isinstance(error.original, discord.Forbidden):
-                self.mp_bot.description = "The bot is missing the `Manage Roles` permission!" 
-                await ctx.send(embed = self.mp_bot)
-
-    @tempmute.error
-    async def tempmute_error(self, ctx, error):
         if isinstance(error, commands.MissingPermissions):
             self.mp_user.description = "You are missing the `Manage Roles` permission!"
             await ctx.send(embed = self.mp_user)

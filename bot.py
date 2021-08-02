@@ -1,8 +1,6 @@
 import os
 import discord
-from discord import Forbidden
 from discord.ext import commands
-from discord.ext.commands.errors import CommandNotFound, NoPrivateMessage
 
 class TerminoHelp(commands.HelpCommand):
 
