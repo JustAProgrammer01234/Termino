@@ -9,7 +9,7 @@ class TerminoReddit(apraw.Reddit):
             client_secret = os.getenv("CLIENT_SECRET"),
             user_agent = 'never gonna give you up',
             username = 'scripto_entity_1010',
-            password = os.getenv('REDDIT_PASSWORD')
+            password = os.getenv('REDDIT_PASSWD')
         )
 
     async def get_meme(self):
