@@ -14,5 +14,5 @@ class TerminoReddit(apraw.Reddit):
 
     async def get_meme(self):
         meme_subreddit = await self.subreddit("memes")
-        meme = random.choice([m async for m in meme_subreddit.new()])
+        meme = meme_subreddit.random()
         return meme.title, meme.url
