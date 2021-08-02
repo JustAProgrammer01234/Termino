@@ -79,7 +79,7 @@ async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
         cmd_not_found_embed = discord.Embed(title = "Looks like I coudn't find that command.", description = 'Try typing `$help`', color = discord.Colour.red())
         await ctx.send(embed = cmd_not_found_embed)
-    elif not hasattr(error, 'original'):
+    elif not hasattr(error, 'original') and not isinstance(error, commands.MissingPermissions):
         command_error_embed = discord.Embed(title = "Whoops! An error occured...", 
         description = f'```python\n{error}```',
         color = discord.Colour.red())

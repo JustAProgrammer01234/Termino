@@ -23,7 +23,7 @@ class Mod(commands.Cog, name = 'mod'):
         '''
         Kicks a member.
         '''
-        embd = discord.Embed(title = f':mechanical_leg: Kicked {member.name}#{member.discriminator} :mechanical_leg:', color = discord.Colour.green())
+        embd = discord.Embed(title = f':mechanical_leg: Kicked {member.name}#{member.discriminator} :mechanical_leg:', color = discord.Colour.from_rgb(255,255,255))
         embd.set_thumbnail(url = self.kick_gif)
         if reason is None:
             embd.add_field(name = 'Reason for kick:', value = "Didn't provide a reason.")
@@ -41,7 +41,7 @@ class Mod(commands.Cog, name = 'mod'):
         '''
         Bans a member.
         '''
-        embd = discord.Embed(title = f':hammer: Banned {member.name}#{member.discriminator} :hammer:', color = discord.Colour.green())
+        embd = discord.Embed(description = f':hammer: ***Banned {member.name}#{member.discriminator}*** :hammer:', color = discord.Colour.from_rgb(255,255,255))
         embd.set_thumbnail(url = self.ban_gif)
 
         if reason == None:
@@ -60,7 +60,7 @@ class Mod(commands.Cog, name = 'mod'):
         '''
         Bans a member.
         '''
-        embd = discord.Embed(title = f':hammer: Banned {member.name}#{member.discriminator} :hammer:', color = discord.Colour.green())
+        embd = discord.Embed(description = f':hammer: ***Temporarily banned {member.name}#{member.discriminator}*** :hammer:', color = discord.Colour.from_rgb(255,255,255))
         embd.set_thumbnail(url = self.ban_gif)
 
         if reason == None:
