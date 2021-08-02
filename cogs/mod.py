@@ -37,11 +37,10 @@ class Mod(commands.Cog, name = 'mod'):
     @commands.command()
     @commands.guild_only()
     @commands.has_permissions(ban_members = True)
-    async def ban(self, ctx, member: commands.MemberConverter, *, reason = None, duration: converters.DurationConverter = None):
+    async def ban(self, ctx, member: commands.MemberConverter, *, reason = None):
         '''
         Bans a member.
         '''
-        member_id = member.id
         embd = discord.Embed(title = f':hammer: Banned {member.name}#{member.discriminator} :hammer:', color = discord.Colour.green())
         embd.set_thumbnail(url = self.ban_gif)
 
@@ -54,9 +53,28 @@ class Mod(commands.Cog, name = 'mod'):
             await member.ban(reason = reason)
             await ctx.send(embed = embd)
 
+    @commands.command()
+    @commands.guild_only()
+    @commands.has_permissions(ban_members = True)
+    async def tempban(self, ctx, member: commands.MemberConverter, duration: converters.DurationConverter = None, *, reason = None):
+        '''
+        Bans a member.
+        '''
+        embd = discord.Embed(title = f':hammer: Banned {member.name}#{member.discriminator} :hammer:', color = discord.Colour.green())
+        embd.set_thumbnail(url = self.ban_gif)
+
+        if reason == None:
+            embd.add_field(name = 'Reason for ban:', value = "Didn't provide a reason.")
+            await member.ban(reason = "Didn't provide a reason.")
+            await ctx.send(embed = embd)
+        else:
+            embd.add_field(name = 'Reason for ban:', value = reason)
+            await member.ban(reason = reason)
+            await ctx.send(embed = embd)
+  
         if duration != None:
             await asyncio.sleep(duration)
-            await ctx.guild.unban(member_id, reason = 'Temporary ban already ended.')
+            await member.unban(reason = 'Temporary ban already ended.')
 
     @commands.command()
     @commands.guild_only()

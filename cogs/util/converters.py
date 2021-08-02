@@ -41,5 +41,5 @@ class DurationConverter(commands.Converter):
         time_unit_value = {'s': 1, 'm': 60, 'h': 120}
         num, time_unit = int(duration[:-1]), time_unit_value[duration[-1]]
 
-        if time_unit in time_unit_value:
+        if time_unit in time_unit_value.values():
             return num * time_unit
