@@ -1,11 +1,9 @@
 import string
 import random
-import aiohttp
 import asyncio
 import discord
 from discord.ext import commands
 from .util import converters, reddit
-from discord.ext.commands import errors
 
 class Fun(commands.Cog, name = 'fun'):
     '''
