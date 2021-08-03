@@ -29,7 +29,7 @@ class Voice(commands.Cog, name = 'voice'):
         voice = ctx.voice_client 
         if voice != None:
             await voice.disconnect()
-            leave_embed = discord.Embed(description = f"**Successfully left to {voice.channel.mention}.**", colour = discord.Colour.green())
+            leave_embed = discord.Embed(description = f"**Successfully left {voice.channel.mention}.**", colour = discord.Colour.green())
         else:
             leave_embed = discord.Embed(description = f"**Can't disconnect, I'm not currently in a voice channel.**", colour = discord.Colour.red())
         await ctx.send(embed = leave_embed)
