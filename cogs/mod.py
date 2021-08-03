@@ -56,9 +56,9 @@ class Mod(commands.Cog, name = 'mod'):
     @commands.command()
     @commands.guild_only()
     @commands.has_permissions(ban_members = True)
-    async def tempban(self, ctx, member: commands.MemberConverter, duration: converters.DurationConverter = None, *, reason = None):
+    async def tempban(self, ctx, member: commands.MemberConverter, duration: converters.DurationConverter, *, reason = None):
         '''
-        Bans a member.
+        Temporarily bans a member.
         '''
         embd = discord.Embed(description = f':hammer: ***Temporarily banned {member.name}#{member.discriminator}*** :hammer:', color = discord.Colour.from_rgb(255,255,255))
         embd.set_thumbnail(url = self.ban_gif)
@@ -72,9 +72,8 @@ class Mod(commands.Cog, name = 'mod'):
             await member.ban(reason = reason)
             await ctx.send(embed = embd)
   
-        if duration != None:
-            await asyncio.sleep(duration)
-            await member.unban(reason = 'Temporary ban already ended.')
+        await asyncio.sleep(duration)
+        await member.unban(reason = 'Temporary ban already ended.')
 
     @commands.command()
     @commands.guild_only()

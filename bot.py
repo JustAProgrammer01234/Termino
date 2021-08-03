@@ -58,38 +58,37 @@ class TerminoHelp(commands.HelpCommand):
         await destination.send(embed = help_embed)
         await destination.send(embed = reminder_embed)
 
-class Bot(commands.Bot):
+class Bot(commands.AutoShardedBot):
     def __init__(self, *args, **kwargs):
         super().__init__(command_prefix = '$',
-        intents = discord.Intents.all(),
-        activity = discord.Game(name = 'for $help'),
-        help_command = TerminoHelp(),
-        description = 'Just your average bot.',
-        owner_id = 790767157523775518
+            intents = discord.Intents.all(),
+            activity = discord.Game(name = 'for $help'),
+            help_command = TerminoHelp(),
+            description = 'Just your average bot.',
+            owner_id = 790767157523775518
         )
 
-termino = Bot()
+    async def on_ready(self):
+        print(f"{termino.user.name} is now ready to go.")
 
-@termino.event
-async def on_ready():
-    print(f"{termino.user.name} is now ready to go.")
+        for cog in os.listdir('./cogs'):
+            if cog.endswith('.py') and cog != '__init__.py':
+                termino.load_extension(f'cogs.{cog[:-3]}')
 
-@termino.event
-async def on_command_error(ctx, error):
-    if isinstance(error, commands.CommandNotFound):
-        cmd_not_found_embed = discord.Embed(title = "Looks like I coudn't find that command.", description = 'Try typing `$help`', color = discord.Colour.red())
-        await ctx.send(embed = cmd_not_found_embed)
-    elif not hasattr(error, 'original') and not isinstance(error, commands.MissingPermissions):
-        command_error_embed = discord.Embed(title = "Whoops! An error occured...", 
-        description = f'```python\n{error}```',
-        color = discord.Colour.red())
-        await ctx.send(embed = command_error_embed)
-    else:
-        print(error)
+    async def on_command_error(self, ctx, error):
+        if isinstance(error, commands.CommandNotFound):
+            cmd_not_found_embed = discord.Embed(title = "Looks like I coudn't find that command.", description = 'Try typing `$help`', color = discord.Colour.red())
+            await ctx.send(embed = cmd_not_found_embed)
+
+        elif not hasattr(error, 'original') and not isinstance(error, commands.MissingPermissions):
+            command_error_embed = discord.Embed(title = "Whoops! An error occured...", 
+                                                description = f'```python\n{error}```',
+                                                color = discord.Colour.red())
+            await ctx.send(embed = command_error_embed)
+            
+        else:
+            print(error)
         
 if __name__ == '__main__':
-    for cog in os.listdir('./cogs'):
-        if cog.endswith('.py') and cog != '__init__.py':
-            termino.load_extension(f'cogs.{cog[:-3]}')
-
+    termino = Bot()
     termino.run(os.getenv('BOT_TOKEN'))
