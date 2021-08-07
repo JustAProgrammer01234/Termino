@@ -4,10 +4,6 @@ from discord.ext import commands
 
 class TerminoHelp(commands.HelpCommand):
 
-    def __init__(self, bot, *args, **kwargs):
-        super().__init__()
-        self.bot = bot
-
     async def send_bot_help(self, mapping):
         ctx = self.context 
         destination = self.get_destination()
@@ -70,7 +66,7 @@ class Bot(commands.AutoShardedBot):
         super().__init__(command_prefix = '$',
             intents = discord.Intents.all(),
             activity = discord.Game(name = 'for $help'),
-            help_command = TerminoHelp(self),
+            help_command = TerminoHelp(),
             description = 'Just your average bot.',
             owner_id = 790767157523775518
         )
