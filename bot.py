@@ -5,6 +5,7 @@ from discord.ext import commands
 class TerminoHelp(commands.HelpCommand):
 
     def __init__(self, bot, *args, **kwargs):
+        super().__init__()
         self.bot = bot
 
     async def send_bot_help(self, mapping):
