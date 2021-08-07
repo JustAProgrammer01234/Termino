@@ -1,7 +1,14 @@
 import discord 
 import asyncio
-from .util import converters
 from discord.ext import commands
+
+class DurationConverter(commands.Converter):
+    async def convert(self, ctx, duration):
+        time_unit_value = {'s': 1, 'm': 60, 'h': 120}
+        num, time_unit = int(duration[:-1]), time_unit_value[duration[-1]]
+
+        if time_unit in time_unit_value.values():
+            return num * time_unit
 
 class Mod(commands.Cog, name = 'mod'):
     '''
@@ -25,6 +32,7 @@ class Mod(commands.Cog, name = 'mod'):
         '''
         embd = discord.Embed(title = f':mechanical_leg: Kicked {member.name}#{member.discriminator} :mechanical_leg:', color = discord.Colour.from_rgb(255,255,255))
         embd.set_thumbnail(url = self.kick_gif)
+        
         if reason is None:
             embd.add_field(name = 'Reason for kick:', value = "Didn't provide a reason.")
             await member.kick(reason = "Didn't provide a reason.")
@@ -56,7 +64,7 @@ class Mod(commands.Cog, name = 'mod'):
     @commands.command()
     @commands.guild_only()
     @commands.has_permissions(ban_members = True)
-    async def tempban(self, ctx, member: commands.MemberConverter, duration: converters.DurationConverter, *, reason = None):
+    async def tempban(self, ctx, member: commands.MemberConverter, duration: DurationConverter, *, reason = None):
         '''
         Temporarily bans a member.
         '''
@@ -131,7 +139,7 @@ class Mod(commands.Cog, name = 'mod'):
     @commands.command()
     @commands.guild_only()
     @commands.has_permissions(manage_roles = True)
-    async def mute(self, ctx, member: commands.MemberConverter, duration: converters.DurationConverter = None, reason = None):
+    async def mute(self, ctx, member: commands.MemberConverter, duration: DurationConverter = None, reason = None):
         '''
         Mutes a member in both text and voice channels.
         '''

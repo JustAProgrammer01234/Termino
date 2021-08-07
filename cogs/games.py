@@ -1,6 +1,6 @@
-import random
 import discord
 import asyncio
+from .util import corefuncs
 from discord.ext import commands
 
 class Games(commands.Cog, name = 'games'):
@@ -15,8 +15,8 @@ class Games(commands.Cog, name = 'games'):
         '''
         A command that allows you to play dice with you and Termino.
         '''
-        player_dice = random.randint(1,6)
-        bot_dice = random.randint(1,6)
+        player_dice = corefuncs.generate_random_number(1,6)
+        bot_dice = corefuncs.generate_random_number(1,6)
         if player_dice == bot_dice:
             result_message = ":game_die: Looks like it's a tie man. :game_die:"
         elif player_dice > bot_dice:
@@ -33,7 +33,7 @@ class Games(commands.Cog, name = 'games'):
         '''
         A command that allows you to play rock paper scissors with you and Termino.
         '''
-        bot_choice = random.choice(['rock','paper','scissors'])
+        bot_choice = corefuncs.random_choice(['rock','paper','scissors'])
         unicode_to_text = {
             '\U0001faa8':'rock',
             '\U0001f4f0':'paper',
@@ -105,12 +105,12 @@ class Games(commands.Cog, name = 'games'):
         '''
         A number guessing game where you have to guess the right int from 1 - 10
         '''
-        hidden_number = random.randint(1, 10)
+        hidden_number = corefuncs.generate_random_number(1, 10)
         num_of_chances = 0
         has_won = None
 
         def message_check(message):
-            return message.author == ctx.author and message.channel == ctx.channel 
+            return message.author.id == ctx.author.id and message.channel.id == ctx.channel.id 
 
         while num_of_chances <= chances:
             chances_left = chances - num_of_chances

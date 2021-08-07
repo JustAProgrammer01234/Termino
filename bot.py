@@ -4,6 +4,9 @@ from discord.ext import commands
 
 class TerminoHelp(commands.HelpCommand):
 
+    def __init__(self, bot):
+        self.bot = bot
+
     async def send_bot_help(self, mapping):
         destination = self.get_destination()
 
@@ -63,17 +66,20 @@ class Bot(commands.AutoShardedBot):
         super().__init__(command_prefix = '$',
             intents = discord.Intents.all(),
             activity = discord.Game(name = 'for $help'),
-            help_command = TerminoHelp(),
+            help_command = TerminoHelp(self),
             description = 'Just your average bot.',
             owner_id = 790767157523775518
         )
 
     async def on_ready(self):
-        print(f"{termino.user.name} is now ready to go.")
+        print(f'{termino.user} is now ready to go.')
 
         for cog in os.listdir('./cogs'):
             if cog.endswith('.py') and cog != '__init__.py':
                 termino.load_extension(f'cogs.{cog[:-3]}')
+
+    async def on_connect(self):
+        print(f'{termino.user} successfully connected to discord.')
 
     async def on_command_error(self, ctx, error):
         if isinstance(error, commands.CommandNotFound):
