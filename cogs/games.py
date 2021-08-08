@@ -105,7 +105,7 @@ class Games(commands.Cog, name = 'games'):
         '''
         A number guessing game where you have to guess the right int from 1 - 10
         '''
-        hidden_number = corefuncs.generate_random_number(1, 10)
+        hidden_number = await corefuncs.generate_random_number(1, 10)
         num_of_chances = 0
         has_won = None
 

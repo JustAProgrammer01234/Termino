@@ -38,6 +38,9 @@ class Utility(commands.Cog, name = 'utility'):
 
         await ctx.send(embed = embd)
 
+    @commands.command()
+    async def source(self, ctx):
+        await ctx.send("https://github.com/JustAProgrammer01234/Termino")
 
     @commands.command() 
     @commands.guild_only()

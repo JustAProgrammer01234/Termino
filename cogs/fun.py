@@ -2,13 +2,7 @@ import string
 import asyncio
 import discord
 from discord.ext import commands
-from .util import converters, reddit, corefuncs
-
-class SlapSomeone(commands.Converter):
-    async def convert(self, ctx, reason):
-        member_list = ctx.guild.members
-        slapped_member = corefuncs.random_choice(member_list)
-        return f'{ctx.author.mention} slapped {slapped_member.mention} because of **{reason}**.'
+from .util import reddit, corefuncs
 
 class Fun(commands.Cog, name = 'fun'):
     '''
@@ -51,20 +45,21 @@ class Fun(commands.Cog, name = 'fun'):
         '''
         try:
             embd = discord.Embed(title = f'Generated random number from {start} to {stop}:',
-            description = corefuncs.generate_random_number(start, stop), color = discord.Colour.from_rgb(255,255,255))
+            description = f'`{await corefuncs.generate_random_number(start, stop)}`', color = discord.Colour.from_rgb(255,255,255))
             await ctx.send(embed = embd) 
         except ValueError:
             await ctx.send("The first number must be less than the other.")
 
 
     @commands.command(name = '8ball', aliases = ['8b','magic_ball'])
-    async def _8ball(self, ctx, *, question: converters.EightBall):
+    async def _8ball(self, ctx, *, question):
         '''
         An implementation of the 8ball fortune teller.
         '''
-        embd = discord.Embed(title = '8ball says:', description = question[0], color = discord.Colour.from_rgb(255,255,255))
+        random_response = await corefuncs.random_choice(self.eightball_messages)
+        embd = discord.Embed(title = '8ball says:', description = f'```{random_response}```', color = discord.Colour.from_rgb(255,255,255))
         embd.set_thumbnail(url = 'https://magic-8ball.com/assets/images/magicBallStart.png')
-        embd.set_footer(text = f'Question: {question[1]}')
+        embd.set_footer(text = f'Question: {question}')
         await ctx.send(embed = embd)
 
     @commands.command()
@@ -88,8 +83,39 @@ class Fun(commands.Cog, name = 'fun'):
         await ctx.send(embed = meme_embed)
     
     @commands.command()
+    async def okand(self, ctx):
+        '''
+        Ok, and?
+        '''
+        await ctx.send("Ok, and?")
+
+    @commands.command()
+    async def nooneasked(self, ctx):
+        '''
+        No one asked.
+        '''
+        await ctx.send("No one asked, mate.")
+
+    @commands.command(name = 'check-luck')
     @commands.guild_only()
-    async def slap(self, ctx, member: discord.Member, *, reason):
+    async def check_luck(self, ctx, member: commands.MemberConverter = None):
+        '''
+        Checks how lucky you are or how lucky a member is.
+        '''
+        luck = await corefuncs.generate_random_number(1, 100)
+        luck_embed = discord.Embed(description = f":four_leaf_clover: `{luck}%` :four_leaf_clover:", colour = discord.Colour.from_rgb(255,255,255))
+
+        if member is None:
+            luck_embed.title = 'Your luck is:'
+        else:
+            luck_embed.title = f'The luck of {member.name} is:'
+
+        await ctx.send(embed = luck_embed)
+
+    
+    @commands.command()
+    @commands.guild_only()
+    async def slap(self, ctx, member: commands.MemberConverter, *, reason):
         '''
         Slaps a specific member in a discord server.
         '''
@@ -99,11 +125,12 @@ class Fun(commands.Cog, name = 'fun'):
 
     @commands.command()
     @commands.guild_only()
-    async def randomslap(self, ctx, *, reason: SlapSomeone):
+    async def randomslap(self, ctx, *, reason):
         '''
         Slaps a random member in a discord server.
         '''
-        embd = discord.Embed(description = reason, color = discord.Colour.from_rgb(255,255,255))
+        random_member = await corefuncs.random_choice(ctx.guild.members)
+        embd = discord.Embed(description = f'{ctx.author.mention} slapped {random_member.mention} because of **{reason}**.', color = discord.Colour.from_rgb(255,255,255))
         embd.set_image(url = corefuncs.random_choice(self.gif_url))
         await ctx.send(embed = embd)
 
@@ -114,19 +141,21 @@ class Fun(commands.Cog, name = 'fun'):
         A command that hacks a member. (This is not meant to be real so don't worry if you get hacked by this.)
         '''
         password_chars = [char for char in string.ascii_letters + string.digits + string.punctuation]
-        password_length = corefuncs.generate_random_number(5,10)
-        password = [corefuncs.random_choice(password_chars) for _ in range(password_length)]
+        password_length = await corefuncs.generate_random_number(5,10)
+        password = [await corefuncs.random_choice(password_chars) for _ in range(password_length)]
         hack_message = await ctx.send(f'Hacking {member.mention}')
-        hack_embed_message = discord.Embed(title = f'Credentials of {member.name}#{member.discriminator}', color = discord.Colour.from_rgb(255,255,255))
-        hack_embed_message.add_field(name = 'Ip address:', value = f'{corefuncs.generate_random_number(0, 255)}.{corefuncs.generate_random_number(0, 255)}.{corefuncs.generate_random_number(0, 255)}.{corefuncs.generate_random_number(0, 255)}', inline = False)
+        hack_embed_message = discord.Embed(title = f'Credentials of {member}', color = discord.Colour.from_rgb(255,255,255))
+        hack_embed_message.add_field(name = 'Ip address:', value = f'{await corefuncs.generate_random_number(0, 255)}.{await corefuncs.generate_random_number(0, 255)}.{await corefuncs.generate_random_number(0, 255)}.{await corefuncs.generate_random_number(0, 255)}', inline = False)
         hack_embed_message.add_field(name = 'Email:', value = f'{member.name}@gmail.com', inline = False)
         hack_embed_message.add_field(name = 'Password:',value = f"{''.join(password)}", inline = False)
         hack_embed_message.set_thumbnail(url = member.avatar_url)
         hack_embed_message.set_footer(text = f'Hacked by: {ctx.message.author}', icon_url = ctx.message.author.avatar_url)
         message_dict = {0: 'Found ip', 1: 'Found email',2: 'Found email password'}
+
         for i in range(3):
             await asyncio.sleep(1)
             await hack_message.edit(content = message_dict[i])
+
         await asyncio.sleep(1)
         await hack_message.delete()
         await ctx.send(embed = hack_embed_message)
