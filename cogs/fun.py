@@ -81,7 +81,7 @@ class Fun(commands.Cog, name = 'fun'):
         '''
         meme = await self.bot.reddit.get_random_post('memes')
         meme_embed = discord.Embed(title = meme[0], color = discord.Colour.from_rgb(255,255,255))
-        meme_embed.set_author(name = meme[1])
+        meme_embed.set_author(name = f'Meme by: u/{meme[1]}')
         meme_embed.set_image(url = meme[2])
         await ctx.send(embed = meme_embed)
     
@@ -115,7 +115,6 @@ class Fun(commands.Cog, name = 'fun'):
 
         await ctx.send(embed = luck_embed)
 
-    
     @commands.command()
     @commands.guild_only()
     async def slap(self, ctx, member: commands.MemberConverter, *, reason):
