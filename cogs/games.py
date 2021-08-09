@@ -33,7 +33,7 @@ class Games(commands.Cog, name = 'games'):
         '''
         A command that allows you to play rock paper scissors with you and Termino.
         '''
-        bot_choice = corefuncs.random_choice(['rock','paper','scissors'])
+        bot_choice = await corefuncs.random_choice(['rock','paper','scissors'])
         unicode_to_text = {
             '\U0001faa8':'rock',
             '\U0001f4f0':'paper',
