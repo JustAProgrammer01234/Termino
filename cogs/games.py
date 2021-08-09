@@ -103,7 +103,7 @@ class Games(commands.Cog, name = 'games'):
     @commands.command(name = 'number-guessing-game', aliases = ['ngg'])
     async def number_guessing_game(self, ctx, chances: int):
         '''
-        A number guessing game where you have to guess the right int from 1 - 10
+        A guessing game where you have to guess the right number from 1 - 10. 
         '''
         hidden_number = await corefuncs.generate_random_number(1, 10)
         num_of_chances = 0
