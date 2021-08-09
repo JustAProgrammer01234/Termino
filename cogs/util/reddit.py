@@ -1,18 +1,14 @@
-import os 
-import apraw
-import random 
+import asyncpraw
 
-class TerminoReddit(apraw.Reddit):
-    def __init__(self):
-        super().__init__(
-            client_id = os.getenv("CLIENT_ID"),
-            client_secret = os.getenv("CLIENT_SECRET"),
-            user_agent = 'never gonna give you up',
-            username = 'scripto_entity_1010',
-            password = os.getenv('REDDIT_PASSWD')
-        )
+class TerminoReddit(asyncpraw.Reddit):
+    def __init__(self, site_name):
+        super().__init__(site_name = site_name)
 
-    async def get_meme(self):
-        meme_subreddit = await self.subreddit("memes")
-        meme = await meme_subreddit.random()
-        return meme.title, meme.url 
+    async def get_random_post(self, subreddit):
+        pass 
+
+    async def get_user_info(self, user):
+        pass 
+
+    async def get_subreddit_info(self, subreddit):
+        pass 

@@ -1,16 +1,16 @@
 import asyncpg 
 
-class DataBase:
+class TerminoDb:
     def __init__(self, user, passwd, host, port, database):
         self.dsn = f'postgres://{user}:{passwd}@{host}:{port}/{database}'  
 
-    async def create_row(self, guild_id):
+    async def initialize_server(self, guild_id):
         async with asyncpg.create_pool(dsn = self.dsn) as pool:
             await pool.execute('''
             INSERT INTO termino_servers VALUES ($1, $2, $3, $4, $5);
             ''', guild_id, None, None, None, None)
 
-    async def fetch_row(self, guild_id):
+    async def fetch_server_info(self, guild_id):
         async with asyncpg.create_pool(dsn = self.dsn) as pool:
             row = await pool.fetch('''
             SELECT * FROM termino_servers WHERE guild_id = $1;

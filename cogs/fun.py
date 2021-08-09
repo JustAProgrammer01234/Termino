@@ -77,10 +77,7 @@ class Fun(commands.Cog, name = 'fun'):
         '''
         Sends a random meme from r/memes
         '''
-        meme_title, meme_url = await reddit.TerminoReddit().get_meme()
-        meme_embed = discord.Embed(title = meme_title, color = discord.Colour.from_rgb(255,255,255))
-        meme_embed.set_image(url = meme_url)
-        await ctx.send(embed = meme_embed)
+        await ctx.send('This command is under maintenance.')
     
     @commands.command()
     async def okand(self, ctx):
