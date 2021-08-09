@@ -76,7 +76,7 @@ class Bot(commands.AutoShardedBot):
 
         for cog in os.listdir('./cogs'):
             if cog.endswith('.py') and cog != '__init__.py':
-                termino.load_extension(f'cogs.{cog[:-3]}')
+                self.load_extension(f'cogs.{cog[:-3]}')
 
     async def on_connect(self):
         print(f'{termino.user} successfully connected to discord.')
