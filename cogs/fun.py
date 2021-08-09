@@ -4,21 +4,16 @@ import discord
 from discord.ext import commands
 from .util import reddit, corefuncs
 
-class Fun(commands.Cog, name = 'fun'):
-    '''
-    This category contains all the fun commands you can do.
-    '''
-    def __init__(self, bot):
-        self.bot = bot
-        self.gif_url =[
-            'https://media1.tenor.com/images/31f29b3fcc20a486f44454209914266a/tenor.gif?itemid=17942299',
-            'https://media1.tenor.com/images/3c161bd7d6c6fba17bb3e5c5ecc8493e/tenor.gif?itemid=5196956',
-            'https://media1.tenor.com/images/e29671457384a94a7e19fea26029b937/tenor.gif?itemid=10048943',
-            'https://media1.tenor.com/images/42621cf33b44ca6a717d448b1223bccc/tenor.gif?itemid=15696850',
-            'https://media1.tenor.com/images/7680952f25c4aaf8f2d04930b05da340/tenor.gif?itemid=16545760',
-            'https://media1.tenor.com/images/49de17c6f21172b3abfaf5972fddf6d6/tenor.gif?itemid=10206784'
-        ]
-        self.eightball_messages = [
+gif_url = [
+        'https://media1.tenor.com/images/31f29b3fcc20a486f44454209914266a/tenor.gif?itemid=17942299',
+        'https://media1.tenor.com/images/3c161bd7d6c6fba17bb3e5c5ecc8493e/tenor.gif?itemid=5196956',
+        'https://media1.tenor.com/images/e29671457384a94a7e19fea26029b937/tenor.gif?itemid=10048943',
+        'https://media1.tenor.com/images/42621cf33b44ca6a717d448b1223bccc/tenor.gif?itemid=15696850',
+        'https://media1.tenor.com/images/7680952f25c4aaf8f2d04930b05da340/tenor.gif?itemid=16545760',
+        'https://media1.tenor.com/images/49de17c6f21172b3abfaf5972fddf6d6/tenor.gif?itemid=10206784'
+    ]
+
+eightball_messages = [
             'As I see it, yes.',
             'Ask again later.',
             'Better not tell you now.',
@@ -36,7 +31,15 @@ class Fun(commands.Cog, name = 'fun'):
             'Signs point to yes.',
             'Very doubtful.',
             'Without a doubt.',
-            'Yes.']
+            'Yes.'
+        ]
+
+class Fun(commands.Cog, name = 'fun'):
+    '''
+    This category contains all the fun commands you can do.
+    '''
+    def __init__(self, bot):
+        self.bot = bot
 
     @commands.command()
     async def randomnum(self, ctx, start: int, stop: int):
@@ -50,13 +53,12 @@ class Fun(commands.Cog, name = 'fun'):
         except ValueError:
             await ctx.send("The first number must be less than the other.")
 
-
     @commands.command(name = '8ball', aliases = ['8b','magic_ball'])
     async def _8ball(self, ctx, *, question):
         '''
         An implementation of the 8ball fortune teller.
         '''
-        random_response = await corefuncs.random_choice(self.eightball_messages)
+        random_response = await corefuncs.random_choice(eightball_messages)
         embd = discord.Embed(title = '8ball says:', description = f'```{random_response}```', color = discord.Colour.from_rgb(255,255,255))
         embd.set_thumbnail(url = 'https://magic-8ball.com/assets/images/magicBallStart.png')
         embd.set_footer(text = f'Question: {question}')
@@ -77,7 +79,11 @@ class Fun(commands.Cog, name = 'fun'):
         '''
         Sends a random meme from r/memes
         '''
-        await ctx.send('This command is under maintenance.')
+        meme = await self.bot.reddit.get_random_post('memes')
+        meme_embed = discord.Embed(title = meme[0], color = discord.Colour.from_rgb(255,255,255))
+        meme_embed.set_author(name = meme[1])
+        meme_embed.set_image(url = meme[2])
+        await ctx.send(embed = meme_embed)
     
     @commands.command()
     async def okand(self, ctx):
@@ -117,7 +123,7 @@ class Fun(commands.Cog, name = 'fun'):
         Slaps a specific member in a discord server.
         '''
         embd = discord.Embed(description = f'{ctx.author.mention} slapped {member.mention} because of **{reason}**', color = discord.Colour.from_rgb(255,255,255))
-        embd.set_image(url = await corefuncs.random_choice(self.gif_url))
+        embd.set_image(url = await corefuncs.random_choice(gif_url))
         await ctx.send(embed = embd)
 
     @commands.command()
@@ -128,7 +134,7 @@ class Fun(commands.Cog, name = 'fun'):
         '''
         random_member = await corefuncs.random_choice(ctx.guild.members)
         embd = discord.Embed(description = f'{ctx.author.mention} slapped {random_member.mention} because of **{reason}**.', color = discord.Colour.from_rgb(255,255,255))
-        embd.set_image(url = await corefuncs.random_choice(self.gif_url))
+        embd.set_image(url = await corefuncs.random_choice(gif_url))
         await ctx.send(embed = embd)
 
     @commands.command()

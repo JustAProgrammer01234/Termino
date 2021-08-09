@@ -38,9 +38,6 @@ class Bot(commands.AutoShardedBot):
                                                 color = discord.Colour.red())
             await ctx.send(embed = command_error_embed)
         
-        else:
-            print(error)
-        
 if __name__ == '__main__':
     termino = Bot()
     termino.run(os.getenv('BOT_TOKEN'))
