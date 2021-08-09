@@ -120,7 +120,7 @@ class Fun(commands.Cog, name = 'fun'):
         Slaps a specific member in a discord server.
         '''
         embd = discord.Embed(description = f'{ctx.author.mention} slapped {member.mention} because of **{reason}**', color = discord.Colour.from_rgb(255,255,255))
-        embd.set_image(url = corefuncs.random_choice(self.gif_url))
+        embd.set_image(url = await corefuncs.random_choice(self.gif_url))
         await ctx.send(embed = embd)
 
     @commands.command()
@@ -131,7 +131,7 @@ class Fun(commands.Cog, name = 'fun'):
         '''
         random_member = await corefuncs.random_choice(ctx.guild.members)
         embd = discord.Embed(description = f'{ctx.author.mention} slapped {random_member.mention} because of **{reason}**.', color = discord.Colour.from_rgb(255,255,255))
-        embd.set_image(url = corefuncs.random_choice(self.gif_url))
+        embd.set_image(url = await corefuncs.random_choice(self.gif_url))
         await ctx.send(embed = embd)
 
     @commands.command()
