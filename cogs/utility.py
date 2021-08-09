@@ -40,6 +40,9 @@ class Utility(commands.Cog, name = 'utility'):
 
     @commands.command()
     async def source(self, ctx):
+        '''
+        Sends the source code of the bot.
+        '''
         await ctx.send("https://github.com/JustAProgrammer01234/Termino")
 
     @commands.command() 

@@ -16,10 +16,10 @@ class Settings(commands.Cog, name = 'settings'):
     async def on_member_join(self, member):
         pass
 
-    @commands.command(name = 'set-join-channel')
+    @commands.command(name = 'set-welcome-channel')
     @commands.guild_only()
     @commands.has_permissions(manage_channels = True)
-    async def set_join_channel(self, ctx, channel: discord.TextChannel):
+    async def set_welcome_channel(self, ctx, channel: discord.TextChannel):
         '''
         Tells the bot to send welcome messages to users who joins the server in `<channel>`
         '''

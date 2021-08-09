@@ -1,4 +1,8 @@
 import asyncpg 
 
 class DataBase:
-    pass
+    def __init__(self, user, passwd, host, port):
+        self.user = user 
+        self.passwd = passwd 
+        self.host = host 
+        self.port = port 

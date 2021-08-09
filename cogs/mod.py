@@ -2,6 +2,10 @@ import discord
 import asyncio
 from discord.ext import commands
 
+kick_gif = 'https://media1.tenor.com/images/e4e4730bdc422c5f75b1126926077485/tenor.gif?itemid=4799973'
+ban_gif = 'https://media.tenor.com/images/76f50d3ec6888dd3552db1d074435022/tenor.gif'
+mute_gif = 'https://media1.tenor.com/images/b54c8e343c06dc160c4fc270f8ff0ae8/tenor.gif?itemid=17545855'
+
 class DurationConverter(commands.Converter):
     async def convert(self, ctx, duration):
         time_unit_value = {'s': 1, 'm': 60, 'h': 120}
@@ -16,9 +20,6 @@ class Mod(commands.Cog, name = 'mod'):
     '''
     def __init__(self, bot):
         self.bot = bot 
-        self.kick_gif = 'https://media1.tenor.com/images/e4e4730bdc422c5f75b1126926077485/tenor.gif?itemid=4799973'
-        self.ban_gif = 'https://media.tenor.com/images/76f50d3ec6888dd3552db1d074435022/tenor.gif'
-        self.mute_gif = 'https://media1.tenor.com/images/b54c8e343c06dc160c4fc270f8ff0ae8/tenor.gif?itemid=17545855'
         self.mp_user = discord.Embed(title = ':no_entry: Permission denied! :no_entry:', color = discord.Colour.red())
         self.mp_bot = discord.Embed(title = ':warning: Bot has missing perms! :warning:', color = discord.Colour.red())
         self.mp_bot.set_footer(text = 'Or it may be affected by hierarchy.')
@@ -29,9 +30,11 @@ class Mod(commands.Cog, name = 'mod'):
     async def kick(self, ctx, member: commands.MemberConverter, *, reason = None):
         '''
         Kicks a member.
+
+        You must have Kick Members perm to do this. The same goes for the bot.
         '''
-        embd = discord.Embed(title = f':mechanical_leg: Kicked {member.name}#{member.discriminator} :mechanical_leg:', color = discord.Colour.from_rgb(255,255,255))
-        embd.set_thumbnail(url = self.kick_gif)
+        embd = discord.Embed(title = f':mechanical_leg: ***Kicked {member.name}#{member.discriminator}*** :mechanical_leg:', color = discord.Colour.from_rgb(255,255,255))
+        embd.set_thumbnail(url = kick_gif)
         
         if reason is None:
             embd.add_field(name = 'Reason for kick:', value = "Didn't provide a reason.")
@@ -48,11 +51,13 @@ class Mod(commands.Cog, name = 'mod'):
     async def ban(self, ctx, member: commands.MemberConverter, *, reason = None):
         '''
         Bans a member.
-        '''
-        embd = discord.Embed(description = f':hammer: ***Banned {member.name}#{member.discriminator}*** :hammer:', color = discord.Colour.from_rgb(255,255,255))
-        embd.set_thumbnail(url = self.ban_gif)
 
-        if reason == None:
+        You must have Ban Members perm to do this. The same goes for the bot.
+        '''
+        embd = discord.Embed(title = f':hammer: ***Banned {member.name}#{member.discriminator}*** :hammer:', color = discord.Colour.from_rgb(255,255,255))
+        embd.set_thumbnail(url = ban_gif)
+
+        if reason is None:
             embd.add_field(name = 'Reason for ban:', value = "Didn't provide a reason.")
             await member.ban(reason = "Didn't provide a reason.")
             await ctx.send(embed = embd)
@@ -67,11 +72,13 @@ class Mod(commands.Cog, name = 'mod'):
     async def tempban(self, ctx, member: commands.MemberConverter, duration: DurationConverter, *, reason = None):
         '''
         Temporarily bans a member.
-        '''
-        embd = discord.Embed(description = f':hammer: ***Temporarily banned {member.name}#{member.discriminator}*** :hammer:', color = discord.Colour.from_rgb(255,255,255))
-        embd.set_thumbnail(url = self.ban_gif)
 
-        if reason == None:
+        You must have Ban Members perm to do this. The same goes for the bot.
+        '''
+        embd = discord.Embed(title = f':hammer: ***Temporarily banned {member.name}#{member.discriminator}*** :hammer:', color = discord.Colour.from_rgb(255,255,255))
+        embd.set_thumbnail(url = ban_gif)
+
+        if reason is None:
             embd.add_field(name = 'Reason for ban:', value = "Didn't provide a reason.")
             await member.ban(reason = "Didn't provide a reason.")
             await ctx.send(embed = embd)
@@ -89,6 +96,8 @@ class Mod(commands.Cog, name = 'mod'):
     async def unban(self, ctx, *, member):
         '''
         Unbans a member
+
+        You must have Ban Members perm to do this. The same goes for the bot.
         '''
         ban_list = await ctx.guild.bans()
         name, discriminator = member.split('#')
@@ -114,6 +123,8 @@ class Mod(commands.Cog, name = 'mod'):
     async def banlist(self, ctx):
         '''
         Sends a list of banned members.
+
+        You must have Ban Members perm to do this. The same goes for the bot.
         '''
         bans_label = ''
         ban_list = await ctx.guild.bans()
@@ -142,6 +153,8 @@ class Mod(commands.Cog, name = 'mod'):
     async def mute(self, ctx, member: commands.MemberConverter, duration: DurationConverter = None, reason = None):
         '''
         Mutes a member in both text and voice channels.
+
+        You must have Manage Roles perm to do this. The same goes for the bot.
         '''
         await ctx.send('This command is under maintenance.')
 
@@ -151,6 +164,8 @@ class Mod(commands.Cog, name = 'mod'):
     async def unmute(self, ctx, member: commands.MemberConverter):
         '''
         Unmutes a member in both text and voice channels.
+
+        You must have Manage Roles perm to do this. The same goes for the bot.
         '''
         await ctx.send('This command is under maintenance.')
 
