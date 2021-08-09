@@ -15,8 +15,8 @@ class Games(commands.Cog, name = 'games'):
         '''
         A command that allows you to play dice with you and Termino.
         '''
-        player_dice = corefuncs.generate_random_number(1,6)
-        bot_dice = corefuncs.generate_random_number(1,6)
+        player_dice = await corefuncs.generate_random_number(1,6)
+        bot_dice = await corefuncs.generate_random_number(1,6)
         if player_dice == bot_dice:
             result_message = ":game_die: Looks like it's a tie man. :game_die:"
         elif player_dice > bot_dice:
