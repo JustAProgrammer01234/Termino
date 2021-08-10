@@ -80,9 +80,10 @@ class Fun(commands.Cog, name = 'fun'):
         Sends a random meme from r/memes
         '''
         meme = await self.bot.reddit.get_random_post('memes')
-        meme_embed = discord.Embed(title = meme[0], color = discord.Colour.from_rgb(255,255,255))
+        meme_embed = discord.Embed(title = meme[0], url = meme[3], color = discord.Colour.from_rgb(255,255,255))
         meme_embed.set_author(name = f'Meme by: u/{meme[1]}')
         meme_embed.set_image(url = meme[2])
+        meme_embed.set_footer(text = f'Upvotes: {meme[4]}')
         await ctx.send(embed = meme_embed)
     
     @commands.command()

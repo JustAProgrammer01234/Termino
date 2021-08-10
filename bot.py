@@ -1,4 +1,5 @@
 import os
+import dotenv
 import discord
 from cogs.util import db, reddit
 from discord.ext import commands
@@ -17,15 +18,12 @@ class Bot(commands.AutoShardedBot):
     async def on_connect(self):
         print(f'{termino.user} successfully connected to discord.')
 
-        self.database = db.TerminoDb(os.getenv('PSQL_USER'), os.getenv('PSQL_PASSWD'), os.getenv('PSQL_HOST'), os.getenv('PSQL_PORT'), os.getenv('PSQL_DB'))
-        self.reddit = reddit.TerminoReddit(site_name = 'Termino')
-
-    async def on_ready(self):
-        print(f'{termino.user} is now ready to go.')
-
         for cog in os.listdir('./cogs'):
             if cog.endswith('.py') and cog != '__init__.py':
                 self.load_extension(f'cogs.{cog[:-3]}')
+
+        self.database = db.TerminoDb(os.getenv('PSQL_USER'), os.getenv('PSQL_PASSWD'), os.getenv('PSQL_HOST'), os.getenv('PSQL_PORT'), os.getenv('PSQL_DB'))
+        self.reddit = reddit.SubReddit(client_id = os.getenv('REDDIT_CLIENT_ID'), client_secret = os.getenv('REDDIT_CLIENT_SECRET'), user_agent = os.getenv('REDDIT_USER_AGENT'))
 
     async def on_command_error(self, ctx, error):
         if isinstance(error, commands.CommandNotFound):
@@ -39,5 +37,6 @@ class Bot(commands.AutoShardedBot):
             await ctx.send(embed = command_error_embed)
         
 if __name__ == '__main__':
+    dotenv.load_dotenv()
     termino = Bot()
     termino.run(os.getenv('BOT_TOKEN'))

@@ -1,18 +1,16 @@
-import asyncpraw
+import redditeasy
 from .corefuncs import random_choice
 
-class TerminoReddit(asyncpraw.Reddit):
-    def __init__(self, site_name):
-        super().__init__(site_name = site_name)
+class SubReddit(redditeasy.AsyncSubreddit):
+    def __init__(self, client_id, client_secret, user_agent):
+        super().__init__(client_id = client_id,
+                client_secret = client_secret,
+                user_agent = user_agent
+            )
 
     async def get_random_post(self, subreddit):
-        memes = await self.subreddit(subreddit)
-        meme = await random_choice([meme async for meme in memes.hot(limit=25)])
-        submission = await self.submission(id = meme)
-        return submission.title, submission.author, submission.url
-
-    async def get_user_info(self, user):
-        pass 
-
-    async def get_subreddit_info(self, subreddit):
-        pass 
+        random_post = await self.get_post(subreddit = subreddit)
+        while random_post.nsfw:
+            random_post = await self.get_post(subreddit = subreddit)
+        return random_post.title, random_post.author, random_post.content, random_post.post_url, random_post.score
+        
