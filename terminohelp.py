@@ -28,7 +28,7 @@ class TerminoHelp(commands.HelpCommand):
         help_embed.set_thumbnail(url = ctx.me.avatar_url)
 
         for i in range(len(commands)):
-            command_list += f'**{i + 1}.** `{commands[i]}`\n'
+            command_list += f'> **{i + 1}.** `{commands[i]}`\n'
 
         help_embed.add_field(name = 'Commands:', value = command_list)
         await ctx.reply(embed = help_embed)
