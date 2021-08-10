@@ -16,7 +16,7 @@ class TerminoHelp(commands.HelpCommand):
 
         for category in mapping:
             if category != None:
-                help_embed.add_field(name = f'{category}', value = f'`$help {category.qualified_name}`', inline = True)
+                help_embed.add_field(name = f'> {category}', value = f'`$help {category.qualified_name}`', inline = True)
 
         await ctx.reply(embed = help_embed)
 
@@ -25,7 +25,7 @@ class TerminoHelp(commands.HelpCommand):
         commands = cog.get_commands()
         command_list = ''
 
-        help_embed = discord.Embed(title = f'Info about category: > {cog}', description = f'{cog.description}', color = 0xFFFF)
+        help_embed = discord.Embed(title = f'Info about category: {cog}', description = f'{cog.description}', color = 0xFFFF)
         help_embed.set_author(name = f"Help provided by: {ctx.me}", icon_url = ctx.me.avatar_url)
         help_embed.set_footer(text = f"Requested by: {ctx.author}", icon_url = ctx.author.avatar_url)
         help_embed.set_thumbnail(url = ctx.me.avatar_url)
