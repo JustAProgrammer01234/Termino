@@ -24,6 +24,9 @@ class Mod(commands.Cog, name = 'mod'):
         self.mp_bot = discord.Embed(title = ':warning: Bot has missing perms! :warning:', color = discord.Colour.red())
         self.mp_bot.set_footer(text = 'Or it may be affected by hierarchy.')
 
+    def __repr__(self):
+        return '> Moderation :shield:'
+
     @commands.command()
     @commands.guild_only()
     @commands.has_permissions(kick_members = True)

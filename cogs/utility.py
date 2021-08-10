@@ -11,6 +11,9 @@ class Utility(commands.Cog, name = 'utility'):
         self.bot = bot
         self.pong_url = 'https://media1.tenor.com/images/d43fa1f8705692a7907cf3952fd322e4/tenor.gif?itemid=14393751'
 
+    def __repr__(self):
+        return '> Utility :white_check_mark:'
+
     @commands.command()
     async def ping(self, ctx):
         '''
@@ -32,7 +35,7 @@ class Utility(commands.Cog, name = 'utility'):
         embd = discord.Embed(title = f'Info about: {self.bot.user.name}#{self.bot.user.discriminator}', description = self.bot.description, color = discord.Colour.from_rgb(255,255,255))
         embd.set_thumbnail(url = self.bot.user.avatar_url)
         embd.add_field(name = 'Developer:', value = f'**Username:** `{bot_dev.name}#{bot_dev.discriminator}`\n**ID:** `{bot_dev.id}`', inline = False)
-        embd.add_field(name = 'General info:', value = f'**Prefix:** `{self.bot.command_prefix}`\n**Servers joined:** `{len(self.bot.guilds)}`')
+        embd.add_field(name = 'General info:', value = f'**Prefix:** `{self.bot.command_prefix()}`\n**Servers joined:** `{len(self.bot.guilds)}`')
         embd.add_field(name = 'Library used:', value = f'**Name:** `discord.py`\n**Version:** `{discord.__version__}`', inline = False)
         embd.add_field(name = 'Programming language used:', value = f'**Name:** `Python`\n**Version:** `{platform.python_version()}`')
 

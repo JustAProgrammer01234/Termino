@@ -41,6 +41,9 @@ class Fun(commands.Cog, name = 'fun'):
     def __init__(self, bot):
         self.bot = bot
 
+    def __repr__(self):
+        return '> Fun :basketball:'
+
     @commands.command()
     async def randomnum(self, ctx, start: int, stop: int):
         '''

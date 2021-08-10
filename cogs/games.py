@@ -10,6 +10,9 @@ class Games(commands.Cog, name = 'games'):
     def __init__(self, bot):
         self.bot = bot
 
+    def __repr__(self):
+        return '> Games :video_game:'
+
     @commands.command()
     async def dice(self, ctx):
         '''

@@ -8,6 +8,9 @@ class Voice(commands.Cog, name = 'voice'):
     def __init__(self, bot):
         self.bot = bot 
 
+    def __repr__(self):
+        return '> Voice :speaker:'
+
     @commands.command()
     async def join(self, ctx):
         '''
