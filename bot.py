@@ -7,7 +7,7 @@ from terminohelp import TerminoHelp
 
 class Bot(commands.AutoShardedBot):
     def __init__(self, *args, **kwargs):
-        super().__init__(command_prefix = commands.when_mentioned_or('$'),
+        super().__init__(command_prefix = ['$','termino'],
             intents = discord.Intents.all(),
             activity = discord.Game(name = 'for $help'),
             help_command = TerminoHelp(),

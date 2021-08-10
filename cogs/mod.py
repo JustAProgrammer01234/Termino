@@ -21,8 +21,9 @@ class Mod(commands.Cog, name = 'mod'):
     def __init__(self, bot):
         self.bot = bot 
         self.mp_user = discord.Embed(title = ':no_entry: Permission denied! :no_entry:', color = discord.Colour.red())
+        self.mp_user.set_footer(text = 'Or you may be affected by hierarchy.')
         self.mp_bot = discord.Embed(title = ':warning: Bot has missing perms! :warning:', color = discord.Colour.red())
-        self.mp_bot.set_footer(text = 'Or it may be affected by hierarchy.')
+        self.mp_bot.set_footer(text = 'Or the bot may be affected by hierarchy.')
 
     def __repr__(self):
         return ':shield: Moderation :shield:'
@@ -38,7 +39,7 @@ class Mod(commands.Cog, name = 'mod'):
         '''
         embd = discord.Embed(title = f':mechanical_leg: ***Kicked {member.name}#{member.discriminator}*** :mechanical_leg:', color = discord.Colour.from_rgb(255,255,255))
         embd.set_thumbnail(url = kick_gif)
-        
+    
         if reason is None:
             embd.add_field(name = 'Reason for kick:', value = "Didn't provide a reason.")
             await member.kick(reason = "Didn't provide a reason.")
