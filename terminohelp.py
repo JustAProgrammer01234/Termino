@@ -13,7 +13,7 @@ class TerminoHelp(commands.HelpCommand):
 
         for category in mapping:
             if category != None:
-                help_embed.add_field(name = f'{category.qualified_name.title()}', value = f'`$help {category.qualified_name}`', inline = True)
+                help_embed.add_field(name = f'{category.qualified_name.title()}', value = f'```$help {category.qualified_name}```', inline = True)
 
         await ctx.reply(embed = help_embed)
 
