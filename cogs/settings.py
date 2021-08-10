@@ -9,7 +9,7 @@ class Settings(commands.Cog, name = 'settings'):
         self.bot = bot
 
     def __repr__(self):
-        return '> Settings :gear:'
+        return ':gear: Settings :gear:'
 
     @commands.Cog.listener()
     async def on_guild_join(self, guild):

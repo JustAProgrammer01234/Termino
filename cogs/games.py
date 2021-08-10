@@ -11,7 +11,7 @@ class Games(commands.Cog, name = 'games'):
         self.bot = bot
 
     def __repr__(self):
-        return '> Games :video_game:'
+        return ':video_game: Games :video_game:'
 
     @commands.command()
     async def dice(self, ctx):

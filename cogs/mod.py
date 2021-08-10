@@ -25,7 +25,7 @@ class Mod(commands.Cog, name = 'mod'):
         self.mp_bot.set_footer(text = 'Or it may be affected by hierarchy.')
 
     def __repr__(self):
-        return '> Moderation :shield:'
+        return ':shield: Moderation :shield:'
 
     @commands.command()
     @commands.guild_only()

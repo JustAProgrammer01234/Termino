@@ -42,7 +42,7 @@ class Fun(commands.Cog, name = 'fun'):
         self.bot = bot
 
     def __repr__(self):
-        return '> Fun :basketball:'
+        return ':basketball: Fun :basketball:'
 
     @commands.command()
     async def randomnum(self, ctx, start: int, stop: int):
