@@ -1,15 +1,16 @@
 import os
 import dotenv
 import discord
+import asyncpg
 from cogs.util import db, reddit
 from discord.ext import commands
 from terminohelp import TerminoHelp
 
 class Bot(commands.AutoShardedBot):
     def __init__(self, *args, **kwargs):
-        super().__init__(command_prefix = ['$','termino'],
+        super().__init__(command_prefix = '$.',
             intents = discord.Intents.all(),
-            activity = discord.Game(name = 'for $help'),
+            activity = discord.Game(name = 'for $.help'),
             help_command = TerminoHelp(),
             description = 'Just your average bot.',
             owner_id = 790767157523775518
@@ -17,13 +18,15 @@ class Bot(commands.AutoShardedBot):
 
     async def on_connect(self):
         print(f'{termino.user} successfully connected to discord.')
+        self.database = db.TerminoDb(os.getenv('PSQL_USER'), os.getenv('PSQL_PASSWD'), os.getenv('PSQL_HOST'), os.getenv('PSQL_PORT'), os.getenv('PSQL_DB'))
+        self.reddit = reddit.SubReddit(client_id = os.getenv('REDDIT_CLIENT_ID'), client_secret = os.getenv('REDDIT_CLIENT_SECRET'), user_agent = os.getenv('REDDIT_USER_AGENT'))
 
         for cog in os.listdir('./cogs'):
             if cog.endswith('.py') and cog != '__init__.py':
                 self.load_extension(f'cogs.{cog[:-3]}')
 
-        self.database = db.TerminoDb(os.getenv('PSQL_USER'), os.getenv('PSQL_PASSWD'), os.getenv('PSQL_HOST'), os.getenv('PSQL_PORT'), os.getenv('PSQL_DB'))
-        self.reddit = reddit.SubReddit(client_id = os.getenv('REDDIT_CLIENT_ID'), client_secret = os.getenv('REDDIT_CLIENT_SECRET'), user_agent = os.getenv('REDDIT_USER_AGENT'))
+        async with asyncpg.create_pool(dsn = self.database.dsn) as pool:
+            self.database.pool = pool
 
     async def on_command_error(self, ctx, error):
         if isinstance(error, commands.CommandNotFound):

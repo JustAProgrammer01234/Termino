@@ -28,6 +28,114 @@ class Mod(commands.Cog, name = 'mod'):
     def __repr__(self):
         return ':shield: Moderation :shield:'
 
+    async def cog_command_error(self, ctx, error):
+        if isinstance(error, commands.MissingPermissions):
+            self.mp_user.description = 'You do not have the required permissions to do that command!'
+            await ctx.send(embed = self.mp_user)
+        elif isinstance(error, commands.CommandInvokeError):
+            if hasattr(error, 'original'):
+                if isinstance(error.original, discord.Forbidden):
+                    self.mp_bot.description = "The bot doesn't have the required permissions to do that command!"
+                    await ctx.send(embed = self.mp_bot)
+
+    @commands.group()
+    @commands.guild_only()
+    @commands.has_permissions(manage_roles = True)
+    async def role(self, ctx):
+        '''
+        Command group that contains sub commands for creating roles in a server.
+
+        You must have Manage Roles Perm to do this. The same goes for the bot.
+        '''
+        await ctx.send_help('role')
+
+    @role.command()
+    @commands.guild_only()
+    @commands.has_permissions(manage_roles = True)
+    async def create(self, ctx, role_name, *, reason = None):
+        '''
+        Creates a role.
+
+        You must have Manage Roles perm to do this. The same goes for the bot.
+        '''
+        if reason is None:
+            await ctx.guild.create_role(name = role_name, reason = f'Role created by: {ctx.author}')
+        else:
+            await ctx.guild.create_role(name = role_name, reason = reason)
+        
+        await ctx.send('Role successfully created.')
+
+    @role.command()
+    @commands.guild_only()
+    @commands.has_permissions(manage_roles = True)
+    async def add_role(self, ctx, role: commands.RoleConverter, member: commands.MemberConverter, reason = None):
+        '''
+        Adds a role to a member.
+
+        You must have Manage Roles perm to do this. The same goes for the bot.
+        '''
+        if reason is None:
+            await member.add_role(role = role, reason = f'Role added by: {ctx.author}')
+        else:
+            await member.add_role(role = role, reason = reason)
+
+        await ctx.send(f'Sucessfully added role to **{member}**.')
+
+    @commands.group(name = 'create-channel', invoke_without_command = True)
+    @commands.guild_only()
+    @commands.has_permissions(manage_channels = True)
+    async def create_channel(self, ctx):
+        '''
+        Command group that contains sub commands for creating channels in a server.
+
+        You must have Manage Channels perm to do this. The same goes for the bot.
+        '''
+        await ctx.send_help('create-channel')
+
+    @create_channel.command()
+    @commands.guild_only()
+    @commands.has_permissions(manage_channels = True)
+    async def text(self, ctx, channel_name, *, reason = None):
+        '''
+        Creates a text channel.
+
+        You must have Manage Channels perm to do this. The same goes for the bot.
+        '''
+        if reason is None:
+            await ctx.guild.create_text_channel(name = channel_name, reason = f'Text channel created by: {ctx.author}')
+        else:
+            await ctx.guild.create_text_channel(name = channel_name, reason = reason)
+
+        await ctx.send('Text channel sucesssfully created.')
+
+    @commands.command()
+    @commands.guild_only()
+    @commands.has_permissions(manage_messages = True)
+    async def purge(self, ctx, limit: int):
+        '''
+        Purges or deletes the number of messages or `limit` in the channel the command is called. 
+
+        You must have Manage Messages perm to do this. The same goes for the bot.
+        '''
+        await ctx.channel.purge(limit = limit)
+        await ctx.send(f'Successfully deleted {limit} messages.')
+    
+    @create_channel.command()
+    @commands.guild_only()
+    @commands.has_permissions(manage_channels = True)
+    async def voice(self, ctx, channel_name, reason = None):
+        '''
+        Creates a voice channel.
+
+        You must have Manage Channels perm to do this. The same goes for the bot.
+        '''
+        if reason is None:
+            await ctx.guild.create_voice_channel(name = channel_name, reason = f'Voice channel created by: {ctx.author}')
+        else:
+            await ctx.guild.create_voice_channel(name = channel_name, reason = reason)
+            
+        await ctx.send('Voice channel successfully created.')
+
     @commands.command()
     @commands.guild_only()
     @commands.has_permissions(kick_members = True)
@@ -41,7 +149,7 @@ class Mod(commands.Cog, name = 'mod'):
         embd.set_thumbnail(url = kick_gif)
     
         if reason is None:
-            embd.add_field(name = 'Reason for kick:', value = "Didn't provide a reason.")
+            embd.add_field(name = 'Reason for kick:', value = f"Kicked by: {ctx.author}")
             await member.kick(reason = "Didn't provide a reason.")
             await ctx.send(embed = embd)
         else:
@@ -62,7 +170,7 @@ class Mod(commands.Cog, name = 'mod'):
         embd.set_thumbnail(url = ban_gif)
 
         if reason is None:
-            embd.add_field(name = 'Reason for ban:', value = "Didn't provide a reason.")
+            embd.add_field(name = 'Reason for ban:', value = f"Banned by: {ctx.author}")
             await member.ban(reason = "Didn't provide a reason.")
             await ctx.send(embed = embd)
         else:
@@ -83,7 +191,7 @@ class Mod(commands.Cog, name = 'mod'):
         embd.set_thumbnail(url = ban_gif)
 
         if reason is None:
-            embd.add_field(name = 'Reason for ban:', value = "Didn't provide a reason.")
+            embd.add_field(name = 'Reason for ban:', value = f"Temporarily banned by: {ctx.author}")
             await member.ban(reason = "Didn't provide a reason.")
             await ctx.send(embed = embd)
         else:
@@ -111,7 +219,7 @@ class Mod(commands.Cog, name = 'mod'):
         for ban_entry in ban_list:
             user = ban_entry.user
             if f'{name}#{discriminator}' == f'{user.name}#{user.discriminator}':
-                await ctx.guild.unban(user)
+                await ctx.guild.unban(user, reason = f'Unbanned by: {ctx.author}')
                 await message.delete()
                 await ctx.send(f'{name}#{discriminator} has been unbanned.')
                 found_member = True
@@ -172,65 +280,6 @@ class Mod(commands.Cog, name = 'mod'):
         You must have Manage Roles perm to do this. The same goes for the bot.
         '''
         await ctx.send('This command is under maintenance.')
-
-    @kick.error
-    async def kick_error(self, ctx, error):
-        if isinstance(error, commands.MissingPermissions): 
-            self.mp_user.description = "You are missing the `Kick Members` permission!"
-            await ctx.send(embed = self.mp_user)
-        elif hasattr(error, 'original'):
-            if isinstance(error.original, discord.Forbidden):
-                self.mp_bot.description = "The bot is missing the `Kick Members` permission!" 
-                await ctx.send(embed = self.mp_bot)
-
-    @ban.error
-    async def ban_error(self, ctx, error):
-        if isinstance(error, commands.MissingPermissions):
-            self.mp_user.description = "You are missing the `Ban Members` permission!"
-            await ctx.send(embed = self.mp_user)
-        elif hasattr(error, 'original'):
-            if isinstance(error.original, discord.Forbidden):
-                self.mp_bot.description = "The bot is missing the `Ban Members` permission!" 
-                await ctx.send(embed = self.mp_bot)
-
-    @unban.error
-    async def unban_error(self, ctx, error):
-        if isinstance(error, commands.MissingPermissions):
-            self.mp_user.description = "You are missing the `Ban Members` permission!"
-            await ctx.send(embed = self.mp_user)
-        elif isinstance(error.original, discord.Forbidden):
-            self.mp_bot.description = "The bot is missing the `Ban Members` permission!" 
-            await ctx.send(embed = self.mp_bot)
-
-    @banlist.error 
-    async def banlist_error(self, ctx, error):
-        if isinstance(error, commands.MissingPermissions):
-            self.mp_user.description = "You are missing the `Ban Members` permission!"
-            await ctx.send(embed = self.mp_user)
-        elif hasattr(error, 'original'):
-            if isinstance(error.original, discord.Forbidden):
-                self.mp_bot.description = "The bot is missing the `Ban Members` permission!" 
-                await ctx.send(embed = self.mp_bot)
-
-    @mute.error
-    async def mute_error(self, ctx, error):
-        if isinstance(error, commands.MissingPermissions):
-            self.mp_user.description = "You are missing the `Manage Roles` permission!"
-            await ctx.send(embed = self.mp_user)
-        elif hasattr(error, 'original'):
-            if isinstance(error.original, discord.Forbidden):
-                self.mp_bot.description = "The bot is missing the `Manage Roles` permission!" 
-                await ctx.send(embed = self.mp_bot)
-
-    @unmute.error
-    async def unmute_error(self, ctx, error):
-        if isinstance(error, commands.MissingPermissions):
-            self.mp_user.description = "You are missing the `Manage Roles` permission!"
-            await ctx.send(embed = self.mp_user)
-        elif hasattr(error, 'original'):
-            if isinstance(error.original, discord.Forbidden):
-                self.mp_bot.description = "The bot is missing the `Manage Roles` permission!" 
-                await ctx.send(embed = self.mp_bot)
 
 def setup(bot):
     bot.add_cog(Mod(bot))

@@ -36,7 +36,7 @@ class Utility(commands.Cog, name = 'utility'):
         embd = discord.Embed(title = f'Info about: {self.bot.user.name}#{self.bot.user.discriminator}', description = self.bot.description, color = discord.Colour.from_rgb(255,255,255))
         embd.set_thumbnail(url = self.bot.user.avatar_url)
         embd.add_field(name = 'Developer:', value = f'**Username:** `{bot_dev.name}#{bot_dev.discriminator}`\n**ID:** `{bot_dev.id}`', inline = False)
-        embd.add_field(name = 'General info:', value = f'**Prefix:** `{command_prefix}`\n**Servers joined:** `{len(self.bot.guilds)}`')
+        embd.add_field(name = 'General info:', value = f'**Prefix:** {command_prefix}\n**Servers joined:** `{len(self.bot.guilds)}`')
         embd.add_field(name = 'Library used:', value = f'**Name:** `discord.py`\n**Version:** `{discord.__version__}`', inline = False)
         embd.add_field(name = 'Programming language used:', value = f'**Name:** `Python`\n**Version:** `{platform.python_version()}`')
 
