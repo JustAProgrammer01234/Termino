@@ -16,12 +16,12 @@ class Bot(commands.AutoShardedBot):
             description = 'Just your average bot.',
             owner_id = 790767157523775518
         )
-
-    async def on_connect(self):
-        print(f'{termino.user} successfully connected to discord.')
         self.database = db.TerminoDbClient(os.getenv('PSQL_USER'), os.getenv('PSQL_PASSWD'), os.getenv('PSQL_HOST'), os.getenv('PSQL_PORT'), os.getenv('PSQL_DB'))
         self.reddit = reddit.SubReddit(client_id = os.getenv('REDDIT_CLIENT_ID'), client_secret = os.getenv('REDDIT_CLIENT_SECRET'), user_agent = os.getenv('REDDIT_USER_AGENT'))
 
+    async def on_connect(self):
+        print(f'{termino.user} successfully connected to discord.')
+    
         for cog in os.listdir('./cogs'):
             if cog.endswith('.py') and cog != '__init__.py':
                 self.load_extension(f'cogs.{cog[:-3]}')
