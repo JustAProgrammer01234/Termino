@@ -2,8 +2,9 @@ import os
 import dotenv
 import discord
 import asyncpg
-from cogs.util import db, reddit
+from cogs.util import reddit
 from discord.ext import commands
+from cogs.util.database import db
 from terminohelp import TerminoHelp
 
 class Bot(commands.AutoShardedBot):
@@ -18,7 +19,7 @@ class Bot(commands.AutoShardedBot):
 
     async def on_connect(self):
         print(f'{termino.user} successfully connected to discord.')
-        self.database = db.TerminoDb(os.getenv('PSQL_USER'), os.getenv('PSQL_PASSWD'), os.getenv('PSQL_HOST'), os.getenv('PSQL_PORT'), os.getenv('PSQL_DB'))
+        self.database = db.TerminoDbClient(os.getenv('PSQL_USER'), os.getenv('PSQL_PASSWD'), os.getenv('PSQL_HOST'), os.getenv('PSQL_PORT'), os.getenv('PSQL_DB'))
         self.reddit = reddit.SubReddit(client_id = os.getenv('REDDIT_CLIENT_ID'), client_secret = os.getenv('REDDIT_CLIENT_SECRET'), user_agent = os.getenv('REDDIT_USER_AGENT'))
 
         for cog in os.listdir('./cogs'):

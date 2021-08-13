@@ -1,7 +1,9 @@
-class TerminoDb:
+class TerminoDbClient:
     def __init__(self, user, passwd, host, port, database):
         self.pool = None
         self.dsn = f'postgres://{user}:{passwd}@{host}:{port}/{database}'  
+
+class TerminoServers(TerminoDbClient):
 
     async def initialize_server(self, guild_id):
         await self.pool.execute('''
@@ -21,7 +23,7 @@ class TerminoDb:
 
     async def update_welcome_role(self, guild_id, role_id):
         await self.pool.execute('''
-        UPDATE termino_servers SET welcome_role = $2 WHERE guild_id = $1;
+        UPDATE termino_servers SET welcome_role_id = $2 WHERE guild_id = $1;
         ''', guild_id, role_id)
 
     async def update_welcome_dm(self, guild_id, message):
@@ -31,7 +33,7 @@ class TerminoDb:
 
     async def update_mute_role(self, guild_id, mute_role_id):
         await self.pool.execute('''
-        UPDATE termino_servers SET welcome_channel_id = $2 WHERE guild_id = $1;
+        UPDATE termino_servers SET mute_role_id = $2 WHERE guild_id = $1;
         ''', guild_id, mute_role_id)
 
     async def delete_row(self, guild_id):
