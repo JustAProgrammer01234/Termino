@@ -78,50 +78,16 @@ class Settings(commands.Cog, name = 'settings'):
     @commands.has_permissions(manage_roles = True)
     async def select_mute_role(self, ctx, mute_role: commands.RoleConverter):
         '''
-        This command allows you to select an existing mute role. (This is for servers who already have a mute role included!)
+        This command allows you to select an existing mute role. (This is for servers who already have a mute role included.)
         '''
         await ctx.send('This command is under maintenance.')
 
-
-    # @set_join_channel.error
-    # async def set_channel_join_error(self, ctx, error):
-    #     if isinstance(error, commands.MissingPermissions):
-    #         await ctx.send(embed = self.mp_manage_channels)
-    
-    # @set_join_role.error
-    # async def set_join_role_error(self, ctx, error):
-    #     if isinstance(error, commands.MissingPermissions):
-    #         await ctx.send(embed = self.mp_manage_roles)
-
-    # @welcome_dm_message.error
-    # async def welcome_dm_message_error(self, ctx, error):
-    #     if isinstance(error, commands.MissingPermissions):
-    #         await ctx.send(embed = self.mp_manage_messages)
-
-    # @remove_join_role.error
-    # async def remove_join_role_error(self, ctx, error):
-    #     if isinstance(error, commands.MissingPermissions):
-    #         await ctx.send(embed = self.mp_manage_roles)
-
-    # @remove_join_channel.error
-    # async def remove_join_channel_error(self, ctx, error):
-    #     if isinstance(error, commands.MissingPermissions):
-    #         await ctx.send(embed = self.mp_manage_channels)
-
-    # @remove_dm_message.error
-    # async def remove_dm_message_error(self, ctx, error):
-    #     if isinstance(error, commands.MissingPermissions):
-    #         await ctx.send(embed = self.mp_manage_messages)
-
-    # @add_mute_role.error 
-    # async def add_mute_role_error(self, ctx, error):
-    #     if isinstance(error, commands.MissingPermissions):
-    #         await ctx.send(embed = self.mp_manage_roles)
-
-    # @remove_mute_role.error 
-    # async def add_mute_role_error(self, ctx, error):
-    #     if isinstance(error, commands.MissingPermissions):
-    #         await ctx.send(embed = self.mp_manage_roles)
+    @commands.command()
+    async def set_prefix(self, ctx, prefix):
+        '''
+        Changes the bot's prefix for this server.
+        '''
+        await ctx.send('This command is under maintenance.')
 
 def setup(bot):
     bot.add_cog(Settings(bot))
