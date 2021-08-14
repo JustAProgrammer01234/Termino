@@ -21,21 +21,19 @@ class Mod(commands.Cog, name = 'mod'):
     def __init__(self, bot):
         self.bot = bot 
         self.mp_user = discord.Embed(title = ':no_entry: Permission denied! :no_entry:', color = discord.Colour.red())
-        self.mp_user.set_footer(text = 'Or you may be affected by hierarchy.')
+        self.mp_user.description = 'Or you may be affected by hierarchy.'
         self.mp_bot = discord.Embed(title = ':warning: Bot has missing perms! :warning:', color = discord.Colour.red())
-        self.mp_bot.set_footer(text = 'Or the bot may be affected by hierarchy.')
+        self.mp_bot.description = 'Or the bot may be affected by hierarchy.'
 
     def __repr__(self):
         return ':shield: Moderation :shield:'
 
     async def cog_command_error(self, ctx, error):
         if isinstance(error, commands.MissingPermissions):
-            self.mp_user.description = 'You do not have the required permissions to do that command!'
             await ctx.send(embed = self.mp_user)
         elif isinstance(error, commands.CommandInvokeError):
             if hasattr(error, 'original'):
                 if isinstance(error.original, discord.Forbidden):
-                    self.mp_bot.description = "The bot doesn't have the required permissions to do that command!"
                     await ctx.send(embed = self.mp_bot)
 
     @commands.group()

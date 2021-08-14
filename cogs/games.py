@@ -128,12 +128,12 @@ class Games(commands.Cog, name = 'games'):
                 await ctx.send(f"It took you a while to guess your number, it was **{hidden_number}**")
                 break 
             else:
+                has_won = False
                 try:
                     num = int(number.content)
                 except ValueError:
                     await ctx.send("Your message must be a **number**.")
                 else:
-                    has_won = False
                     if num < 1 or num > 10:
                         await ctx.send("Your number must be from 1 - 10.")
                     elif num != hidden_number:

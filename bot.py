@@ -1,5 +1,4 @@
 import os
-import dotenv
 import discord
 import asyncpg
 from cogs.util import reddit
@@ -44,6 +43,5 @@ class Bot(commands.AutoShardedBot):
             print(error)
         
 if __name__ == '__main__':
-    dotenv.load_dotenv()
     termino = Bot()
     termino.run(os.getenv('BOT_TOKEN'))

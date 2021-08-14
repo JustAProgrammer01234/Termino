@@ -24,7 +24,7 @@ class Settings(commands.Cog, name = 'settings'):
     @commands.has_permissions(manage_channels = True)
     async def set_welcome_channel(self, ctx, channel: discord.TextChannel):
         '''
-        Tells the bot to send welcome messages to users who joins the server in `<channel>`
+        Tells the bot to send welcome messages to users who joins the server in `<channel>`.
         '''
         pass
 
