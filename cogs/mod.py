@@ -26,7 +26,7 @@ class Mod(commands.Cog, name = 'mod'):
         self.mp_bot.description = 'Or the bot may be affected by hierarchy.'
 
     def __repr__(self):
-        return ':shield: Moderation :shield:'
+        return ':shield: Mod :shield:'
 
     async def cog_command_error(self, ctx, error):
         if isinstance(error, commands.MissingPermissions):
@@ -36,37 +36,80 @@ class Mod(commands.Cog, name = 'mod'):
                 if isinstance(error.original, discord.Forbidden):
                     await ctx.send(embed = self.mp_bot)
 
-    @commands.group()
+    @commands.group(invoke_without_command = True)
+    @commands.guild_only()
+    @commands.has_permissions(manage_guild = True)
+    async def create(self, ctx):
+        '''
+        Command group that creates a channel, role, or category.
+
+        You must have Manage Server perm to do this. The same goes for the bot
+        '''
+        await ctx.send_help('create')
+
+    @create.command()
     @commands.guild_only()
     @commands.has_permissions(manage_roles = True)
-    async def role(self, ctx):
-        '''
-        Command group that contains sub commands for creating roles in a server.
-
-        You must have Manage Roles Perm to do this. The same goes for the bot.
-        '''
-        await ctx.send_help('role')
-
-    @role.command()
-    @commands.guild_only()
-    @commands.has_permissions(manage_roles = True)
-    async def create(self, ctx, role_name, *, reason = None):
+    async def role(self, ctx, role_name, *, reason = None):
         '''
         Creates a role.
 
         You must have Manage Roles perm to do this. The same goes for the bot.
         '''
         if reason is None:
-            await ctx.guild.create_role(name = role_name, reason = f'Role created by: {ctx.author}')
+            await ctx.guild.create_role(name = role_name, reason = f'Role requested by: {ctx.author}')
         else:
             await ctx.guild.create_role(name = role_name, reason = reason)
         
-        await ctx.send('Role successfully created.')
+        await ctx.send(':ballot_box_with_check: ***Role successfully created.*** :ballot_box_with_check:')
 
-    @role.command()
+    @create.command(name = 'text-channel')
+    @commands.guild_only()
+    @commands.has_permissions(manage_channels = True)
+    async def text_channel(self, ctx, channel_name, *, reason = None):
+        '''
+        Creates a text channel.
+
+        You must have Manage Channels perm to do this. The same goes for the bot.
+        '''
+        if reason is None:
+            await ctx.guild.create_text_channel(name = channel_name, reason = f'Text channel requested by: {ctx.author}')
+        else:
+            await ctx.guild.create_text_channel(name = channel_name, reason = reason)
+
+        await ctx.send(':ballot_box_with_check: ***Text channel sucesssfully created.*** :ballot_box_with_check:')
+
+    @create.command(name = 'voice-channel')
+    @commands.guild_only()
+    @commands.has_permissions(manage_channels = True)
+    async def voice_channel(self, ctx, channel_name, reason = None):
+        '''
+        Creates a voice channel.
+
+        You must have Manage Channels perm to do this. The same goes for the bot.
+        '''
+        if reason is None:
+            await ctx.guild.create_voice_channel(name = channel_name, reason = f'Voice channel requested by: {ctx.author}')
+        else:
+            await ctx.guild.create_voice_channel(name = channel_name, reason = reason)
+            
+        await ctx.send(':ballot_box_with_check: ***Voice channel successfully created.*** :ballot_box_with_check:')
+
+    @create.command()
+    @commands.guild_only()
+    @commands.has_permissions(manage_channels = True)
+    async def category(self, ctx, category_name, reason = None):
+        if reason is None:
+            await ctx.guild.create_category(name = category_name, reason = f'Category requested by: {ctx.author}')
+        else:
+            await ctx.guild.create_category(name = category_name, reason = reason)
+
+        await ctx.send(':ballot_box_with_check: ***Category successfully created.*** :ballot_box_with_check:')
+
+    @commands.command(name = 'add-role')
     @commands.guild_only()
     @commands.has_permissions(manage_roles = True)
-    async def add(self, ctx, role: commands.RoleConverter, member: commands.MemberConverter, reason = None):
+    async def add_role(self, ctx, role: commands.RoleConverter, member: commands.MemberConverter, reason = None):
         '''
         Adds a role to a member.
 
@@ -77,50 +120,7 @@ class Mod(commands.Cog, name = 'mod'):
         else:
             await member.add_role(role = role, reason = reason)
 
-        await ctx.send(f'Sucessfully added role to **{member}**.')
-
-    @commands.group(name = 'create-channel', invoke_without_command = True)
-    @commands.guild_only()
-    @commands.has_permissions(manage_channels = True)
-    async def create_channel(self, ctx):
-        '''
-        Command group that contains sub commands for creating channels in a server.
-
-        You must have Manage Channels perm to do this. The same goes for the bot.
-        '''
-        await ctx.send_help('create-channel')
-
-    @create_channel.command()
-    @commands.guild_only()
-    @commands.has_permissions(manage_channels = True)
-    async def text(self, ctx, channel_name, *, reason = None):
-        '''
-        Creates a text channel.
-
-        You must have Manage Channels perm to do this. The same goes for the bot.
-        '''
-        if reason is None:
-            await ctx.guild.create_text_channel(name = channel_name, reason = f'Text channel created by: {ctx.author}')
-        else:
-            await ctx.guild.create_text_channel(name = channel_name, reason = reason)
-
-        await ctx.send('Text channel sucesssfully created.')
-
-    @create_channel.command()
-    @commands.guild_only()
-    @commands.has_permissions(manage_channels = True)
-    async def voice(self, ctx, channel_name, reason = None):
-        '''
-        Creates a voice channel.
-
-        You must have Manage Channels perm to do this. The same goes for the bot.
-        '''
-        if reason is None:
-            await ctx.guild.create_voice_channel(name = channel_name, reason = f'Voice channel created by: {ctx.author}')
-        else:
-            await ctx.guild.create_voice_channel(name = channel_name, reason = reason)
-            
-        await ctx.send('Voice channel successfully created.')
+        await ctx.send(f'Sucessfully added role to **{member}**.')            
 
     @commands.command()
     @commands.guild_only()

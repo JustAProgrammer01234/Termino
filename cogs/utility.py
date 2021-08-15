@@ -31,7 +31,7 @@ class Utility(commands.Cog, name = 'utility'):
         Sends info about the bot.
         '''
         bot_dev = self.bot.get_user(self.bot.owner_id)
-        command_prefix = ','.join(self.bot.command_prefix)
+        command_prefix = self.bot.command_prefix
 
         embd = discord.Embed(title = f'Info about: {self.bot.user.name}#{self.bot.user.discriminator}', description = self.bot.description, color = discord.Colour.from_rgb(255,255,255))
         embd.set_thumbnail(url = self.bot.user.avatar_url)
