@@ -66,7 +66,7 @@ class Mod(commands.Cog, name = 'mod'):
     @role.command()
     @commands.guild_only()
     @commands.has_permissions(manage_roles = True)
-    async def add_role(self, ctx, role: commands.RoleConverter, member: commands.MemberConverter, reason = None):
+    async def add(self, ctx, role: commands.RoleConverter, member: commands.MemberConverter, reason = None):
         '''
         Adds a role to a member.
 
@@ -106,18 +106,6 @@ class Mod(commands.Cog, name = 'mod'):
 
         await ctx.send('Text channel sucesssfully created.')
 
-    @commands.command()
-    @commands.guild_only()
-    @commands.has_permissions(manage_messages = True)
-    async def purge(self, ctx, limit: int):
-        '''
-        Purges or deletes the number of messages or `limit` in the channel the command is called. 
-
-        You must have Manage Messages perm to do this. The same goes for the bot.
-        '''
-        await ctx.channel.purge(limit = limit)
-        await ctx.send(f'Successfully deleted {limit} messages.')
-    
     @create_channel.command()
     @commands.guild_only()
     @commands.has_permissions(manage_channels = True)
@@ -134,6 +122,18 @@ class Mod(commands.Cog, name = 'mod'):
             
         await ctx.send('Voice channel successfully created.')
 
+    @commands.command()
+    @commands.guild_only()
+    @commands.has_permissions(manage_messages = True)
+    async def purge(self, ctx, limit: int):
+        '''
+        Purges or deletes the number of messages or `limit` in the channel the command is called. 
+
+        You must have Manage Messages perm to do this. The same goes for the bot.
+        '''
+        await ctx.channel.purge(limit = limit)
+        await ctx.send(f'Successfully deleted {limit} messages.')
+    
     @commands.command()
     @commands.guild_only()
     @commands.has_permissions(kick_members = True)
