@@ -26,15 +26,15 @@ class Bot(commands.AutoShardedBot):
         port = os.getenv('PSQL_PORT')
         database = os.getenv('PSQL_DB')
 
-        for cog in os.listdir('./cogs'):
-            if cog.endswith('.py') and cog != '__init__.py':
-                self.load_extension(f'cogs.{cog[:-3]}')
-
         async with asyncpg.create_pool(dsn = f'postgres://{user}:{passwd}@{host}:{port}/{database}') as pool:
             self.pool = pool
 
         self.servers_db = termino_servers.TerminoServers(self)
         await self.servers_db.create_table()
+
+        for cog in os.listdir('./cogs'):
+            if cog.endswith('.py') and cog != '__init__.py':
+                self.load_extension(f'cogs.{cog[:-3]}')
 
     async def on_command_error(self, ctx, error):
         if isinstance(error, commands.CommandNotFound):
