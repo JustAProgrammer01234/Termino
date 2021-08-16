@@ -35,10 +35,22 @@ class Utility(commands.Cog, name = 'utility'):
 
         embd = discord.Embed(title = f'Info about: {self.bot.user.name}#{self.bot.user.discriminator}', description = self.bot.description, color = discord.Colour.from_rgb(255,255,255))
         embd.set_thumbnail(url = self.bot.user.avatar_url)
-        embd.add_field(name = 'Developer:', value = f'**Username:** `{bot_dev.name}#{bot_dev.discriminator}`\n**ID:** `{bot_dev.id}`', inline = False)
-        embd.add_field(name = 'General info:', value = f'**Prefix:** {command_prefix}\n**Servers joined:** `{len(self.bot.guilds)}`')
-        embd.add_field(name = 'Library used:', value = f'**Name:** `discord.py`\n**Version:** `{discord.__version__}`', inline = False)
-        embd.add_field(name = 'Programming language used:', value = f'**Name:** `Python`\n**Version:** `{platform.python_version()}`')
+    
+        embd.add_field(name = 'Developer:', value = f'''
+        **Username:** `{bot_dev.name}#{bot_dev.discriminator}`
+        **ID:** `{bot_dev.id}`''', inline = False)
+
+        embd.add_field(name = 'General info:', value = f'''
+        **Prefix:** {command_prefix}
+        **Servers joined:** `{len(self.bot.guilds)}`''')
+
+        embd.add_field(name = 'Library used:', value = f'''
+        **Name:** `discord.py`
+        **Version:** `{discord.__version__}`''', inline = False)
+
+        embd.add_field(name = 'Programming language used:', value = f'''
+        **Name:** `Python`
+        **Version:** `{platform.python_version()}`''')
 
         await ctx.send(embed = embd)
 
@@ -62,13 +74,29 @@ class Utility(commands.Cog, name = 'utility'):
         len_emojis = len(ctx.guild.emojis)
         server_owner = self.bot.get_user(ctx.guild.owner_id)
 
-        embd = discord.Embed(title = f'Info about server: {ctx.guild}', description = f'Server description:\n{ctx.guild.description}', color = discord.Colour.from_rgb(255,255,255)) 
+        embd = discord.Embed(title = f'Info about server: {ctx.guild}', description = f'''
+        Server description: {ctx.guild.description}''', color = discord.Colour.from_rgb(255,255,255)) 
         embd.set_thumbnail(url = ctx.guild.icon_url)
-        embd.add_field(name = 'Owner:', value = f'**Username:** `{server_owner.name}#{server_owner.discriminator}`\n**Id:** `{server_owner.id}`', inline = False)
-        embd.add_field(name = 'General info:', value = f'**Server created at:** `{ctx.guild.created_at}`\n**Server ID**: `{ctx.guild.id}`\n**Region:** `{ctx.guild.region}`', inline = False)
-        embd.add_field(name = 'Channel count:', value = f'**Text Channels:** `{len_text}`\n**Voice Channels:** `{len_voice}`\n**Total:** `{len_text + len_voice}`', inline = False)
-        embd.add_field(name = 'Member count:', value = f'**Users:** `{len_users}`\n**Bots:** `{len_bots}`\n**Total:** `{ctx.guild.member_count}`', inline = False)
-        embd.add_field(name = 'Emoji count:', value = f'**Emoji limit:** `{ctx.guild.emoji_limit}`\n**Emojis:** `{len_emojis}`', inline = False)
+
+        embd.add_field(name = 'Owner:', value = f'''
+        **Username:** `{server_owner.name}#{server_owner.discriminator}`
+        **Id:** `{server_owner.id}`''', inline = False)
+
+        embd.add_field(name = 'General info:', value = f'''**Server created at:** `{ctx.guild.created_at}`
+        **Server ID**: `{ctx.guild.id}`
+        **Region:** `{ctx.guild.region}`''', inline = False)
+
+        embd.add_field(name = 'Channel count:', value = f'''
+        **Text Channels:** `{len_text}`
+        **Voice Channels:** `{len_voice}`
+        **Total:** `{len_text + len_voice}`''', inline = False)
+
+        embd.add_field(name = 'Member count:', value = f'''**Users:** `{len_users}`
+        **Bots:** `{len_bots}`
+        **Total:** `{ctx.guild.member_count}`''', inline = False)
+
+        embd.add_field(name = 'Emoji count:', value = f'''**Emoji limit:** `{ctx.guild.emoji_limit}`
+        **Emojis:** `{len_emojis}`''', inline = False)
 
         await ctx.send(embed = embd)
 

@@ -3,7 +3,7 @@ import discord
 import asyncpg
 from cogs.util import reddit
 from discord.ext import commands
-from cogs.util.database import db
+from cogs.util.database import termino_servers
 from terminohelp import TerminoHelp
 
 class Bot(commands.AutoShardedBot):
@@ -15,18 +15,26 @@ class Bot(commands.AutoShardedBot):
             description = 'Just your average bot.',
             owner_id = 790767157523775518
         )
-        self.database = db.TerminoDbClient(os.getenv('PSQL_USER'), os.getenv('PSQL_PASSWD'), os.getenv('PSQL_HOST'), os.getenv('PSQL_PORT'), os.getenv('PSQL_DB'))
         self.reddit = reddit.SubReddit(client_id = os.getenv('REDDIT_CLIENT_ID'), client_secret = os.getenv('REDDIT_CLIENT_SECRET'), user_agent = os.getenv('REDDIT_USER_AGENT'))
 
     async def on_connect(self):
         print(f'{termino.user} successfully connected to discord.')
     
+        user = os.getenv('PSQL_USER')
+        passwd = os.getenv('PSQL_PASSWD')
+        host = os.getenv('PSQL_HOST')
+        port = os.getenv('PSQL_PORT')
+        database = os.getenv('PSQL_DB')
+
         for cog in os.listdir('./cogs'):
             if cog.endswith('.py') and cog != '__init__.py':
                 self.load_extension(f'cogs.{cog[:-3]}')
 
-        async with asyncpg.create_pool(dsn = self.database.dsn) as pool:
-            self.database.pool = pool
+        async with asyncpg.create_pool(dsn = f'postgres://{user}:{passwd}@{host}:{port}/{database}') as pool:
+            self.pool = pool
+
+        self.servers_db = termino_servers.TerminoServers(self)
+        await self.servers_db.create_table()
 
     async def on_command_error(self, ctx, error):
         if isinstance(error, commands.CommandNotFound):
@@ -41,6 +49,9 @@ class Bot(commands.AutoShardedBot):
         
         else:
             print(error)
+
+    async def on_guild_join(self, guild):
+        await self.servers_db.initialize_server(guild.id)
         
 if __name__ == '__main__':
     termino = Bot()

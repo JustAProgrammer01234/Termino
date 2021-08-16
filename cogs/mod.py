@@ -20,6 +20,8 @@ class Mod(commands.Cog, name = 'mod'):
     '''
     def __init__(self, bot):
         self.bot = bot 
+        self.servers_db = self.bot.servers_db
+
         self.mp_user = discord.Embed(title = ':no_entry: Permission denied! :no_entry:', color = discord.Colour.red())
         self.mp_user.description = 'Or you may be affected by hierarchy.'
         self.mp_bot = discord.Embed(title = ':warning: Bot has missing perms! :warning:', color = discord.Colour.red())
@@ -116,9 +118,9 @@ class Mod(commands.Cog, name = 'mod'):
         You must have Manage Roles perm to do this. The same goes for the bot.
         '''
         if reason is None:
-            await member.add_role(role = role, reason = f'Role added by: {ctx.author}')
+            await member.add_roles(role, reason = f'Role assignment requested by: {ctx.author}')
         else:
-            await member.add_role(role = role, reason = reason)
+            await member.add_roles(role, reason = reason)
 
         await ctx.send(f'Sucessfully added role to **{member}**.')            
 
@@ -143,7 +145,7 @@ class Mod(commands.Cog, name = 'mod'):
 
         You must have Kick Members perm to do this. The same goes for the bot.
         '''
-        embd = discord.Embed(title = f':mechanical_leg: ***Kicked {member.name}#{member.discriminator}*** :mechanical_leg:', color = discord.Colour.from_rgb(255,255,255))
+        embd = discord.Embed(title = f':mechanical_leg: ***Kicked {member}*** :mechanical_leg:', color = discord.Colour.from_rgb(255,255,255))
         embd.set_thumbnail(url = kick_gif)
     
         if reason is None:
@@ -164,7 +166,7 @@ class Mod(commands.Cog, name = 'mod'):
 
         You must have Ban Members perm to do this. The same goes for the bot.
         '''
-        embd = discord.Embed(title = f':hammer: ***Banned {member.name}#{member.discriminator}*** :hammer:', color = discord.Colour.from_rgb(255,255,255))
+        embd = discord.Embed(title = f':hammer: ***Banned {member}*** :hammer:', color = discord.Colour.from_rgb(255,255,255))
         embd.set_thumbnail(url = ban_gif)
 
         if reason is None:
@@ -185,7 +187,7 @@ class Mod(commands.Cog, name = 'mod'):
 
         You must have Ban Members perm to do this. The same goes for the bot.
         '''
-        embd = discord.Embed(title = f':hammer: ***Temporarily banned {member.name}#{member.discriminator}*** :hammer:', color = discord.Colour.from_rgb(255,255,255))
+        embd = discord.Embed(title = f':hammer: ***Temporarily banned {member}*** :hammer:', color = discord.Colour.from_rgb(255,255,255))
         embd.set_thumbnail(url = ban_gif)
 
         if reason is None:
@@ -256,17 +258,49 @@ class Mod(commands.Cog, name = 'mod'):
             await ctx.send(embed = banlist_embed)
         else:
             await ctx.send("This server has no banned members.")
-    
+
     @commands.command()
     @commands.guild_only()
     @commands.has_permissions(manage_roles = True)
-    async def mute(self, ctx, member: commands.MemberConverter, duration: DurationConverter = None, reason = None):
+    async def mute(self, ctx, member: commands.MemberConverter, reason = None):
         '''
         Mutes a member in both text and voice channels.
 
         You must have Manage Roles perm to do this. The same goes for the bot.
         '''
-        await ctx.send('This command is under maintenance.')
+        mute_role = self.servers_db.fetch_server_info(ctx.guild.id)['mute_role_id']
+        mute_embed = discord.Embed(title = f':mute: ***Muted {member}*** :mute:', color = discord.Colour.from_rgb(255,255,255))
+        
+        if reason is None:
+            mute_embed.add_field(name = 'Reason:', value = f'Muted by: {ctx.author}')
+        else:
+            mute_embed.add_field(name = 'Reason:', value = reason)
+
+        await member.add_roles(mute_role)
+        await ctx.send(embed = mute_embed)
+    
+    @commands.command(name = 'temp-mute')
+    @commands.guild_only()
+    @commands.has_permissions(manage_roles = True)
+    async def temp_mute(self, ctx, member: commands.MemberConverter, duration: DurationConverter = None, reason = None):
+        '''
+        Temporarily mutes a member in both text and voice channels.
+
+        You must have Manage Roles perm to do this. The same goes for the bot.
+        '''
+        mute_role = self.servers_db.fetch_server_info(ctx.guild.id)['mute_role_id']
+        mute_embed = discord.Embed(title = f':mute: ***Muted {member}*** :mute:', color = discord.Colour.from_rgb(255,255,255))
+        
+        if reason is None:
+            mute_embed.add_field(name = 'Reason:', value = f'Muted by: {ctx.author}')
+        else:
+            mute_embed.add_field(name = 'Reason:', value = reason)
+
+        await member.add_roles(mute_role)
+        await ctx.send(embed = mute_embed)
+        await asyncio.sleep(duration)
+        await member.remove_roles(mute_role, reason = 'Temporary mute already ended.')
+        
 
     @commands.command()
     @commands.guild_only()
@@ -277,7 +311,9 @@ class Mod(commands.Cog, name = 'mod'):
 
         You must have Manage Roles perm to do this. The same goes for the bot.
         '''
-        await ctx.send('This command is under maintenance.')
+        mute_role = self.servers_db.fetch_server_info(ctx.guild.id)['mute_role_id']
+        await member.remove_roles(mute_role)
+        await ctx.send(f'{member} has been unmuted.')
 
 def setup(bot):
     bot.add_cog(Mod(bot))
