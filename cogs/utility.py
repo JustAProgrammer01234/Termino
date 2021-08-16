@@ -79,7 +79,7 @@ class Utility(commands.Cog, name = 'utility'):
         embd.set_thumbnail(url = ctx.guild.icon_url)
 
         embd.add_field(name = 'Owner:', value = f'''
-        **Username:** `{server_owner.name}#{server_owner.discriminator}`
+        **Username:** `{server_owner}`
         **Id:** `{server_owner.id}`''', inline = False)
 
         embd.add_field(name = 'General info:', value = f'''**Server created at:** `{ctx.guild.created_at}`
@@ -117,9 +117,13 @@ class Utility(commands.Cog, name = 'utility'):
         '''
         member_roles = '\n'.join([role.mention for role in member.roles])
 
-        embd = discord.Embed(title = f'Info about member: {member.name}#{member.discriminator}', color = discord.Colour.from_rgb(255,255,255))
+        embd = discord.Embed(title = f'Info about member: {member}', color = discord.Colour.from_rgb(255,255,255))
         embd.set_thumbnail(url = member.avatar_url)
-        embd.add_field(name = 'General info:', value = f'**User created at:** `{member.created_at}`\n**User joined at:** `{member.joined_at}`\n**Member id:** `{member.id}`\n**Status:** `{member.status}`', inline = False)
+        embd.add_field(name = 'General info:', value = f'''**User created at:** `{member.created_at}`
+        **User joined at:** `{member.joined_at}`
+        **Member id:** `{member.id}`
+        **Status:** `{member.status}`''', inline = False)
+        
         embd.add_field(name = 'Roles assigned:', value = f'{member_roles}')
 
         await ctx.send(embed = embd)

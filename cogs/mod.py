@@ -34,9 +34,8 @@ class Mod(commands.Cog, name = 'mod'):
         if isinstance(error, commands.MissingPermissions):
             await ctx.send(embed = self.mp_user)
         elif isinstance(error, commands.CommandInvokeError):
-            if hasattr(error, 'original'):
-                if isinstance(error.original, discord.Forbidden):
-                    await ctx.send(embed = self.mp_bot)
+            if hasattr(error, 'original') and isinstance(error.original, discord.Forbidden):
+                await ctx.send(embed = self.mp_bot)
 
     @commands.group(invoke_without_command = True)
     @commands.guild_only()
@@ -218,7 +217,7 @@ class Mod(commands.Cog, name = 'mod'):
 
         for ban_entry in ban_list:
             user = ban_entry.user
-            if f'{name}#{discriminator}' == f'{user.name}#{user.discriminator}':
+            if f'{name}#{discriminator}' == f'{user}':
                 await ctx.guild.unban(user, reason = f'Unbanned by: {ctx.author}')
                 await message.delete()
                 await ctx.send(f'{name}#{discriminator} has been unbanned.')
@@ -249,7 +248,7 @@ class Mod(commands.Cog, name = 'mod'):
 
             for ban_entry in ban_list:
                 user = ban_entry.user
-                bans_label += f'{user.name}#{user.discriminator}\n'
+                bans_label += f'{user}\n'
 
             if greater_than_one:
                 await message.delete()
@@ -270,13 +269,22 @@ class Mod(commands.Cog, name = 'mod'):
         '''
         mute_role = self.servers_db.fetch_server_info(ctx.guild.id)['mute_role_id']
         mute_embed = discord.Embed(title = f':mute: ***Muted {member}*** :mute:', color = discord.Colour.from_rgb(255,255,255))
-        
+
+        if mute_role is None:
+            try:
+                m = await ctx.guild.create_role(name = 'Muted', permissions = 1024)
+            except commands.CommandInvokeError as e:
+                if hasattr(e, 'original') and isinstance(e.original, discord.Forbidden):
+                    await ctx.send("**Warning**, I need Manage Roles perm to create a role role.")
+            else:
+                self.servers_db.update_mute_role(ctx.guild.id, m)
+
         if reason is None:
             mute_embed.add_field(name = 'Reason:', value = f'Muted by: {ctx.author}')
         else:
             mute_embed.add_field(name = 'Reason:', value = reason)
 
-        await member.add_roles(mute_role)
+        await member.add_roles(mute_role, reason = f'Muted by: {ctx.author}')
         await ctx.send(embed = mute_embed)
     
     @commands.command(name = 'temp-mute')
@@ -290,6 +298,15 @@ class Mod(commands.Cog, name = 'mod'):
         '''
         mute_role = self.servers_db.fetch_server_info(ctx.guild.id)['mute_role_id']
         mute_embed = discord.Embed(title = f':mute: ***Muted {member}*** :mute:', color = discord.Colour.from_rgb(255,255,255))
+
+        if mute_role is None:
+            try:
+                m = await ctx.guild.create_role(name = 'Muted', permissions = 1024)
+            except commands.CommandInvokeError as e:
+                if hasattr(e, 'original') and isinstance(e.original, discord.Forbidden):
+                    await ctx.send("**Warning**, I need Manage Roles perm to create a role role.")
+            else:
+                self.servers_db.update_mute_role(ctx.guild.id, m)
         
         if reason is None:
             mute_embed.add_field(name = 'Reason:', value = f'Muted by: {ctx.author}')
