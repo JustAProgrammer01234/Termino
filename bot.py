@@ -15,7 +15,9 @@ class Bot(commands.AutoShardedBot):
             description = 'Just your average bot.',
             owner_id = 790767157523775518
         )
-        self.reddit = reddit.SubReddit(client_id = os.getenv('REDDIT_CLIENT_ID'), client_secret = os.getenv('REDDIT_CLIENT_SECRET'), user_agent = os.getenv('REDDIT_USER_AGENT'))
+        self.reddit = reddit.SubReddit(client_id = os.getenv('REDDIT_CLIENT_ID'), 
+                            client_secret = os.getenv('REDDIT_CLIENT_SECRET'), 
+                            user_agent = os.getenv('REDDIT_USER_AGENT'))
 
     async def on_connect(self):
         print(f'{termino.user} successfully connected to discord.')
@@ -26,15 +28,21 @@ class Bot(commands.AutoShardedBot):
         port = os.getenv('PSQL_PORT')
         database = os.getenv('PSQL_DB')
 
-        async with asyncpg.create_pool(dsn = f'postgres://{user}:{passwd}@{host}:{port}/{database}') as pool:
-            self.pool = pool
+        try:
+            async with asyncpg.create_pool(dsn = f'postgres://{user}:{passwd}@{host}:{port}/{database}') as pool:
+                self.pool = pool
 
-        self.servers_db = termino_servers.TerminoServers(self)
-        await self.servers_db.create_table()
+            self.servers_db = termino_servers.TerminoServers(self)
+            await self.servers_db.create_table()
+        except:
+            pass
 
         for cog in os.listdir('./cogs'):
             if cog.endswith('.py') and cog != '__init__.py':
-                self.load_extension(f'cogs.{cog[:-3]}')
+                try:
+                    self.load_extension(f'cogs.{cog[:-3]}')
+                except:
+                    pass
 
     async def on_command_error(self, ctx, error):
         if isinstance(error, commands.CommandNotFound):

@@ -210,12 +210,11 @@ class Mod(commands.Cog, name = 'mod'):
 
         You must have Ban Members perm to do this. The same goes for the bot.
         '''
-        ban_list = await ctx.guild.bans()
         name, discriminator = member.split('#')
         message = await ctx.send('Hold on this may take a while.')
         found_member = False
 
-        for ban_entry in ban_list:
+        async for ban_entry in ctx.guild.bans():
             user = ban_entry.user
             if f'{name}#{discriminator}' == f'{user}':
                 await ctx.guild.unban(user, reason = f'Unbanned by: {ctx.author}')
@@ -269,13 +268,14 @@ class Mod(commands.Cog, name = 'mod'):
         '''
         mute_role = self.servers_db.fetch_server_info(ctx.guild.id)['mute_role_id']
         mute_embed = discord.Embed(title = f':mute: ***Muted {member}*** :mute:', color = discord.Colour.from_rgb(255,255,255))
+        mute_embed.set_thumbnail(url = mute_gif)
 
         if mute_role is None:
             try:
                 m = await ctx.guild.create_role(name = 'Muted', permissions = 1024)
             except commands.CommandInvokeError as e:
                 if hasattr(e, 'original') and isinstance(e.original, discord.Forbidden):
-                    await ctx.send("**Warning**, I need Manage Roles perm to create a role role.")
+                    await ctx.send("**Warning!** I need Manage Roles perm to create a mute role.")
             else:
                 self.servers_db.update_mute_role(ctx.guild.id, m)
 
@@ -298,13 +298,14 @@ class Mod(commands.Cog, name = 'mod'):
         '''
         mute_role = self.servers_db.fetch_server_info(ctx.guild.id)['mute_role_id']
         mute_embed = discord.Embed(title = f':mute: ***Muted {member}*** :mute:', color = discord.Colour.from_rgb(255,255,255))
+        mute_embed.set_thumbnail(url = mute_gif)
 
         if mute_role is None:
-            try:
+            try: 
                 m = await ctx.guild.create_role(name = 'Muted', permissions = 1024)
             except commands.CommandInvokeError as e:
                 if hasattr(e, 'original') and isinstance(e.original, discord.Forbidden):
-                    await ctx.send("**Warning**, I need Manage Roles perm to create a role role.")
+                    await ctx.send("**Warning!** I need Manage Roles perm to create a mute role.")
             else:
                 self.servers_db.update_mute_role(ctx.guild.id, m)
         

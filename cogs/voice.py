@@ -37,6 +37,34 @@ class Voice(commands.Cog, name = 'voice'):
             leave_embed = discord.Embed(description = f"**Can't disconnect, I'm not currently in a voice channel.**", colour = discord.Colour.red())
         await ctx.send(embed = leave_embed)
 
+    @commands.command()
+    async def play(self, ctx, url):
+        '''
+        Plays a url in the voice channel your in.
+        '''
+        await ctx.send('This command is under maintenance.')
+
+    @commands.command()
+    async def stop(self, ctx):
+        '''
+        Stops the url being played.
+        '''
+        await ctx.send('This command is under maintenance.')
+
+    @commands.command()
+    async def resume(self, ctx, url):
+        '''
+        Resumes playing the url.
+        '''
+        await ctx.send('This command is under maintenance.')
+
+    @commands.command()
+    async def pause(self, ctx, url):
+        '''
+        Pauses the url being played.
+        '''
+        await ctx.send('This command is under maintenance.')
+
 
 def setup(bot):
     bot.add_cog(Voice(bot))

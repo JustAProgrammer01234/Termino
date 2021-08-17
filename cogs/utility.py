@@ -41,8 +41,10 @@ class Utility(commands.Cog, name = 'utility'):
         **ID:** `{bot_dev.id}`''', inline = False)
 
         embd.add_field(name = 'General info:', value = f'''
-        **Prefix:** {command_prefix}
-        **Servers joined:** `{len(self.bot.guilds)}`''')
+        **Prefix:** `{command_prefix}`
+        **Servers joined:** `{len(self.bot.guilds)}`
+        **Bot created at:** `{self.bot.user.created_at.strftime('%d/%m/%Y')}`
+        ''')
 
         embd.add_field(name = 'Library used:', value = f'''
         **Name:** `discord.py`
@@ -82,7 +84,7 @@ class Utility(commands.Cog, name = 'utility'):
         **Username:** `{server_owner}`
         **Id:** `{server_owner.id}`''', inline = False)
 
-        embd.add_field(name = 'General info:', value = f'''**Server created at:** `{ctx.guild.created_at}`
+        embd.add_field(name = 'General info:', value = f'''**Server created at:** `{ctx.guild.created_at.strftime('%d/%m/%Y')}`
         **Server ID**: `{ctx.guild.id}`
         **Region:** `{ctx.guild.region}`''', inline = False)
 
@@ -119,8 +121,8 @@ class Utility(commands.Cog, name = 'utility'):
 
         embd = discord.Embed(title = f'Info about member: {member}', color = discord.Colour.from_rgb(255,255,255))
         embd.set_thumbnail(url = member.avatar_url)
-        embd.add_field(name = 'General info:', value = f'''**User created at:** `{member.created_at}`
-        **User joined at:** `{member.joined_at}`
+        embd.add_field(name = 'General info:', value = f'''**User created at:** `{member.created_at.strftime('%d/%m/%Y')}`
+        **User joined at:** `{member.joined_at.strftime('%d/%m/%Y')}`
         **Member id:** `{member.id}`
         **Status:** `{member.status}`''', inline = False)
         
