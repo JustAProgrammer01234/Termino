@@ -1,6 +1,7 @@
 import os
 import discord
 import asyncpg
+import asyncio
 from cogs.util import reddit
 from discord.ext import commands
 from cogs.util.database import termino_servers
@@ -20,23 +21,8 @@ class Bot(commands.AutoShardedBot):
                             user_agent = os.getenv('REDDIT_USER_AGENT'))
 
     async def on_connect(self):
-        print(f'{termino.user} successfully connected to discord.')
+        print(f'{self.user} successfully connected to discord.')
     
-        user = os.getenv('PSQL_USER')
-        passwd = os.getenv('PSQL_PASSWD')
-        host = os.getenv('PSQL_HOST')
-        port = os.getenv('PSQL_PORT')
-        database = os.getenv('PSQL_DB')
-
-        try:
-            async with asyncpg.create_pool(dsn = f'postgres://{user}:{passwd}@{host}:{port}/{database}') as pool:
-                self.pool = pool
-
-            self.servers_db = termino_servers.TerminoServers(self)
-            await self.servers_db.create_table()
-        except:
-            pass
-
         for cog in os.listdir('./cogs'):
             if cog.endswith('.py') and cog != '__init__.py':
                 try:
@@ -46,7 +32,7 @@ class Bot(commands.AutoShardedBot):
 
     async def on_command_error(self, ctx, error):
         if isinstance(error, commands.CommandNotFound):
-            cmd_not_found_embed = discord.Embed(title = "Looks like I coudn't find that command.", description = 'Try typing `$help`', color = discord.Colour.red())
+            cmd_not_found_embed = discord.Embed(title = "Looks like I coudn't find that command.", description = f'Try typing `{self.command_prefix}help`', color = discord.Colour.red())
             await ctx.send(embed = cmd_not_found_embed)
 
         elif not hasattr(error, 'original') and not isinstance(error, commands.MissingPermissions):
@@ -60,7 +46,26 @@ class Bot(commands.AutoShardedBot):
 
     async def on_guild_join(self, guild):
         await self.servers_db.initialize_server(guild.id)
-        
-if __name__ == '__main__':
+
+async def main():
     termino = Bot()
+
+    user = os.getenv('PSQL_USER')
+    passwd = os.getenv('PSQL_PASSWD')
+    host = os.getenv('PSQL_HOST')
+    port = os.getenv('PSQL_PORT')
+    database = os.getenv('PSQL_DB')
+
+    try:
+        async with asyncpg.create_pool(dsn = f'postgres://{user}:{passwd}@{host}:{port}/{database}') as pool:
+            termino.pool = pool
+
+            termino.servers_db = termino_servers.TerminoServers(termino)
+            await termino.servers_db.create_table()
+    except:
+        pass
+
     termino.run(os.getenv('BOT_TOKEN'))
+
+loop = asyncio.get_event_loop()
+loop.run_until_complete(main())

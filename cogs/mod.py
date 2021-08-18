@@ -37,6 +37,22 @@ class Mod(commands.Cog, name = 'mod'):
             if hasattr(error, 'original') and isinstance(error.original, discord.Forbidden):
                 await ctx.send(embed = self.mp_bot)
 
+    async def check_mute_role(self, ctx, mute_role):
+        if mute_role is None:
+            try:
+                m = await ctx.guild.create_role(name = 'Muted', permissions = 1024)
+            except commands.CommandInvokeError as e:
+                if hasattr(e, 'original') and isinstance(e.original, discord.Forbidden):
+                    await ctx.send("**Warning!** I need Manage Roles perm to create a mute role.")
+            else:
+                self.servers_db.update_mute_role(ctx.guild.id, m)
+        else:
+            role_in_server = discord.utils.find(lambda r: r.id == mute_role, ctx.guild.roles)
+            
+            if role_in_server is None:
+                await ctx.send("Looks like the mute role you configured to my db does not exist.")
+                return
+
     @commands.group(invoke_without_command = True)
     @commands.guild_only()
     @commands.has_permissions(manage_guild = True)
@@ -270,14 +286,7 @@ class Mod(commands.Cog, name = 'mod'):
         mute_embed = discord.Embed(title = f':mute: ***Muted {member}*** :mute:', color = discord.Colour.from_rgb(255,255,255))
         mute_embed.set_thumbnail(url = mute_gif)
 
-        if mute_role is None:
-            try:
-                m = await ctx.guild.create_role(name = 'Muted', permissions = 1024)
-            except commands.CommandInvokeError as e:
-                if hasattr(e, 'original') and isinstance(e.original, discord.Forbidden):
-                    await ctx.send("**Warning!** I need Manage Roles perm to create a mute role.")
-            else:
-                self.servers_db.update_mute_role(ctx.guild.id, m)
+        await self.check_mute_role(ctx, mute_role)
 
         if reason is None:
             mute_embed.add_field(name = 'Reason:', value = f'Muted by: {ctx.author}')
@@ -299,16 +308,9 @@ class Mod(commands.Cog, name = 'mod'):
         mute_role = self.servers_db.fetch_server_info(ctx.guild.id)['mute_role_id']
         mute_embed = discord.Embed(title = f':mute: ***Muted {member}*** :mute:', color = discord.Colour.from_rgb(255,255,255))
         mute_embed.set_thumbnail(url = mute_gif)
-
-        if mute_role is None:
-            try: 
-                m = await ctx.guild.create_role(name = 'Muted', permissions = 1024)
-            except commands.CommandInvokeError as e:
-                if hasattr(e, 'original') and isinstance(e.original, discord.Forbidden):
-                    await ctx.send("**Warning!** I need Manage Roles perm to create a mute role.")
-            else:
-                self.servers_db.update_mute_role(ctx.guild.id, m)
         
+        await self.check_mute_role(ctx, mute_role)
+
         if reason is None:
             mute_embed.add_field(name = 'Reason:', value = f'Muted by: {ctx.author}')
         else:
