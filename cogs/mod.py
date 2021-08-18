@@ -38,6 +38,8 @@ class Mod(commands.Cog, name = 'mod'):
                 await ctx.send(embed = self.mp_bot)
 
     async def check_mute_role(self, ctx, mute_role):
+        mute_role = discord.utils.find(lambda m: m.id == mute_role, ctx.guild.roles)
+
         if mute_role is None:
             try:
                 m = await ctx.guild.create_role(name = 'Muted', permissions = 1024)
@@ -332,8 +334,13 @@ class Mod(commands.Cog, name = 'mod'):
         You must have Manage Roles perm to do this. The same goes for the bot.
         '''
         mute_role = self.servers_db.fetch_server_info(ctx.guild.id)['mute_role_id']
-        await member.remove_roles(mute_role)
-        await ctx.send(f'{member} has been unmuted.')
+        has_mute_role = discord.utils.find(lambda m: m.id == mute_role, ctx.guild.roles)
+
+        if has_mute_role:
+            await member.remove_roles(mute_role)
+            await ctx.send(f'{member} has been unmuted.')
+        else:
+            await ctx.send(f"Looks like the mute role you configured to my db doesn't exist.")
 
 def setup(bot):
     bot.add_cog(Mod(bot))
