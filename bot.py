@@ -65,6 +65,6 @@ async def main():
     except:
         pass
 
-    termino.run(os.getenv('BOT_TOKEN'))
+    await termino.start(os.getenv('BOT_TOKEN'))
 
 asyncio.run(main())
