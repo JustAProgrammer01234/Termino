@@ -47,6 +47,9 @@ class Bot(commands.AutoShardedBot):
     async def on_guild_join(self, guild):
         await self.servers_db.initialize_server(guild.id)
 
+    async def on_guild_remove(self, guild):
+        await self.servers_db.delete_row(guild.id)
+
 async def main():
     termino = Bot()
 
@@ -59,12 +62,12 @@ async def main():
     try:
         async with asyncpg.create_pool(dsn = f'postgres://{user}:{passwd}@{host}:{port}/{database}') as pool:
             termino.pool = pool
-
             termino.servers_db = termino_servers.TerminoServers(termino)
+
             await termino.servers_db.create_table()
+            await termino.start(os.getenv('BOT_TOKEN'))
     except:
         pass
 
-    await termino.start(os.getenv('BOT_TOKEN'))
-
-asyncio.run(main())
+loop = asyncio.get_event_loop()
+loop.run_until_complete(main())
