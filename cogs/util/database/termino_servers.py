@@ -10,11 +10,11 @@ class TerminoServers:
             async with self.bot.pool.acquire() as con:
                 await con.execute('''
                 CREATE TABLE termino_servers (
-                    guild_id    int,
-                    welcome_channel_id  int,
-                    welcome_role_id int,
+                    guild_id    bigint,
+                    welcome_channel_id  bigint,
+                    welcome_role_id bigint,
                     welcome_dm  TEXT,
-                    mute_role_id    int,
+                    mute_role_id    bigint,
                     prefix  TEXT
                 );
                 ''')
