@@ -284,7 +284,7 @@ class Mod(commands.Cog, name = 'mod'):
 
         You must have Manage Roles perm to do this. The same goes for the bot.
         '''
-        mute_role = self.servers_db.fetch_server_info(ctx.guild.id)['mute_role_id']
+        mute_role = await self.servers_db.fetch_server_info(ctx.guild.id)['mute_role_id']
         mute_embed = discord.Embed(title = f':mute: ***Muted {member}*** :mute:', color = discord.Colour.from_rgb(255,255,255))
         mute_embed.set_thumbnail(url = mute_gif)
 
@@ -307,7 +307,7 @@ class Mod(commands.Cog, name = 'mod'):
 
         You must have Manage Roles perm to do this. The same goes for the bot.
         '''
-        mute_role = self.servers_db.fetch_server_info(ctx.guild.id)['mute_role_id']
+        mute_role = await self.servers_db.fetch_server_info(ctx.guild.id)['mute_role_id']
         mute_embed = discord.Embed(title = f':mute: ***Muted {member}*** :mute:', color = discord.Colour.from_rgb(255,255,255))
         mute_embed.set_thumbnail(url = mute_gif)
         
@@ -333,7 +333,7 @@ class Mod(commands.Cog, name = 'mod'):
 
         You must have Manage Roles perm to do this. The same goes for the bot.
         '''
-        mute_role = self.servers_db.fetch_server_info(ctx.guild.id)['mute_role_id']
+        mute_role = await self.servers_db.fetch_server_info(ctx.guild.id)['mute_role_id']
         has_mute_role = discord.utils.find(lambda m: m.id == mute_role, ctx.guild.roles)
 
         if has_mute_role:
