@@ -8,10 +8,11 @@ class Voice(commands.Cog, name = 'voice'):
     def __init__(self, bot):
         self.bot = bot 
 
-    def __repr__(self):
+    def __str__(self):
         return ':speaker: Voice :speaker:'
 
     @commands.command()
+    @commands.guild_only()
     async def join(self, ctx):
         '''
         Joins the voice channel your in.
@@ -25,6 +26,21 @@ class Voice(commands.Cog, name = 'voice'):
         await ctx.send(embed = join_embed)
 
     @commands.command()
+    @commands.guild_only()
+    async def spawn(self, ctx, voice_channel: commands.VoiceChannelConverter):
+        '''
+        Tells the bot to join a voice channel. 
+        This is different to the join command because it does not go to the vc your in.
+        '''
+        join_embed = discord.Embed(
+            title = f"**Successfully connected to {voice_channel.mention}**",
+            colour = discord.Colour.green()
+        )
+        await voice_channel.connect()
+        await ctx.send(embed = join_embed)
+
+    @commands.command()
+    @commands.guild_only()
     async def leave(self, ctx):
         '''
         Leaves the voice channel the bot is in.
@@ -38,6 +54,7 @@ class Voice(commands.Cog, name = 'voice'):
         await ctx.send(embed = leave_embed)
 
     @commands.command()
+    @commands.guild_only()
     async def play(self, ctx, url):
         '''
         Plays a url in the voice channel your in.
@@ -45,6 +62,7 @@ class Voice(commands.Cog, name = 'voice'):
         await ctx.send('This command is under maintenance.')
 
     @commands.command()
+    @commands.guild_only()
     async def stop(self, ctx):
         '''
         Stops the url being played.
@@ -52,6 +70,7 @@ class Voice(commands.Cog, name = 'voice'):
         await ctx.send('This command is under maintenance.')
 
     @commands.command()
+    @commands.guild_only()
     async def resume(self, ctx, url):
         '''
         Resumes playing the url.
@@ -59,6 +78,7 @@ class Voice(commands.Cog, name = 'voice'):
         await ctx.send('This command is under maintenance.')
 
     @commands.command()
+    @commands.guild_only()
     async def pause(self, ctx, url):
         '''
         Pauses the url being played.

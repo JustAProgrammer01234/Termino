@@ -15,7 +15,7 @@ class Settings(commands.Cog, name = 'settings'):
         self.mp_bot = discord.Embed(title = ':warning: Bot has missing perms! :warning:', color = discord.Colour.red())
         self.mp_bot.description = 'Or the bot may be affected by hierarchy.'
 
-    def __repr__(self):
+    def __str__(self):
         return ':gear: Settings :gear:'
 
     async def cog_command_error(self, ctx, error):
@@ -35,10 +35,10 @@ class Settings(commands.Cog, name = 'settings'):
         welcome_dm = server_info['welcome_dm']
 
         welcome_embed = discord.Embed(title = 'Someone joined the server!', description = f'''
-        Welcome {member}!
-        > Users: {len([m for m in member.guild.members if not m.bot])}
-        > Bots: {len([m for m in member.guild.members if m.bot])}
-        > Total: {member.guild.member_count}
+        ***Welcome {member}!***
+        > **Users: `{len([m for m in member.guild.members if not m.bot])}`**
+        > **Bots: `{len([m for m in member.guild.members if m.bot])}`**
+        > Total: **`{member.guild.member_count}`**
         ''', color = discord.Colour.from_rgb(255,255,255))
         welcome_embed.set_image(url = member.avatar_url)
 
@@ -58,7 +58,7 @@ class Settings(commands.Cog, name = 'settings'):
     @commands.has_permissions(manage_channels = True)
     async def set_welcome_channel(self, ctx, channel: commands.TextChannelConverter):
         '''
-        Tells the bot to send welcome messages to users who joins the server in `<channel>`.
+        Tells the bot to send welcome messages to users who joins the server in a specific channel.
         '''
         await self.servers_db.update_welcome_channel(ctx.guild.id, channel.id)
         await ctx.send(f':white_check_mark: ***Successfully set welcome channel to {channel.mention}*** :white_check_mark:')
@@ -68,7 +68,7 @@ class Settings(commands.Cog, name = 'settings'):
     @commands.has_permissions(manage_roles = True)
     async def set_welcome_role(self, ctx, role: commands.RoleConverter):
         '''
-        Tells the bot to add `<role>` to users who joins the server.
+        Tells the bot to add a role to users who join the server.
         '''
         await self.servers_db.update_welcome_role(ctx.guild.id, role.id)
         await ctx.send(f':white_check_mark: ***Sucessfully set welcome role to {role}.*** :white_check_mark:')
@@ -78,10 +78,10 @@ class Settings(commands.Cog, name = 'settings'):
     @commands.has_permissions(manage_messages = True)
     async def welcome_dm_message(self, ctx, *, message):
         '''
-        Tells the bot to dm users `<message>` who joins the server.
+        Tells the bot to dm users who join the server.
         '''
         await self.servers_db.update_welcome_dm(ctx.guild.id, message)
-        await ctx.send('Now the bot will send dms to users who join the server.')
+        await ctx.send(':white_check_mark: ***Now the bot will send dms to users who join the server.*** :white_check_mark:')
 
     @commands.command(name = 'add-no-role')
     @commands.guild_only()

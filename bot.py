@@ -67,7 +67,7 @@ async def main():
             await termino.servers_db.create_table()
             await termino.start(os.getenv('BOT_TOKEN'))
     except:
-        pass
+        await termino.start(os.getenv('BOT_TOKEN'))
 
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()

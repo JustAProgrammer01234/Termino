@@ -27,7 +27,7 @@ class Mod(commands.Cog, name = 'mod'):
         self.mp_bot = discord.Embed(title = ':warning: Bot has missing perms! :warning:', color = discord.Colour.red())
         self.mp_bot.description = 'Or the bot may be affected by hierarchy.'
 
-    def __repr__(self):
+    def __str__(self):
         return ':shield: Mod :shield:'
 
     async def cog_command_error(self, ctx, error):

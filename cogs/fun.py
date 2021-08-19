@@ -41,7 +41,7 @@ class Fun(commands.Cog, name = 'fun'):
     def __init__(self, bot):
         self.bot = bot
 
-    def __repr__(self):
+    def __str__(self):
         return ':basketball: Fun :basketball:'
 
     @commands.command()

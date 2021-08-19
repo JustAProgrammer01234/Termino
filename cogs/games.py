@@ -10,7 +10,7 @@ class Games(commands.Cog, name = 'games'):
     def __init__(self, bot):
         self.bot = bot
 
-    def __repr__(self):
+    def __str__(self):
         return ':video_game: Games :video_game:'
 
     @commands.command()

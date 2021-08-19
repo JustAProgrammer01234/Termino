@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands 
-from .util import imageutil 
+from .util import imageutil
 
 class Image(commands.Cog, name = 'image'):
     '''
@@ -9,22 +9,46 @@ class Image(commands.Cog, name = 'image'):
     def __init__(self, bot):
         self.bot = bot 
         
-    def __repr__(self):
+    def __str__(self):
         return ':frame_photo: Image :frame_photo:'
 
-    @commands.command(name = 'invert-profile')
-    async def invert_profile(self, ctx, member: discord.Member = None):
-        '''
-        Inverts the profile of a member or yours.
-        '''
+    async def check_if_author(self, ctx, member):
         if member is None:
-            avatar_url = ctx.author.avatar_url_as(format = 'png')
-        else:
-            avatar_url = member.avatar_url_as(format = 'png')
-    
-        bytes_image = await avatar_url.read()
-        inverted_bytes = await imageutil.invert(bytes_image)
-        await ctx.send(file = discord.File(fp = inverted_bytes, filename = 'inverted.png'))
+            return await ctx.author.avatar_url_as(format = 'png').read()
+        return await member.avatar_url_as(format = 'png').read()
+
+    @commands.command()
+    @commands.guild_only()
+    async def invert(self, ctx, member: commands.MemberConverter = None):
+        '''
+        Inverts the pfp of a member or yours.
+        '''
+        async with ctx.typing():
+            bytes_image = await self.check_if_author(ctx, member)
+            inverted_bytes = await imageutil.invert(bytes_image)
+            await ctx.send(file = discord.File(fp = inverted_bytes, filename = 'inverted.png'))
+
+    @commands.command()
+    @commands.guild_only()
+    async def rotate(self, ctx, degrees: float, member: commands.MemberConverter = None):
+        '''
+        Rotates the pfp of a member or yours by a number of degrees.
+        '''
+        async with ctx.typing():
+            bytes_image = await self.check_if_author(ctx, member)
+            rotated_bytes = await imageutil.rotate(bytes_image, degrees)
+            await ctx.send(file = discord.File(fp = rotated_bytes, filename = 'rotated.png'))
+
+    @commands.command()
+    @commands.guild_only()
+    async def filter(self, ctx, member: commands.MemberConverter = None):
+        '''
+        Filters the pfp of a member or yours.
+        '''
+        async with ctx.typing():
+            bytes_image = await self.check_if_author(ctx, member)
+            filtered_bytes = await imageutil.filter(bytes_image)
+            await ctx.send(file = discord.File(fp = filtered_bytes, filename = 'filtered.png'))
 
 def setup(bot):
     bot.add_cog(Image(bot))

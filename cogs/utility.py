@@ -11,7 +11,7 @@ class Utility(commands.Cog, name = 'utility'):
         self.bot = bot
         self.pong_url = 'https://media1.tenor.com/images/d43fa1f8705692a7907cf3952fd322e4/tenor.gif?itemid=14393751'
 
-    def __repr__(self):
+    def __str__(self):
         return ':white_check_mark: Utility :white_check_mark:'
 
     @commands.command()
