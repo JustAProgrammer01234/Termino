@@ -8,18 +8,18 @@ from cogs.util.database import termino_servers
 from terminohelp import TerminoHelp
 
 async def get_prefix(bot, message):
-    return await bot.termino_servers.fetch_server_info(message.guild.id)['prefix']
+    return await bot.servers_db.fetch_server_info(message.guild.id)['prefix']
 
 class Bot(commands.AutoShardedBot):
     def __init__(self):
         super().__init__(
+            command_prefix = get_prefix,
             intents = discord.Intents.all(),
             activity = discord.Game(name = 'for $.help'),
             help_command = TerminoHelp(),
             description = 'Just your average bot.',
             owner_id = 790767157523775518
         )
-        self.command_prefix = get_prefix
         self.reddit = reddit.SubReddit(client_id = os.getenv('REDDIT_CLIENT_ID'), 
                             client_secret = os.getenv('REDDIT_CLIENT_SECRET'), 
                             user_agent = os.getenv('REDDIT_USER_AGENT')
