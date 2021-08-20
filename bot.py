@@ -8,12 +8,15 @@ from cogs.util.database import termino_servers
 from terminohelp import TerminoHelp
 
 async def get_prefix(bot, message):
-    return bot.servers_db.fetch_server_info(message.guild.id)
+    if not message.guild:
+        return '$'
+    server_prefix = await bot.servers_db.fetch_server_info(message.guild.id)['prefix']
+    return server_prefix
 
 class Bot(commands.AutoShardedBot):
     def __init__(self):
         super().__init__(
-            command_prefix = get_prefix['prefix'],
+            command_prefix = get_prefix,
             intents = discord.Intents.all(),
             activity = discord.Game(name = 'for $.help'),
             help_command = TerminoHelp(),
