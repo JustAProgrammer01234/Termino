@@ -7,9 +7,13 @@ from discord.ext import commands
 from cogs.util.database import termino_servers
 from terminohelp import TerminoHelp
 
+async def get_prefix(bot, message):
+    return await bot.termino_servers.fetch_server_info(message.guild.id)['prefix']
+
 class Bot(commands.AutoShardedBot):
     def __init__(self, *args, **kwargs):
-        super().__init__(command_prefix = '$.',
+        super().__init__(
+            command_prefix = '$.',
             intents = discord.Intents.all(),
             activity = discord.Game(name = 'for $.help'),
             help_command = TerminoHelp(),
@@ -18,7 +22,8 @@ class Bot(commands.AutoShardedBot):
         )
         self.reddit = reddit.SubReddit(client_id = os.getenv('REDDIT_CLIENT_ID'), 
                             client_secret = os.getenv('REDDIT_CLIENT_SECRET'), 
-                            user_agent = os.getenv('REDDIT_USER_AGENT'))
+                            user_agent = os.getenv('REDDIT_USER_AGENT')
+                        )
 
     async def on_connect(self):
         print(f'{self.user} successfully connected to discord.')
@@ -32,13 +37,19 @@ class Bot(commands.AutoShardedBot):
 
     async def on_command_error(self, ctx, error):
         if isinstance(error, commands.CommandNotFound):
-            cmd_not_found_embed = discord.Embed(title = "Looks like I coudn't find that command.", description = f'Try typing `{self.command_prefix}help`', color = discord.Colour.red())
+            cmd_not_found_embed = discord.Embed(
+                title = "Looks like I couldn't find that command.",
+                description = f"Try typing `{self.command_prefix}help`",
+                color = discord.Colour.red()
+            )
             await ctx.send(embed = cmd_not_found_embed)
 
         elif not hasattr(error, 'original') and not isinstance(error, commands.MissingPermissions):
-            command_error_embed = discord.Embed(title = "Whoops! An error occured...", 
-                                                description = f'```python\n{error}```',
-                                                color = discord.Colour.red())
+            command_error_embed = discord.Embed(
+                title = "Whoops! An error occured...", 
+                description = f'```python\n{error}```',
+                color = discord.Colour.red()
+            )
             await ctx.send(embed = command_error_embed)
         
         else:

@@ -28,3 +28,12 @@ def filter(image_bytes):
         filtered_image.save(buffer, 'png')
         buffer.seek(0)
         return buffer
+
+@executor_function 
+def mirror(image_bytes):
+    with Image.open(BytesIO(image_bytes)) as image:
+        buffer = BytesIO()
+        mirrored_image = ImageOps.mirror(image)
+        mirrored_image.save(buffer, 'png')
+        buffer.seek(0)
+        return buffer

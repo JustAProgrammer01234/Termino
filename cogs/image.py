@@ -50,5 +50,16 @@ class Image(commands.Cog, name = 'image'):
             filtered_bytes = await imageutil.filter(bytes_image)
             await ctx.send(file = discord.File(fp = filtered_bytes, filename = 'filtered.png'))
 
+    @commands.command()
+    @commands.guild_only()
+    async def mirror(self, ctx, member: commands.MemberConverter = None):
+        '''
+        "Mirrors" the pfp of a member or yours.
+        '''
+        async with ctx.typing():
+            bytes_image = await self.check_if_author(ctx, member)
+            filtered_bytes = await imageutil.mirror(bytes_image)
+            await ctx.send(file = discord.File(fp = filtered_bytes, filename = 'filtered.png'))
+
 def setup(bot):
     bot.add_cog(Image(bot))

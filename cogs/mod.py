@@ -46,14 +46,17 @@ class Mod(commands.Cog, name = 'mod'):
             except commands.CommandInvokeError as e:
                 if hasattr(e, 'original') and isinstance(e.original, discord.Forbidden):
                     await ctx.send("**Warning!** I need Manage Roles perm to create a mute role.")
+                    return 
             else:
                 self.servers_db.update_mute_role(ctx.guild.id, m)
         else:
             role_in_server = discord.utils.find(lambda r: r.id == mute_role, ctx.guild.roles)
             
             if role_in_server is None:
-                await ctx.send("Looks like the mute role you configured to my db does not exist.")
+                await ctx.send("Looks like the mute role you configured to my db has been deleted or something.")
                 return
+
+            
 
     @commands.group(invoke_without_command = True)
     @commands.guild_only()
@@ -288,14 +291,24 @@ class Mod(commands.Cog, name = 'mod'):
         mute_embed = discord.Embed(title = f':mute: ***Muted {member}*** :mute:', color = discord.Colour.from_rgb(255,255,255))
         mute_embed.set_thumbnail(url = mute_gif)
 
-        await self.check_mute_role(ctx, mute_role)
+        is_valid = await self.check_mute_role(ctx, mute_role)
+
+        if is_valid is None:
+            return 
+
+        converted_mute_role = commands.RoleConverter().convert(ctx, mute_role)
+
+        if converted_mute_role in member.roles:
+            await ctx.send("The member is already muted lol.")
+            return 
 
         if reason is None:
             mute_embed.add_field(name = 'Reason:', value = f'Muted by: {ctx.author}')
+            await member.add_roles(mute_role, reason = f'Muted by: {ctx.author}')
         else:
             mute_embed.add_field(name = 'Reason:', value = reason)
+            await member.add_roles(mute_role, reason = reason)
 
-        await member.add_roles(mute_role, reason = f'Muted by: {ctx.author}')
         await ctx.send(embed = mute_embed)
     
     @commands.command(name = 'temp-mute')
@@ -311,14 +324,24 @@ class Mod(commands.Cog, name = 'mod'):
         mute_embed = discord.Embed(title = f':mute: ***Muted {member}*** :mute:', color = discord.Colour.from_rgb(255,255,255))
         mute_embed.set_thumbnail(url = mute_gif)
         
-        await self.check_mute_role(ctx, mute_role)
+        is_valid = await self.check_mute_role(ctx, mute_role)
+
+        if is_valid is None:
+            return 
+
+        converted_mute_role = commands.RoleConverter().convert(ctx, mute_role)
+
+        if converted_mute_role in member.roles:
+            await ctx.send("The member is already muted lol.")
+            return
 
         if reason is None:
-            mute_embed.add_field(name = 'Reason:', value = f'Muted by: {ctx.author}')
+            mute_embed.add_field(name = 'Reason:', value = f'Temporarily muted by: {ctx.author}')
+            await member.add_roles(mute_role, reason = f'Muted by: {ctx.author}')
         else:
             mute_embed.add_field(name = 'Reason:', value = reason)
+            await member.add_roles(mute_role, reason = reason)
 
-        await member.add_roles(mute_role)
         await ctx.send(embed = mute_embed)
         await asyncio.sleep(duration)
         await member.remove_roles(mute_role, reason = 'Temporary mute already ended.')
@@ -327,7 +350,7 @@ class Mod(commands.Cog, name = 'mod'):
     @commands.command()
     @commands.guild_only()
     @commands.has_permissions(manage_roles = True)
-    async def unmute(self, ctx, member: commands.MemberConverter):
+    async def unmute(self, ctx, member: commands.MemberConverter, reason = None):
         '''
         Unmutes a member in both text and voice channels.
 
@@ -336,11 +359,16 @@ class Mod(commands.Cog, name = 'mod'):
         mute_role = await self.servers_db.fetch_server_info(ctx.guild.id)['mute_role_id']
         has_mute_role = discord.utils.find(lambda m: m.id == mute_role, ctx.guild.roles)
 
+        if reason is not None:
+            reason = reason
+        else:
+            reason = f'Unmuted by: {ctx.author}'
+
         if has_mute_role:
             await member.remove_roles(mute_role)
             await ctx.send(f'{member} has been unmuted.')
         else:
-            await ctx.send(f"Looks like the mute role you configured to my db doesn't exist.")
+            await ctx.send(f"Looks like the mute role you configured to my db has been deleted.")
 
 def setup(bot):
     bot.add_cog(Mod(bot))

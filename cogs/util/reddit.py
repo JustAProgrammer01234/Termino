@@ -9,7 +9,7 @@ class SubReddit(redditeasy.AsyncSubreddit):
             )
 
     async def get_random_post(self, subreddit):
-        random_post = await self.get_post(subreddit = subreddit)
+        random_post = await self.get_new_post(subreddit = subreddit)
         while random_post.nsfw:
-            random_post = await self.get_post(subreddit = subreddit)
+            random_post = await self.get_new_post(subreddit = subreddit)
         return random_post.title, random_post.author, random_post.content, random_post.post_url, random_post.score

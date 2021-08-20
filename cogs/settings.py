@@ -128,7 +128,8 @@ class Settings(commands.Cog, name = 'settings'):
         '''
         Changes the bot's prefix for this server.
         '''
-        await ctx.send('This command is under maintenance.')
+        await self.servers_db.update_prefix(ctx.guild.id, prefix)
+        await ctx.send(f':white_check_mark: ***Succesfully updated prefix to {prefix}*** :white_check_mark:')
 
 def setup(bot):
     bot.add_cog(Settings(bot))

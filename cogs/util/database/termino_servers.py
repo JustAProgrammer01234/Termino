@@ -24,8 +24,8 @@ class TerminoServers:
     async def initialize_server(self, guild_id):
         async with self.bot.pool.acquire() as con:
             await con.execute('''
-            INSERT INTO termino_servers VALUES ($1, $2, $3, $4, $5);
-            ''', guild_id, None, None, None, None)
+            INSERT INTO termino_servers VALUES ($1, $2, $3, $4, $5, $6);
+            ''', guild_id, None, None, None, None, '$')
 
     async def fetch_server_info(self, guild_id):
         async with self.bot.pool.acquire() as con:
