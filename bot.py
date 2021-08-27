@@ -16,7 +16,7 @@ async def get_prefix(bot, message):
 class Bot(commands.AutoShardedBot):
     def __init__(self):
         super().__init__(
-            command_prefix = '$.',
+            command_prefix = get_prefix,
             intents = discord.Intents.all(),
             activity = discord.Game(name = 'for $.help'),
             help_command = TerminoHelp(),
