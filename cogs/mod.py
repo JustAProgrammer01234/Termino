@@ -48,7 +48,7 @@ class Mod(commands.Cog, name = 'mod'):
                     await ctx.send("**Warning!** I need Manage Roles perm to create a mute role.")
                     return 
             else:
-                self.servers_db.update_mute_role(ctx.guild.id, m)
+                self.servers_db.update_mute_role(ctx.guild.id, m.id)
         else:
             role_in_server = discord.utils.find(lambda r: r.id == mute_role, ctx.guild.roles)
             
@@ -56,7 +56,12 @@ class Mod(commands.Cog, name = 'mod'):
                 await ctx.send("Looks like the mute role you configured to my db has been deleted or something.")
                 return
 
-            
+    async def is_muted(self, ctx, mute_role, member):
+        check_is_muted = discord.utils.find(lambda m: m.id == mute_role, member.roles)
+
+        if not check_is_muted:
+            await ctx.send(f'{member} is not muted.')
+            return 
 
     @commands.group(invoke_without_command = True)
     @commands.guild_only()
@@ -259,22 +264,18 @@ class Mod(commands.Cog, name = 'mod'):
         '''
         bans_label = ''
         ban_list = await ctx.guild.bans()
-        banlist_embed = discord.Embed(title = f'Banned users in {ctx.guild}:', color = discord.Colour.from_rgb(255,255,255))
-        greater_than_one = len(ban_list) > 1
-
+        banlist_embed = discord.Embed(
+            title = f'Banned users in {ctx.guild}:', 
+            color = discord.Colour.from_rgb(255,255,255)
+        )
         if len(ban_list) > 0:
-            if greater_than_one:
-                message = await ctx.send(f'I found **{len(ban_list)}** users banned, listing them one by one.')
-
-            for ban_entry in ban_list:
-                user = ban_entry.user
-                bans_label += f'{user}\n'
-
-            if greater_than_one:
-                await message.delete()
-                
-            banlist_embed.description = f'```{bans_label}```'
-            await ctx.send(embed = banlist_embed)
+            async with ctx.typing():
+                for ban_entry in ban_list:
+                    user = ban_entry.user
+                    bans_label += f'{user}\n'
+                    
+                banlist_embed.description = f'```{bans_label}```'
+                await ctx.send(embed = banlist_embed)
         else:
             await ctx.send("This server has no banned members.")
 
@@ -296,10 +297,9 @@ class Mod(commands.Cog, name = 'mod'):
         if is_valid is None:
             return 
 
-        converted_mute_role = commands.RoleConverter().convert(ctx, mute_role)
+        member_is_muted = await self.is_muted(ctx, mute_role, member)
 
-        if converted_mute_role in member.roles:
-            await ctx.send("The member is already muted lol.")
+        if member_is_muted is None:
             return 
 
         if reason is None:
@@ -329,11 +329,10 @@ class Mod(commands.Cog, name = 'mod'):
         if is_valid is None:
             return 
 
-        converted_mute_role = commands.RoleConverter().convert(ctx, mute_role)
+        member_is_muted = await self.is_muted(ctx, mute_role, member)
 
-        if converted_mute_role in member.roles:
-            await ctx.send("The member is already muted lol.")
-            return
+        if member_is_muted is None:
+            return 
 
         if reason is None:
             mute_embed.add_field(name = 'Reason:', value = f'Temporarily muted by: {ctx.author}')
@@ -359,13 +358,13 @@ class Mod(commands.Cog, name = 'mod'):
         mute_role = await self.servers_db.fetch_server_info(ctx.guild.id)['mute_role_id']
         has_mute_role = discord.utils.find(lambda m: m.id == mute_role, ctx.guild.roles)
 
-        if reason is not None:
+        if reason:
             reason = reason
         else:
             reason = f'Unmuted by: {ctx.author}'
 
         if has_mute_role:
-            await member.remove_roles(mute_role)
+            await member.remove_roles(mute_role, reason = reason)
             await ctx.send(f'{member} has been unmuted.')
         else:
             await ctx.send(f"Looks like the mute role you configured to my db has been deleted.")

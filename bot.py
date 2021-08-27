@@ -16,7 +16,7 @@ async def get_prefix(bot, message):
 class Bot(commands.AutoShardedBot):
     def __init__(self):
         super().__init__(
-            command_prefix = get_prefix,
+            command_prefix = '$.',
             intents = discord.Intents.all(),
             activity = discord.Game(name = 'for $.help'),
             help_command = TerminoHelp(),
@@ -39,21 +39,21 @@ class Bot(commands.AutoShardedBot):
                     pass
 
     async def on_command_error(self, ctx, error):
+        error_embed = discord.Embed(
+            color = discord.Colour.red()
+        )
+
+        await ctx.message.add_reaction('\U0000274c')
+        
         if isinstance(error, commands.CommandNotFound):
-            cmd_not_found_embed = discord.Embed(
-                title = "Looks like I couldn't find that command.",
-                description = f"Try typing `{self.command_prefix}help`",
-                color = discord.Colour.red()
-            )
-            await ctx.send(embed = cmd_not_found_embed)
+            error_embed.title = "Looks like I couldn't find that command."
+            error_embed.description = f"Try typing `{self.command_prefix}help`"
+            await ctx.send(embed = error_embed)
 
         elif not hasattr(error, 'original') and not isinstance(error, commands.MissingPermissions):
-            command_error_embed = discord.Embed(
-                title = "Whoops! An error occured...", 
-                description = f'```python\n{error}```',
-                color = discord.Colour.red()
-            )
-            await ctx.send(embed = command_error_embed)
+            error_embed.title = "Whoops! An error occured..."
+            error_embed.description = f"```python\n{error}```"
+            await ctx.send(embed = error_embed)
         
         else:
             print(error)

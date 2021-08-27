@@ -18,7 +18,7 @@ class Voice(commands.Cog, name = 'voice'):
         Joins the voice channel your in.
         '''
         voice = ctx.author.voice
-        if voice != None:
+        if voice:
             await voice.channel.connect()
             join_embed = discord.Embed(description = f"**Successfully connected to {voice.channel.mention}.**", colour = discord.Colour.green())
         else:
@@ -33,7 +33,7 @@ class Voice(commands.Cog, name = 'voice'):
         This is different to the join command because it does not go to the vc your in.
         '''
         join_embed = discord.Embed(
-            title = f"**Successfully connected to {voice_channel.mention}**",
+            description = f"**Successfully connected to {voice_channel.mention}**",
             colour = discord.Colour.green()
         )
         await voice_channel.connect()
@@ -46,7 +46,7 @@ class Voice(commands.Cog, name = 'voice'):
         Leaves the voice channel the bot is in.
         '''
         voice = ctx.voice_client 
-        if voice != None:
+        if voice:
             await voice.disconnect()
             leave_embed = discord.Embed(description = f"**Successfully left {voice.channel.mention}.**", colour = discord.Colour.green())
         else:

@@ -77,16 +77,60 @@ class Fun(commands.Cog, name = 'fun'):
         else:
             await ctx.send(f"Number {number} is not even.")
 
-    @commands.command()
+    @commands.group(invoke_without_command = True)
     async def meme(self, ctx):
         '''
-        Sends a random meme from r/memes
+        Sends a random meme from `r/memes`.
         '''
-        meme = await self.bot.reddit.get_random_post('memes')
-        meme_embed = discord.Embed(title = meme[0], url = meme[3], color = discord.Colour.from_rgb(255,255,255))
-        meme_embed.set_author(name = f'Meme by: u/{meme[1]}')
-        meme_embed.set_image(url = meme[2])
-        meme_embed.set_footer(text = f'Upvotes: {meme[4]}')
+        await ctx.send_help('meme')
+
+    @meme.command()
+    async def new(self, ctx): 
+        '''
+        Sends a new meme.
+        '''
+        new_meme = await self.bot.reddit.get_random_post_new('memes')
+        meme_embed = discord.Embed(
+            title = new_meme[0],
+            color = discord.Colour.from_rgb(255,255,255),
+            url = new_meme[3]
+        )
+        meme_embed.set_author(name = f'u/{new_meme[1]}')
+        meme_embed.set_image(url = new_meme[2])
+        meme_embed.set_footer(text = f'Upvotes: {new_meme[4]}')
+        await ctx.send(embed = meme_embed)
+
+
+    @meme.command()
+    async def top(self, ctx):
+        '''
+        Sends a top meme.
+        '''
+        new_meme = await self.bot.reddit.get_random_post_top('memes')
+        meme_embed = discord.Embed(
+            title = new_meme[0],
+            color = discord.Colour.from_rgb(255,255,255),
+            url = new_meme[3]
+        )
+        meme_embed.set_author(name = f'u/{new_meme[1]}')
+        meme_embed.set_image(url = new_meme[2])
+        meme_embed.set_footer(text = f'Upvotes: {new_meme[4]}')
+        await ctx.send(embed = meme_embed)
+
+    @meme.command()
+    async def random(self, ctx):
+        '''
+        Sends a random meme.
+        '''
+        new_meme = await self.bot.reddit.get_random_post('memes')
+        meme_embed = discord.Embed(
+            title = new_meme[0],
+            color = discord.Colour.from_rgb(255,255,255),
+            url = new_meme[3]
+        )
+        meme_embed.set_author(name = f'u/{new_meme[1]}')
+        meme_embed.set_image(url = new_meme[2])
+        meme_embed.set_footer(text = f'Upvotes: {new_meme[4]}')
         await ctx.send(embed = meme_embed)
     
     @commands.command()
@@ -151,11 +195,11 @@ class Fun(commands.Cog, name = 'fun'):
         password = [await corefuncs.random_choice(password_chars) for _ in range(password_length)]
         hack_message = await ctx.send(f'Hacking {member.mention}')
         hack_embed_message = discord.Embed(title = f'Credentials of {member}', color = discord.Colour.from_rgb(255,255,255))
-        hack_embed_message.add_field(name = 'Ip address:', value = f'{await corefuncs.generate_random_number(0, 255)}.{await corefuncs.generate_random_number(0, 255)}.{await corefuncs.generate_random_number(0, 255)}.{await corefuncs.generate_random_number(0, 255)}', inline = False)
-        hack_embed_message.add_field(name = 'Email:', value = f'{member.name}@gmail.com', inline = False)
-        hack_embed_message.add_field(name = 'Password:',value = f"{''.join(password)}", inline = False)
+        hack_embed_message.add_field(name = 'Ip address:', value = f'`{await corefuncs.generate_random_number(0, 255)}.{await corefuncs.generate_random_number(0, 255)}.{await corefuncs.generate_random_number(0, 255)}.{await corefuncs.generate_random_number(0, 255)}`', inline = False)
+        hack_embed_message.add_field(name = 'Email:', value = f'`{member.name}@gmail.com`', inline = False)
+        hack_embed_message.add_field(name = 'Password:',value = f"`{''.join(password)}`", inline = False)
         hack_embed_message.set_thumbnail(url = member.avatar_url)
-        hack_embed_message.set_footer(text = f'Hacked by: {ctx.message.author}', icon_url = ctx.message.author.avatar_url)
+        hack_embed_message.set_footer(text = f'Hacked by: {ctx.message.author}', icon_url = ctx.author.avatar_url)
         message_dict = {0: 'Found ip', 1: 'Found email',2: 'Found email password'}
 
         for i in range(3):
