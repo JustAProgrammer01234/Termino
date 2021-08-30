@@ -111,6 +111,8 @@ class Settings(commands.Cog, name = 'settings'):
         await ctx.send(f':white_check_mark: ***Succesfully set mute role to {mute_role}.*** :white_check_mark:')
 
     @commands.command()
+    @commands.guild_only()
+    @commands.has_permissions(administrator = True)
     async def set_prefix(self, ctx, prefix):
         '''
         Changes the bot's prefix for this server.

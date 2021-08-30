@@ -222,7 +222,7 @@ class Fun(commands.Cog, name = 'fun'):
         hack_embed_message.set_footer(text = f'Hacked by: {ctx.message.author}', icon_url = ctx.author.avatar_url)
         message_dict = {0: 'Found ip', 1: 'Found email',2: 'Found email password'}
 
-        for _ in range(3):
+        for i in range(3):
             await asyncio.sleep(1)
             await hack_message.edit(content = message_dict[i])
 
