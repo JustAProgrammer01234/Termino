@@ -48,7 +48,7 @@ class Bot(commands.AutoShardedBot):
         
         if isinstance(error, commands.CommandNotFound):
             error_embed.title = "Looks like I couldn't find that command."
-            error_embed.description = f"Try typing `{self.command_prefix}help`"
+            error_embed.description = f"Try typing `{self.command_prefix}help`."
 
         elif not hasattr(error, 'original') and not isinstance(error, commands.MissingPermissions):
             error_embed.title = "Whoops! An error occured..."
@@ -83,10 +83,10 @@ class Bot(commands.AutoShardedBot):
 
         try:
             await termino.wavelink.initiate_node(
-                host = '',
-                port = 2333,
-                password = '',
-                identifier = 'TEST'
+                host = os.getenv('LAVALINK_HOST'),
+                port = os.getenv('LAVALINK_PORT'),
+                password = os.getenv('LAVALINK_PASSWD'),
+                identifier = os.getenv('LAVALINK_IDENTIFIER')
             )
             async with asyncpg.create_pool(dsn = f'postgres://{user}:{passwd}@{host}:{port}/{database}') as pool:
                 termino.pool = pool
