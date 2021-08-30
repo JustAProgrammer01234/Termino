@@ -94,7 +94,8 @@ class Bot(commands.AutoShardedBot):
 
                 await termino.servers_db.create_table()
                 await termino.start(os.getenv('BOT_TOKEN'))
-        except:
+        except Exception as e:
+            print(f'An exception occured: {e}')
             await termino.start(os.getenv('BOT_TOKEN'))
         finally:
             await termino.close()
