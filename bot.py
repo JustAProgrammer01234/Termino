@@ -27,8 +27,7 @@ class Bot(commands.AutoShardedBot):
         self.wavelink = wavelink.Client(bot = self)
         self.reddit = reddit.SubReddit(
             client_id = os.getenv('REDDIT_CLIENT_ID'), 
-            client_secret = os.getenv('REDDIT_CLIENT_SECRET'), 
-            user_agent = os.getenv('REDDIT_USER_AGENT')
+            client_secret = os.getenv('REDDIT_CLIENT_SECRET')
         )
 
         for cog in os.listdir('./cogs'):
@@ -73,35 +72,36 @@ class Bot(commands.AutoShardedBot):
     async def on_guild_remove(self, guild):
         await self.servers_db.delete_row(guild.id)
 
-async def main():
-    termino = Bot()
+    @classmethod
+    async def main(cls):
+        termino = cls()
 
-    user = os.getenv('PSQL_USER')
-    passwd = os.getenv('PSQL_PASSWD')
-    database = os.getenv('PSQL_DB')
+        user = os.getenv('PSQL_USER')
+        passwd = os.getenv('PSQL_PASSWD')
+        database = os.getenv('PSQL_DB')
 
-    try:
-        await termino.wavelink.initiate_node(
-            host = '172.18.0.2',
-            port = 2333,
-            password = os.getenv('LAVALINK_PASSWD'),
-            identifier = 'node_identifier',
-            rest_uri = 'http://172.18.0.2:2333',
-            region = 'us_central'
-        )
-        async with asyncpg.create_pool(dsn = f'postgres://{user}:{passwd}@172.18.0.2:5432/{database}') as pool:
-            termino.servers_db = termino_servers.TerminoServers(pool)
+        try:
+            await termino.wavelink.initiate_node(
+                host = '172.18.0.2',
+                port = 2333,
+                password = os.getenv('LAVALINK_PASSWD'),
+                identifier = 'node_identifier',
+                rest_uri = 'http://172.18.0.2:2333',
+                region = 'us_central'
+            )
+            async with asyncpg.create_pool(dsn = f'postgres://{user}:{passwd}@172.18.0.2:5432/{database}') as pool:
+                termino.servers_db = termino_servers.TerminoServers(pool)
 
-            await termino.servers_db.create_table()
+                await termino.servers_db.create_table()
+                await termino.start(os.getenv('BOT_TOKEN'))
+
+        except Exception as e:
+            print(f'An exception occured: {e}')
             await termino.start(os.getenv('BOT_TOKEN'))
 
-    except Exception as e:
-        print(f'An exception occured: {e}')
-        await termino.start(os.getenv('BOT_TOKEN'))
-
-    finally:
-        await termino.close()
+        except KeyboardInterrupt:
+            await termino.close()
 
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
-    loop.run_until_complete(main())
+    loop.run_until_complete(Bot.main())

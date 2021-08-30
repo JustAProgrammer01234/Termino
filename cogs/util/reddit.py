@@ -2,7 +2,7 @@ import redditeasy
 from .corefuncs import random_choice
 
 class SubReddit(redditeasy.AsyncSubreddit):
-    def __init__(self, client_id, client_secret, user_agent):
+    def __init__(self, client_id, client_secret):
         super().__init__(client_id = client_id,
                 client_secret = client_secret,
                 user_agent = 'Termino by u/scripto_entity_1010'
