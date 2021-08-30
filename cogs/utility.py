@@ -162,6 +162,14 @@ class Utility(commands.Cog, name = 'utility'):
         Sends info about a member.
         '''
         member_roles = '\n'.join([role.mention for role in member.roles])
+        perm_list = []
+
+        for perm in member.permissions_in(ctx.channel):
+            p = perm[0]
+            if '_' in p:
+                p = p.replace('_', ' ')
+            p = p.title()
+            perm_list.append(f'**`{p}`**')
 
         embd = discord.Embed(
             title = f'Info about member: {member}', 
@@ -180,6 +188,11 @@ class Utility(commands.Cog, name = 'utility'):
         embd.add_field(
             name = 'Roles assigned:', 
             value = f'{member_roles}'
+        )
+
+        embd.add_field(
+            name = 'Available perms:',
+            value = perm_list.split('**,** ')
         )
 
         embd.set_thumbnail(url = member.avatar_url)

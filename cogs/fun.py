@@ -194,15 +194,35 @@ class Fun(commands.Cog, name = 'fun'):
         password_length = await corefuncs.generate_random_number(5,10)
         password = [await corefuncs.random_choice(password_chars) for _ in range(password_length)]
         hack_message = await ctx.send(f'Hacking {member.mention}')
-        hack_embed_message = discord.Embed(title = f'Credentials of {member}', color = discord.Colour.from_rgb(255,255,255))
-        hack_embed_message.add_field(name = 'Ip address:', value = f'`{await corefuncs.generate_random_number(0, 255)}.{await corefuncs.generate_random_number(0, 255)}.{await corefuncs.generate_random_number(0, 255)}.{await corefuncs.generate_random_number(0, 255)}`', inline = False)
-        hack_embed_message.add_field(name = 'Email:', value = f'`{member.name}@gmail.com`', inline = False)
-        hack_embed_message.add_field(name = 'Password:',value = f"`{''.join(password)}`", inline = False)
+
+        hack_embed_message = discord.Embed(
+            title = f'Credentials of {member}', 
+            color = discord.Colour.from_rgb(255,255,255)
+        )
+
+        hack_embed_message.add_field(
+            name = 'Ip address:', 
+            value = f'`{await corefuncs.generate_random_number(0, 255)}.{await corefuncs.generate_random_number(0, 255)}.{await corefuncs.generate_random_number(0, 255)}.{await corefuncs.generate_random_number(0, 255)}`', 
+            inline = False
+        )
+
+        hack_embed_message.add_field(
+            name = 'Email:', 
+            value = f'`{member.name}@gmail.com`', 
+            inline = False
+            )
+
+        hack_embed_message.add_field(
+            name = 'Password:', 
+            value = f"`{''.join(password)}`", 
+            inline = False
+        )
+        
         hack_embed_message.set_thumbnail(url = member.avatar_url)
         hack_embed_message.set_footer(text = f'Hacked by: {ctx.message.author}', icon_url = ctx.author.avatar_url)
         message_dict = {0: 'Found ip', 1: 'Found email',2: 'Found email password'}
 
-        for i in range(3):
+        for _ in range(3):
             await asyncio.sleep(1)
             await hack_message.edit(content = message_dict[i])
 

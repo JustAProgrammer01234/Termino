@@ -10,21 +10,8 @@ class Settings(commands.Cog, name = 'settings'):
         self.bot = bot
         self.servers_db = self.bot.servers_db
 
-        self.mp_user = discord.Embed(title = ':no_entry: Permission denied! :no_entry:', color = discord.Colour.red())
-        self.mp_user.description = 'Or you may be affected by hierarchy.'
-        self.mp_bot = discord.Embed(title = ':warning: Bot has missing perms! :warning:', color = discord.Colour.red())
-        self.mp_bot.description = 'Or the bot may be affected by hierarchy.'
-
     def __str__(self):
         return ':gear: Settings :gear:'
-
-    async def cog_command_error(self, ctx, error):
-        if isinstance(error, commands.MissingPermissions):
-            await ctx.send(embed = self.mp_user)
-        elif isinstance(error, commands.CommandInvokeError):
-            if hasattr(error, 'original'):
-                if isinstance(error.original, discord.Forbidden):
-                    await ctx.send(embed = self.mp_bot)
 
     @commands.Cog.listener()
     async def on_member_join(self, member):

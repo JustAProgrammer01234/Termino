@@ -1,5 +1,8 @@
-import discord 
+import re
+import discord
 from discord.ext import commands 
+
+youtube_re = '^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$'
 
 class Voice(commands.Cog, name = 'voice'):
     '''
@@ -19,10 +22,16 @@ class Voice(commands.Cog, name = 'voice'):
         '''
         voice = ctx.author.voice
         if voice:
-            await voice.channel.connect()
-            join_embed = discord.Embed(description = f"**Successfully connected to {voice.channel.mention}.**", colour = discord.Colour.green())
+            player = self.bot.wavelink.get_player(ctx.guild.id)
+            await player.connect(voice.id)
+
+            join_embed = discord.Embed(
+                description = f"**Successfully connected to {voice.channel.mention}.**", 
+                color = discord.Colour.green()
+            )
         else:
-            join_embed = discord.Embed(description = f"**Please join a voice channel.**", colour = discord.Colour.red())
+            raise commands.CommandError("**Please join a voice channel.**")
+            
         await ctx.send(embed = join_embed)
 
     @commands.command()
@@ -32,11 +41,14 @@ class Voice(commands.Cog, name = 'voice'):
         Tells the bot to join a voice channel. 
         This is different to the join command because it does not go to the vc your in.
         '''
+        player = self.bot.wavelink.get_player(ctx.guild.id)
+        await player.connect(voice_chanel.id)
+
         join_embed = discord.Embed(
             description = f"**Successfully connected to {voice_channel.mention}**",
-            colour = discord.Colour.green()
+            color = discord.Colour.green()
         )
-        await voice_channel.connect()
+
         await ctx.send(embed = join_embed)
 
     @commands.command()
@@ -47,44 +59,66 @@ class Voice(commands.Cog, name = 'voice'):
         '''
         voice = ctx.voice_client 
         if voice:
-            await voice.disconnect()
-            leave_embed = discord.Embed(description = f"**Successfully left {voice.channel.mention}.**", colour = discord.Colour.green())
+            player = self.bot.wavelink.get_player(ctx.guild.id)
+            await player.disconnect()
+            leave_embed = discord.Embed(description = f"**Successfully left {voice.channel.mention}.**", color = discord.Colour.green())
         else:
-            leave_embed = discord.Embed(description = f"**Can't disconnect, I'm not currently in a voice channel.**", colour = discord.Colour.red())
+            raise commands.CommandError("**Can't disconnect. I'm not currently in a voice channel.**")
+
         await ctx.send(embed = leave_embed)
 
     @commands.command()
     @commands.guild_only()
-    async def play(self, ctx, url):
+    async def play(self, ctx, song):
         '''
-        Plays a url in the voice channel your in.
+        Plays the song in vc.
+        The command will look through the yt search tab 
+        if argument `song` is not a yt url like this:
+        https://www.youtube.com/watch?v=dQw4w9WgXcQ
         '''
-        await ctx.send('This command is under maintenance.')
+        player = self.bot.get_player(ctx.guild.id)
+
+        if not player.is_connected:
+            await ctx.invoke('join')
+
+        if youtube_re.compile(song) is None:
+            yt_tracks = await self.bot.wavelink.get_tracks(f'ytsearch:{song}')
+        else:
+            yt_tracks = await self.bot.wavelink.get_tracks(song)
+
+        if not yt_tracks:
+            return await ctx.send("Couldn't find the song you're looking for. Sorry.")
+            
+        print(yt_tracks)
+        player.play(yt_tracks)
+        
 
     @commands.command()
     @commands.guild_only()
     async def stop(self, ctx):
         '''
-        Stops the url being played.
+        Stops playing the song.
         '''
-        await ctx.send('This command is under maintenance.')
+        player = self.bot.get_player(ctx.guild.id)
+        await player.stop()
 
     @commands.command()
     @commands.guild_only()
     async def resume(self, ctx, url):
         '''
-        Resumes playing the url.
+        Resumes playing the song.
         '''
-        await ctx.send('This command is under maintenance.')
+        player = self.bot.get_player(ctx.guild.id)
+        await player.set_pause(False)
 
     @commands.command()
     @commands.guild_only()
-    async def pause(self, ctx, url):
+    async def pause(self, ctx):
         '''
-        Pauses the url being played.
+        Pauses the song being played.
         '''
-        await ctx.send('This command is under maintenance.')
-
+        player = self.bot.get_player(ctx.guild.id)
+        await player.set_pause(True)
 
 def setup(bot):
     bot.add_cog(Voice(bot))

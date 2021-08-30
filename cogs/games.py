@@ -27,8 +27,8 @@ class Games(commands.Cog, name = 'games'):
         else:
             result_message = ":game_die: LOL I won. :game_die:"
         result_embed = discord.Embed(title = result_message, color = discord.Colour.random())
-        result_embed.add_field(name = 'You:', value = player_dice, inline = True)
-        result_embed.add_field(name = 'Termino:', value = bot_dice, inline = True)
+        result_embed.add_field(name = 'You:', value = f'**`{player_dice}`**', inline = True)
+        result_embed.add_field(name = 'Termino:', value = f'**`{bot_dice}`**', inline = True)
         await ctx.send(embed = result_embed)
 
     @commands.command(name = 'rock-paper-scissors', aliases = ['rps'])
@@ -97,9 +97,9 @@ class Games(commands.Cog, name = 'games'):
             result_embed.add_field(name = user, value = f'Choice picked:\n`{user_choice}` {choice.emoji}')
 
             if bot_choice == 'paper':
-                result_embed.add_field(name = f'{self.bot.user.name}#{self.bot.user.discriminator}', value = f'Choice picked:\n`{bot_choice}` :newspaper:')
+                result_embed.add_field(name = f'{self.bot.user}', value = f'Choice picked:\n`{bot_choice}` :newspaper:')
             else:
-                result_embed.add_field(name = f'{self.bot.user.name}#{self.bot.user.discriminator}', value = f'Choice picked:\n`{bot_choice}` :{bot_choice}:')
+                result_embed.add_field(name = f'{self.bot.user}', value = f'Choice picked:\n`{bot_choice}` :{bot_choice}:')
             
             await ctx.send(embed = result_embed)
 
