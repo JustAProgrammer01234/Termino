@@ -38,7 +38,7 @@ class Bot(commands.AutoShardedBot):
                 except:
                     pass
 
-    async def on_connect():
+    async def on_connect(self):
         print(f'{self.user} successfully connected to Discord.')
 
     async def on_command_error(self, ctx, error):
