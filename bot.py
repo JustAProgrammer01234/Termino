@@ -38,6 +38,9 @@ class Bot(commands.AutoShardedBot):
                 except:
                     pass
 
+    async def on_connect():
+        print(f'{self.user} successfully connected to Discord.')
+
     async def on_command_error(self, ctx, error):
         error_embed = discord.Embed(
             color = discord.Colour.red()
