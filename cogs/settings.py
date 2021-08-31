@@ -110,15 +110,5 @@ class Settings(commands.Cog, name = 'settings'):
         await self.servers_db.update_mute_role(ctx.guild.id, mute_role.id)
         await ctx.send(f':white_check_mark: ***Succesfully set mute role to {mute_role}.*** :white_check_mark:')
 
-    @commands.command()
-    @commands.guild_only()
-    @commands.has_permissions(administrator = True)
-    async def set_prefix(self, ctx, prefix):
-        '''
-        Changes the bot's prefix for this server.
-        '''
-        await self.servers_db.update_prefix(ctx.guild.id, prefix)
-        await ctx.send(f':white_check_mark: ***Succesfully updated prefix to {prefix}*** :white_check_mark:')
-
 def setup(bot):
     bot.add_cog(Settings(bot))

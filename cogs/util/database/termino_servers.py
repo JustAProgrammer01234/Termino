@@ -14,8 +14,7 @@ class TerminoServers:
                     welcome_channel_id  BIGINT,
                     welcome_role_id BIGINT,
                     welcome_dm  TEXT,
-                    mute_role_id    BIGINT,
-                    prefix  TEXT
+                    mute_role_id    BIGINT
                 );
                 ''')
         except asyncpg.exceptions.DuplicateTableError:
@@ -56,12 +55,6 @@ class TerminoServers:
             await con.execute('''
             UPDATE termino_servers SET mute_role_id = $2 WHERE guild_id = $1;
             ''', guild_id, mute_role_id)
-
-    async def update_prefix(self, guild_id, prefix):
-        async with self.pool.acquire() as con:
-            await con.execute('''
-            UPDATE termino_servers SET prefix = $2 WHERE guild_id = $1;
-            ''', guild_id, prefix)
 
     async def delete_row(self, guild_id):
         async with self.pool.acquire() as con:

@@ -2,7 +2,7 @@ import re
 import discord
 from discord.ext import commands 
 
-youtube_re = '^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$'
+youtube_re = re.compile(r'^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$')
 
 class Voice(commands.Cog, name = 'voice'):
     '''
@@ -42,7 +42,7 @@ class Voice(commands.Cog, name = 'voice'):
         This is different to the join command because it does not go to the vc your in.
         '''
         player = self.bot.wavelink.get_player(ctx.guild.id)
-        await player.connect(voice_chanel.id)
+        await player.connect(voice_channel.id)
 
         join_embed = discord.Embed(
             description = f"**Successfully connected to {voice_channel.mention}**",
@@ -81,7 +81,7 @@ class Voice(commands.Cog, name = 'voice'):
         if not player.is_connected:
             await ctx.invoke('join')
 
-        if youtube_re.compile(song) is None:
+        if youtube_re.match(song) is None:
             yt_tracks = await self.bot.wavelink.get_tracks(f'ytsearch:{song}')
         else:
             yt_tracks = await self.bot.wavelink.get_tracks(song)

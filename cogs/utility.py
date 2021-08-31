@@ -192,7 +192,7 @@ class Utility(commands.Cog, name = 'utility'):
 
         embd.add_field(
             name = 'Available perms:',
-            value = perm_list.split('**,** ')
+            value = '**,** '.join(perm_list)
         )
 
         embd.set_thumbnail(url = member.avatar_url)
