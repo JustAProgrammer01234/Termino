@@ -162,14 +162,6 @@ class Utility(commands.Cog, name = 'utility'):
         Sends info about a member.
         '''
         member_roles = '\n'.join([role.mention for role in member.roles])
-        perm_list = []
-
-        for perm in member.permissions_in(ctx.channel):
-            p = perm[0]
-            if '_' in p:
-                p = p.replace('_', ' ')
-            p = p.title()
-            perm_list.append(f'**`{p}`**')
 
         embd = discord.Embed(
             title = f'Info about member: {member}', 
@@ -187,12 +179,8 @@ class Utility(commands.Cog, name = 'utility'):
         
         embd.add_field(
             name = 'Roles assigned:', 
-            value = f'{member_roles}'
-        )
-
-        embd.add_field(
-            name = 'Available perms:',
-            value = '**,** '.join(perm_list)
+            value = f'{member_roles}',
+            inline = False
         )
 
         embd.set_thumbnail(url = member.avatar_url)
@@ -201,17 +189,17 @@ class Utility(commands.Cog, name = 'utility'):
 
     @commands.command()
     @commands.guild_only()
-    async def permissions(self, ctx):
+    async def permissions(self, ctx, member: commands.MemberConverter):
         '''
-        Sends every single perm the bot has.
+        Sends every single perm a member has.
         '''
         perms = ''
         perms_embed = discord.Embed(
-            title = 'Permissions:',
+            title = f"{member}'s permissions.",
             color = discord.Colour.from_rgb(255,255,255)
         )
 
-        for perm in ctx.channel.permissions_for(ctx.me):
+        for perm in member.permissions_in(ctx.channel):
             p = perm[0]
             if '_' in p:
                 p = p.replace('_', ' ')
@@ -219,7 +207,7 @@ class Utility(commands.Cog, name = 'utility'):
             perms += f'**`{p}`**\n'
 
         perms_embed.description = perms
-        perms_embed.set_thumbnail(url = self.bot.user.avatar_url)
+        perms_embed.set_thumbnail(url = member.avatar_url)
 
         await ctx.send(embed = perms_embed)
 

@@ -30,7 +30,7 @@ class Voice(commands.Cog, name = 'voice'):
                 color = discord.Colour.green()
             )
         else:
-            raise commands.CommandError("**Please join a voice channel.**")
+            await ctx.send(":x: **Please join a voice channel.** :x:")
             
         await ctx.send(embed = join_embed)
 
@@ -63,7 +63,7 @@ class Voice(commands.Cog, name = 'voice'):
             await player.disconnect()
             leave_embed = discord.Embed(description = f"**Successfully left {voice.channel.mention}.**", color = discord.Colour.green())
         else:
-            raise commands.CommandError("**Can't disconnect. I'm not currently in a voice channel.**")
+            await ctx.send(":x: **Can't disconnect. I'm not currently in a voice channel.** :x:")
 
         await ctx.send(embed = leave_embed)
 

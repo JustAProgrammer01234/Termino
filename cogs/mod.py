@@ -20,7 +20,6 @@ class Mod(commands.Cog, name = 'mod'):
     '''
     def __init__(self, bot):
         self.bot = bot 
-        self.servers_db = self.bot.servers_db
 
     def __str__(self):
         return ':shield: Mod :shield:'

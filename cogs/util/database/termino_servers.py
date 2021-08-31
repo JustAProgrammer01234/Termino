@@ -12,6 +12,7 @@ class TerminoServers:
                 CREATE TABLE termino_servers (
                     guild_id    BIGINT,
                     welcome_channel_id  BIGINT,
+                    leave_channel_id BIGINT,
                     welcome_role_id BIGINT,
                     welcome_dm  TEXT,
                     mute_role_id    BIGINT
@@ -36,6 +37,12 @@ class TerminoServers:
         async with self.pool.acquire() as con:
             await con.execute('''
             UPDATE termino_servers SET welcome_channel_id = $2 WHERE guild_id = $1;
+            ''', guild_id, channel_id)
+
+    async def udpate_leave_channel(self, guild_id, channel_id):
+        async with self.pool.acquire() as con:
+            await con.execute('''
+            UPDATE termino_servers SET leave_channel_id = $2 WHERE guild_id = $1;
             ''', guild_id, channel_id)
 
     async def update_welcome_role(self, guild_id, role_id):

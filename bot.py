@@ -81,6 +81,8 @@ class Bot(commands.AutoShardedBot):
             if isinstance(error.original, discord.Forbidden):
                 error_embed.title = ':warning: Bot has missing perms! :warning:'
                 error_embed.description = 'Or the bot may be affected by hierarchy.'
+        else:
+            print(error)
 
         await ctx.send(embed = error_embed)
 
@@ -97,13 +99,11 @@ class Bot(commands.AutoShardedBot):
         try:
             async with asyncpg.create_pool(f'postgres://{user}:{passwd}@172.18.0.2:5432/{database}') as pool:
                 termino.servers_db = termino_servers.TerminoServers(pool)
-                    
                 await termino.servers_db.create_table()
                 await termino.start(os.getenv('BOT_TOKEN'))
-
+            
         except Exception as e:
             print(f'An exception occured: {e}')
-            await termino.start(os.getenv('BOT_TOKEN'))
 
         finally:
             await termino.close()
