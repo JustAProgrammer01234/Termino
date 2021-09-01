@@ -53,7 +53,7 @@ class Utility(commands.Cog, name = 'utility'):
             value = f'''
             **Prefix:** `{command_prefix}`
             **Servers joined:** `{len(self.bot.guilds)}`
-            **Bot created at:** <t:{int(self.bot.user.create_at.timestamp())}:F>
+            **Bot created at:** <t:{int(self.bot.user.created_at.timestamp())}:F>
             '''
         )
 
