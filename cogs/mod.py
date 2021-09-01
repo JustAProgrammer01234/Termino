@@ -70,19 +70,19 @@ class Mod(commands.Cog, name = 'mod'):
 
     @commands.command()
     @commands.guild_only()
-    @commands.has_permissions(manage_channels = True)
+    @commands.has_permissions(manage_roles = True)
     async def lock(self, ctx, channel: commands.TextChannelConverter):
         '''
         Locks a channel.   
 
-        You must have Manage Messages perm to do this. The same goes for the bot.
+        You must have Manage Roles perm to do this. The same goes for the bot.
         '''
         await channel.set_permissions(ctx.guild.default_role, send_message = False)
         await ctx.send(f'**Successfully locked {channel.mention}.**')
 
     @commands.command()
     @commands.guild_only()
-    @commands.has_permissions(manage_channels = True)
+    @commands.has_permissions(manage_roles = True)
     async def unlock(self, ctx, channel: commands.TextChannelConverter):
         '''
         Unlocks a channel.
@@ -198,7 +198,7 @@ class Mod(commands.Cog, name = 'mod'):
         async with ctx.typing():
             if len(ban_list) > 0:
                 for ban_entry in ban_list:
-                    banlist_embed.add_field(name = str(ban_entry[1]), value = f'Reason:\n{ban_entry[0]}')
+                    banlist_embed.add_field(name = str(ban_entry[1]), value = f'Reason:\n{ban_entry[0]}', inline = False)
                 await ctx.send(embed = banlist_embed)
             else:
                 await ctx.send("This server has no banned members.")
