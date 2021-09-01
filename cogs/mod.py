@@ -198,7 +198,7 @@ class Mod(commands.Cog, name = 'mod'):
         async with ctx.typing():
             if len(ban_list) > 0:
                 for ban_entry in ban_list:
-                    banlist_embed.add_field(name = str(ban_entry[1]), value = f'Reason:\n{ban_entry[0]}', inline = False)
+                    banlist_embed.add_field(name = str(ban_entry[1]), value = f'__Reason:__\n`{ban_entry[0]}`', inline = False)
                 await ctx.send(embed = banlist_embed)
             else:
                 await ctx.send("This server has no banned members.")
