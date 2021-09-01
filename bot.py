@@ -60,16 +60,18 @@ class Bot(commands.AutoShardedBot):
     async def on_ready(self):
         print(f'{self.user} is ready.')
 
+    async def on_message(self, message):
+        if message.content == f'<@{self.user.id}>':
+            await message.channel.send(f'My prefix is `{self.command_prefix}`.')
+        await self.process_commands(message)
+
     async def on_command_error(self, ctx, error):
         error_embed = discord.Embed(color = discord.Colour.red())
 
-        await ctx.message.add_reaction('\U0000274c')
-        
-        if isinstance(error, commands.CommandNotFound):
-            error_embed.title = "Looks like I couldn't find that command."
-            error_embed.description = f"Try typing `{self.command_prefix}help`."
+        if not isinstance(error, commands.CommandNotFound):
+            await ctx.message.add_reaction('\U0000274c')
 
-        elif not hasattr(error, 'original') and not isinstance(error, commands.MissingPermissions):
+        if not hasattr(error, 'original') and not isinstance(error, commands.MissingPermissions):
             error_embed.title = "Whoops! An error occured..."
             error_embed.description = f"```python\n{error}```"
 
@@ -81,10 +83,11 @@ class Bot(commands.AutoShardedBot):
             if isinstance(error.original, discord.Forbidden):
                 error_embed.title = ':warning: Bot has missing perms! :warning:'
                 error_embed.description = 'Or the bot may be affected by hierarchy.'
-        else:
-            print(error)
 
-        await ctx.send(embed = error_embed)
+        try:
+            await ctx.send(embed = error_embed)
+        except:
+            pass 
 
     async def on_guild_join(self, guild):
         await self.servers_db.initialize_row(guild.id)
