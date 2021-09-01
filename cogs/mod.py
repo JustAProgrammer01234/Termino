@@ -24,76 +24,6 @@ class Mod(commands.Cog, name = 'mod'):
     def __str__(self):
         return ':shield: Mod :shield:'
 
-    @commands.group(invoke_without_command = True)
-    @commands.guild_only()
-    @commands.has_permissions(manage_guild = True)
-    async def create(self, ctx):
-        '''
-        Command group that creates a channel, role, or category.
-
-        You must have Manage Server perm to do this. The same goes for the bot
-        '''
-        await ctx.send_help('create')
-
-    @create.command()
-    @commands.guild_only()
-    @commands.has_permissions(manage_roles = True)
-    async def role(self, ctx, role_name, *, reason = None):
-        '''
-        Creates a role.
-
-        You must have Manage Roles perm to do this. The same goes for the bot.
-        '''
-        if reason is None:
-            await ctx.guild.create_role(name = role_name, reason = f'Role requested by: {ctx.author}')
-        else:
-            await ctx.guild.create_role(name = role_name, reason = reason)
-        
-        await ctx.send(':ballot_box_with_check: ***Role successfully created.*** :ballot_box_with_check:')
-
-    @create.command(name = 'text-channel')
-    @commands.guild_only()
-    @commands.has_permissions(manage_channels = True)
-    async def text_channel(self, ctx, channel_name, *, reason = None):
-        '''
-        Creates a text channel.
-
-        You must have Manage Channels perm to do this. The same goes for the bot.
-        '''
-        if reason is None:
-            await ctx.guild.create_text_channel(name = channel_name, reason = f'Text channel requested by: {ctx.author}')
-        else:
-            await ctx.guild.create_text_channel(name = channel_name, reason = reason)
-
-        await ctx.send(':ballot_box_with_check: ***Text channel sucesssfully created.*** :ballot_box_with_check:')
-
-    @create.command(name = 'voice-channel')
-    @commands.guild_only()
-    @commands.has_permissions(manage_channels = True)
-    async def voice_channel(self, ctx, channel_name, reason = None):
-        '''
-        Creates a voice channel.
-
-        You must have Manage Channels perm to do this. The same goes for the bot.
-        '''
-        if reason is None:
-            await ctx.guild.create_voice_channel(name = channel_name, reason = f'Voice channel requested by: {ctx.author}')
-        else:
-            await ctx.guild.create_voice_channel(name = channel_name, reason = reason)
-            
-        await ctx.send(':ballot_box_with_check: ***Voice channel successfully created.*** :ballot_box_with_check:')
-
-    @create.command()
-    @commands.guild_only()
-    @commands.has_permissions(manage_channels = True)
-    async def category(self, ctx, category_name, reason = None):
-        if reason is None:
-            await ctx.guild.create_category(name = category_name, reason = f'Category requested by: {ctx.author}')
-        else:
-            await ctx.guild.create_category(name = category_name, reason = reason)
-
-        await ctx.send(':ballot_box_with_check: ***Category successfully created.*** :ballot_box_with_check:')
-
     @commands.command(name = 'add-role')
     @commands.guild_only()
     @commands.has_permissions(manage_roles = True)
@@ -104,11 +34,27 @@ class Mod(commands.Cog, name = 'mod'):
         You must have Manage Roles perm to do this. The same goes for the bot.
         '''
         if reason is None:
-            await member.add_roles(role, reason = f'Role assignment requested by: {ctx.author}')
+            await member.add_roles(role, reason = f'No reason provided.')
         else:
             await member.add_roles(role, reason = reason)
 
         await ctx.send(f'Sucessfully added role to **{member}**.')            
+
+    @commands.command(name = 'remove-role')
+    @commands.guild_only()
+    @commands.has_permissions(manage_roles = True)
+    async def remove_role(self, ctx, role: commands.RoleConverter, member: commands.MemberConverter, reason = None):
+        '''
+        Removes a role from a member.
+
+        You must have Manage Roles perm to do this. The same goes for the bot.
+        '''
+        if reason is None:
+            await member.remove_roles(role, reason = f'No reason provided.')
+        else:
+            await member.remove_roles(role, reason = reason)
+
+        await ctx.send(f'Sucessfully removed role from **{member}**.')   
 
     @commands.command()
     @commands.guild_only()
@@ -120,7 +66,31 @@ class Mod(commands.Cog, name = 'mod'):
         You must have Manage Messages perm to do this. The same goes for the bot.
         '''
         await ctx.channel.purge(limit = limit)
-        await ctx.author.send(f'Successfully deleted `{limit}` messages.')
+        await ctx.author.send(f'**Successfully deleted `{limit}` messages.**')
+
+    @commands.command()
+    @commands.guild_only()
+    @commands.has_permissions(manage_channels = True)
+    async def lock(self, ctx, channel: commands.TextChannelConverter):
+        '''
+        Locks a channel.   
+
+        You must have Manage Messages perm to do this. The same goes for the bot.
+        '''
+        await channel.set_permissions(ctx.guild.default_role, send_message = False)
+        await ctx.send(f'**Successfully locked {channel.mention}.**')
+
+    @commands.command()
+    @commands.guild_only()
+    @commands.has_permissions(manage_channels = True)
+    async def unlock(self, ctx, channel: commands.TextChannelConverter):
+        '''
+        Unlocks a channel.
+
+        You must have Manage Messages perm to do this. The same goes for the bot.
+        '''
+        await channel.set_permissions(ctx.guild.default_role, send_message = True)
+        await ctx.send(f'**Successfully unlocked {channel.mention}.**')
     
     @commands.command()
     @commands.guild_only()
@@ -156,7 +126,7 @@ class Mod(commands.Cog, name = 'mod'):
         embd.set_thumbnail(url = ban_gif)
 
         if reason is None:
-            embd.add_field(name = 'Reason for ban:', value = f"Banned by: {ctx.author}")
+            embd.add_field(name = 'Reason for ban:', value = f'No reason provided.')
             await member.ban(reason = "Didn't provide a reason.")
             await ctx.send(embed = embd)
         else:
@@ -177,7 +147,7 @@ class Mod(commands.Cog, name = 'mod'):
         embd.set_thumbnail(url = ban_gif)
 
         if reason is None:
-            embd.add_field(name = 'Reason for ban:', value = f"Temporarily banned by: {ctx.author}")
+            embd.add_field(name = 'Reason for ban:', value = f'No reason provided.')
             await member.ban(reason = "Didn't provide a reason.")
             await ctx.send(embed = embd)
         else:
@@ -197,21 +167,19 @@ class Mod(commands.Cog, name = 'mod'):
 
         You must have Ban Members perm to do this. The same goes for the bot.
         '''
-        message = await ctx.send('Hold on this may take a while.')
-        found_member = False
+        async with ctx.typing():
+            found_member = False
 
-        async for ban_entry in ctx.guild.bans():
-            user = ban_entry.user
-            if f'{member}' == f'{user}':
-                await ctx.guild.unban(user, reason = f'Unbanned by: {ctx.author}')
-                await message.delete()
-                await ctx.send(f'{member} has been unbanned.')
-                found_member = True
-                break
+            async for ban_entry in ctx.guild.bans():
+                user = ban_entry.user
+                if f'{member}' == f'{user}':
+                    await ctx.guild.unban(user, reason = f'Unbanned by: {ctx.author}')
+                    await ctx.send(f'{member} has been unbanned.')
+                    found_member = True
+                    break
 
-        if not found_member:
-            await message.delete()
-            await ctx.send("Couldn't find banned member.")
+            if not found_member:
+                await ctx.send("Couldn't find banned member.")
 
     @commands.command()
     @commands.guild_only()
@@ -222,22 +190,18 @@ class Mod(commands.Cog, name = 'mod'):
 
         You must have Ban Members perm to do this. The same goes for the bot.
         '''
-        bans_label = ''
         ban_list = await ctx.guild.bans()
         banlist_embed = discord.Embed(
-            title = f'Banned users in {ctx.guild}:', 
+            title = f'{len(ban_list)} banned users in {ctx.guild}:', 
             color = discord.Colour.from_rgb(255,255,255)
         )
-        if len(ban_list) > 0:
-            async with ctx.typing():
+        async with ctx.typing():
+            if len(ban_list) > 0:
                 for ban_entry in ban_list:
-                    user = ban_entry.user
-                    bans_label += f'{user}\n'
-                    
-                banlist_embed.description = f'```{bans_label}```'
+                    banlist_embed.add_field(name = str(ban_entry[1]), value = f'Reason:\n{ban_entry[0]}')
                 await ctx.send(embed = banlist_embed)
-        else:
-            await ctx.send("This server has no banned members.")
+            else:
+                await ctx.send("This server has no banned members.")
 
     @commands.command()
     @commands.guild_only()
@@ -248,28 +212,6 @@ class Mod(commands.Cog, name = 'mod'):
 
         You must have Manage Roles perm to do this. The same goes for the bot.
         '''
-        # mute_role = await self.servers_db.fetch_server_info(ctx.guild.id)['mute_role_id']
-        # mute_embed = discord.Embed(title = f':mute: ***Muted {member}*** :mute:', color = discord.Colour.from_rgb(255,255,255))
-        # mute_embed.set_thumbnail(url = mute_gif)
-
-        # is_valid = await self.check_mute_role(ctx, mute_role)
-
-        # if is_valid is None:
-        #     return 
-
-        # member_is_muted = await self.is_muted(ctx, mute_role, member)
-
-        # if member_is_muted is None:
-        #     return 
-
-        # if reason is None:
-        #     mute_embed.add_field(name = 'Reason:', value = f'Muted by: {ctx.author}')
-        #     await member.add_roles(mute_role, reason = f'Muted by: {ctx.author}')
-        # else:
-        #     mute_embed.add_field(name = 'Reason:', value = reason)
-        #     await member.add_roles(mute_role, reason = reason)
-
-        # await ctx.send(embed = mute_embed)
         await ctx.send('This command is under maintenance.')
     
     @commands.command(name = 'temp-mute')
@@ -281,30 +223,6 @@ class Mod(commands.Cog, name = 'mod'):
 
         You must have Manage Roles perm to do this. The same goes for the bot.
         '''
-        # mute_role = await self.servers_db.fetch_server_info(ctx.guild.id)['mute_role_id']
-        # mute_embed = discord.Embed(title = f':mute: ***Muted {member}*** :mute:', color = discord.Colour.from_rgb(255,255,255))
-        # mute_embed.set_thumbnail(url = mute_gif)
-        
-        # is_valid = await self.check_mute_role(ctx, mute_role)
-
-        # if is_valid is None:
-        #     return 
-
-        # member_is_muted = await self.is_muted(ctx, mute_role, member)
-
-        # if member_is_muted is None:
-        #     return 
-
-        # if reason is None:
-        #     mute_embed.add_field(name = 'Reason:', value = f'Temporarily muted by: {ctx.author}')
-        #     await member.add_roles(mute_role, reason = f'Muted by: {ctx.author}')
-        # else:
-        #     mute_embed.add_field(name = 'Reason:', value = reason)
-        #     await member.add_roles(mute_role, reason = reason)
-
-        # await ctx.send(embed = mute_embed)
-        # await asyncio.sleep(duration)
-        # await member.remove_roles(mute_role, reason = 'Temporary mute already ended.')
         await ctx.send('This command is under maintenance.')
 
     @commands.command()
@@ -316,19 +234,6 @@ class Mod(commands.Cog, name = 'mod'):
 
         You must have Manage Roles perm to do this. The same goes for the bot.
         '''
-        # mute_role = await self.servers_db.fetch_server_info(ctx.guild.id)['mute_role_id']
-        # has_mute_role = discord.utils.find(lambda m: m.id == mute_role, ctx.guild.roles)
-
-        # if reason:
-        #     reason = reason
-        # else:
-        #     reason = f'Unmuted by: {ctx.author}'
-
-        # if has_mute_role:
-        #     await member.remove_roles(mute_role, reason = reason)
-        #     await ctx.send(f'{member} has been unmuted.')
-        # else:
-        #     await ctx.send(f"Looks like the mute role you configured to my db has been deleted.")
         await ctx.send('This command is under maintenance.')
 
 def setup(bot):

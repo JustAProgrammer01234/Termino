@@ -29,10 +29,10 @@ class Voice(commands.Cog, name = 'voice'):
                 description = f"**Successfully connected to {voice.channel.mention}.**", 
                 color = discord.Colour.green()
             )
+
+            await ctx.send(embed = join_embed)
         else:
-            await ctx.send(":x: **Please join a voice channel.** :x:")
-            
-        await ctx.send(embed = join_embed)
+            await ctx.send(":x: ***Please join a voice channel.*** :x:")
 
     @commands.command()
     @commands.guild_only()
@@ -63,7 +63,7 @@ class Voice(commands.Cog, name = 'voice'):
             await player.disconnect()
             leave_embed = discord.Embed(description = f"**Successfully left {voice.channel.mention}.**", color = discord.Colour.green())
         else:
-            await ctx.send(":x: **Can't disconnect. I'm not currently in a voice channel.** :x:")
+            await ctx.send(":x: ***Can't disconnect. I'm not currently in a voice channel.*** :x:")
 
         await ctx.send(embed = leave_embed)
 
@@ -92,7 +92,6 @@ class Voice(commands.Cog, name = 'voice'):
         print(yt_tracks)
         player.play(yt_tracks)
         
-
     @commands.command()
     @commands.guild_only()
     async def stop(self, ctx):

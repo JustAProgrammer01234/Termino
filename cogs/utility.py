@@ -53,7 +53,7 @@ class Utility(commands.Cog, name = 'utility'):
             value = f'''
             **Prefix:** `{command_prefix}`
             **Servers joined:** `{len(self.bot.guilds)}`
-            **Bot created at:** `{self.bot.user.created_at.strftime('%d/%m/%Y')}`
+            **Bot created at:** <t:{int(self.bot.user.create_at.timestamp())}:F>
             '''
         )
 
@@ -112,7 +112,7 @@ class Utility(commands.Cog, name = 'utility'):
 
         embd.add_field(
             name = 'General info:', 
-            value = f'''**Server created at:** `{ctx.guild.created_at.strftime('%d/%m/%Y')}`
+            value = f'''**Server created at:** <t:{int(ctx.guild.created_at.timestamp())}:F>
             **Server ID**: `{ctx.guild.id}`
             **Region:** `{ctx.guild.region}`''', 
             inline = False
@@ -170,8 +170,8 @@ class Utility(commands.Cog, name = 'utility'):
 
         embd.add_field(
             name = 'General info:', 
-            value = f'''**User created at:** `{member.created_at.strftime('%d/%m/%Y')}`
-            **User joined at:** `{member.joined_at.strftime('%d/%m/%Y')}`
+            value = f'''**User created at:** <t:{int(member.created_at.timestamp())}:F>
+            **User joined at:** <t:{int(member.joined_at.timestamp())}:F>
             **Member id:** `{member.id}`
             **Status:** `{member.status}`''', 
             inline = False

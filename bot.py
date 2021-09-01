@@ -94,19 +94,11 @@ class Bot(commands.AutoShardedBot):
 
     @classmethod
     async def main(cls):
-        termino = cls()
-
-        try:
-            async with asyncpg.create_pool(f'postgres://{user}:{passwd}@172.18.0.2:5432/{database}') as pool:
-                termino.servers_db = termino_servers.TerminoServers(pool)
-                await termino.servers_db.create_table()
-                await termino.start(os.getenv('BOT_TOKEN'))
-            
-        except Exception as e:
-            print(f'An exception occured: {e}')
-
-        finally:
-            await termino.close()
+        async with asyncpg.create_pool(f'postgres://{user}:{passwd}@172.18.0.2:5432/{database}') as pool:
+            termino = cls()
+            termino.servers_db = termino_servers.TerminoServers(pool)
+            await termino.servers_db.create_table()
+            await termino.start(os.getenv('BOT_TOKEN'))
 
 
 if __name__ == '__main__':
