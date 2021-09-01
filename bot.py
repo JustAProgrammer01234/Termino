@@ -71,7 +71,7 @@ class Bot(commands.AutoShardedBot):
         if not isinstance(error, commands.CommandNotFound):
             await ctx.message.add_reaction('\U0000274c')
 
-        if not hasattr(error, 'original') or not isinstance(error, commands.MissingPermissions) or not isinstance(error, commands.CommandNotFound):
+        if not hasattr(error, 'original') and not isinstance(error, commands.MissingPermissions) and not isinstance(error, commands.CommandNotFound):
             error_embed.title = "Whoops! An error occured..."
             error_embed.description = f"```python\n{error}```"
 
