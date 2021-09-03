@@ -66,7 +66,6 @@ class Mod(commands.Cog, name = 'mod'):
         You must have Manage Messages perm to do this. The same goes for the bot.
         '''
         await ctx.channel.purge(limit = limit)
-        await ctx.author.send(f'**Successfully deleted `{limit}` messages.**')
 
     @commands.command()
     @commands.guild_only()
@@ -77,8 +76,8 @@ class Mod(commands.Cog, name = 'mod'):
 
         You must have Manage Roles perm to do this. The same goes for the bot.
         '''
+        await ctx.message.add_reaction('\U0001f512')
         await channel.set_permissions(ctx.guild.default_role, send_messages = False)
-        await ctx.send(f'**Successfully locked {channel.mention}.**')
 
     @commands.command()
     @commands.guild_only()
@@ -89,8 +88,8 @@ class Mod(commands.Cog, name = 'mod'):
 
         You must have Manage Messages perm to do this. The same goes for the bot.
         '''
+        await ctx.message.add_reaction('\U0001f513')
         await channel.set_permissions(ctx.guild.default_role, send_messages = True)
-        await ctx.send(f'**Successfully unlocked {channel.mention}.**')
     
     @commands.command()
     @commands.guild_only()
