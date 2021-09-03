@@ -77,7 +77,7 @@ class Mod(commands.Cog, name = 'mod'):
 
         You must have Manage Roles perm to do this. The same goes for the bot.
         '''
-        await channel.set_permissions(ctx.guild.default_role, send_message = False)
+        await channel.set_permissions(ctx.guild.default_role, send_messages = False)
         await ctx.send(f'**Successfully locked {channel.mention}.**')
 
     @commands.command()
@@ -89,7 +89,7 @@ class Mod(commands.Cog, name = 'mod'):
 
         You must have Manage Messages perm to do this. The same goes for the bot.
         '''
-        await channel.set_permissions(ctx.guild.default_role, send_message = True)
+        await channel.set_permissions(ctx.guild.default_role, send_messages = True)
         await ctx.send(f'**Successfully unlocked {channel.mention}.**')
     
     @commands.command()
