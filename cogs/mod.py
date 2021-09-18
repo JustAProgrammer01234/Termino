@@ -1,6 +1,10 @@
+import re 
 import discord 
 import asyncio
 from discord.ext import commands
+
+time_re = re.compile(r"(\d{1,5}(?:[.,]?\d{1,5})?)([smhd])")
+time_dict = {"s":1, "m":60, "h":3600, "d":86400}
 
 kick_gif = 'https://media1.tenor.com/images/e4e4730bdc422c5f75b1126926077485/tenor.gif?itemid=4799973'
 ban_gif = 'https://media.tenor.com/images/76f50d3ec6888dd3552db1d074435022/tenor.gif'
@@ -8,15 +12,20 @@ mute_gif = 'https://media1.tenor.com/images/b54c8e343c06dc160c4fc270f8ff0ae8/ten
 
 class DurationConverter(commands.Converter):
     async def convert(self, ctx, duration):
-        time_unit_value = {'s': 1, 'm': 60, 'h': 120}
-        num, time_unit = int(duration[:-1]), time_unit_value[duration[-1]]
+        matches = time_re.findall(duration)
+        time = 0 
+        for v, k in matches:
+            try:
+                time += time_dict[k]*float(v)
+            except KeyError:
+                raise commands.BadArgument(f"{k} is an invalid time-key! h/m/s/d are valid!")
+            except ValueError:
+                raise commands.BadArgument(f"{v} is not a number!")
+        return time
 
-        if time_unit in time_unit_value.values():
-            return num * time_unit
-
-class Mod(commands.Cog, name = 'mod'):
+class Mod(commands.Cog):
     '''
-    This command category contains all the moderator commands.
+    This category contains all the moderator commands.
     '''
     def __init__(self, bot):
         self.bot = bot 
@@ -38,7 +47,7 @@ class Mod(commands.Cog, name = 'mod'):
         else:
             await member.add_roles(role, reason = reason)
 
-        await ctx.send(f'Sucessfully added role to **{member}**.')            
+        await ctx.send(rf'\:white_check_mark: Sucessfully added role to **{member}**.')            
 
     @commands.command(name = 'remove-role')
     @commands.guild_only()
@@ -54,7 +63,7 @@ class Mod(commands.Cog, name = 'mod'):
         else:
             await member.remove_roles(role, reason = reason)
 
-        await ctx.send(f'Sucessfully removed role from **{member}**.')   
+        await ctx.send(rf'\:white_check_mark: Sucessfully removed role from **{member}**.')   
 
     @commands.command()
     @commands.guild_only()
@@ -106,11 +115,11 @@ class Mod(commands.Cog, name = 'mod'):
         if reason is None:
             embd.add_field(name = 'Reason for kick:', value = f"Kicked by: {ctx.author}")
             await member.kick(reason = "Didn't provide a reason.")
-            await ctx.send(embed = embd)
         else:
             embd.add_field(name = 'Reason for kick:', value = reason)
             await member.kick(reason = reason)
-            await ctx.send(embed = embd)
+        
+        await ctx.send(embed = embd)
 
     @commands.command()
     @commands.guild_only()
@@ -127,11 +136,11 @@ class Mod(commands.Cog, name = 'mod'):
         if reason is None:
             embd.add_field(name = 'Reason for ban:', value = f'No reason provided.')
             await member.ban(reason = "Didn't provide a reason.")
-            await ctx.send(embed = embd)
         else:
             embd.add_field(name = 'Reason for ban:', value = reason)
             await member.ban(reason = reason)
-            await ctx.send(embed = embd)
+        
+        await ctx.send(embed = embd)
 
     @commands.command()
     @commands.guild_only()
@@ -148,37 +157,36 @@ class Mod(commands.Cog, name = 'mod'):
         if reason is None:
             embd.add_field(name = 'Reason for ban:', value = f'No reason provided.')
             await member.ban(reason = "Didn't provide a reason.")
-            await ctx.send(embed = embd)
         else:
             embd.add_field(name = 'Reason for ban:', value = reason)
             await member.ban(reason = reason)
-            await ctx.send(embed = embd)
-  
+            
+        await ctx.send(embed = embd)
         await asyncio.sleep(duration)
         await member.unban(reason = 'Temporary ban already ended.')
 
     @commands.command()
     @commands.guild_only()
     @commands.has_permissions(ban_members = True)
-    async def unban(self, ctx, *, member):
+    async def unban(self, ctx, member_id: int, reason = None):
         '''
-        Unbans a member
+        Unbans a member using the member id.
 
         You must have Ban Members perm to do this. The same goes for the bot.
         '''
-        async with ctx.typing():
-            found_member = False
+        banned_member = discord.Object(id = member_id)
 
-            async for ban_entry in ctx.guild.bans():
-                user = ban_entry.user
-                if f'{member}' == f'{user}':
-                    await ctx.guild.unban(user, reason = f'Unbanned by: {ctx.author}')
-                    await ctx.send(f'{member} has been unbanned.')
-                    found_member = True
-                    break
+        if reason is None:
+            reason = 'No reason provided.'
+        else:
+            reason = reason 
 
-            if not found_member:
-                await ctx.send("Couldn't find banned member.")
+        try:
+            await ctx.guild.unban(banned_member, reason = reason)
+        except discord.NotFound:
+            await ctx.send("Couldn't find that banned member.")
+        else:
+            await ctx.send(rf"\:white_check_mark: Successfully unbanned **{banned_member}**.")
 
     @commands.command()
     @commands.guild_only()
@@ -190,10 +198,8 @@ class Mod(commands.Cog, name = 'mod'):
         You must have Ban Members perm to do this. The same goes for the bot.
         '''
         ban_list = await ctx.guild.bans()
-        banlist_embed = discord.Embed(
-            title = f'{len(ban_list)} banned users in {ctx.guild}:', 
-            color = discord.Colour.from_rgb(255,255,255)
-        )
+        banlist_embed = discord.Embed(title = f'{len(ban_list)} banned users in {ctx.guild}:')
+
         async with ctx.typing():
             if len(ban_list) > 0:
                 for ban_entry in ban_list:

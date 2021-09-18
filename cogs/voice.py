@@ -4,7 +4,7 @@ from discord.ext import commands
 
 youtube_re = re.compile(r'^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$')
 
-class Voice(commands.Cog, name = 'voice'):
+class Voice(commands.Cog):
     '''
     This category contains commands for voice channels.
     '''
@@ -32,7 +32,7 @@ class Voice(commands.Cog, name = 'voice'):
 
             await ctx.send(embed = join_embed)
         else:
-            await ctx.send(":x: ***Please join a voice channel.*** :x:")
+            await ctx.send(r"\:x: **Please join a voice channel.**")
 
     @commands.command()
     @commands.guild_only()
@@ -62,10 +62,9 @@ class Voice(commands.Cog, name = 'voice'):
             player = self.bot.wavelink.get_player(ctx.guild.id)
             await player.disconnect()
             leave_embed = discord.Embed(description = f"**Successfully left {voice.channel.mention}.**", color = discord.Colour.green())
+            await ctx.send(embed = leave_embed)
         else:
-            await ctx.send(":x: ***Can't disconnect. I'm not currently in a voice channel.*** :x:")
-
-        await ctx.send(embed = leave_embed)
+            await ctx.send(r"\:x: ***Can't disconnect. I'm not currently in a voice channel.***")
 
     @commands.command()
     @commands.guild_only()

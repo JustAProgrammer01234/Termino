@@ -1,8 +1,8 @@
 import string
 import asyncio
 import discord
+from .util import corefuncs
 from discord.ext import commands
-from .util import reddit, corefuncs
 
 gif_url = [
         'https://media1.tenor.com/images/31f29b3fcc20a486f44454209914266a/tenor.gif?itemid=17942299',
@@ -34,7 +34,7 @@ eightball_messages = [
             'Yes.'
         ]
 
-class Fun(commands.Cog, name = 'fun'):
+class Fun(commands.Cog):
     '''
     This category contains all the fun commands you can do.
     '''
@@ -50,8 +50,10 @@ class Fun(commands.Cog, name = 'fun'):
         Generates a random number for you from `<start>` to `<stop>`.
         '''
         try:
-            embd = discord.Embed(title = f'Generated random number from {start} to {stop}:',
-            description = f'`{await corefuncs.generate_random_number(start, stop)}`', color = discord.Colour.from_rgb(255,255,255))
+            embd = discord.Embed(
+                title = f'Generated random number from {start} to {stop}:',
+                description = f'`{await corefuncs.generate_random_number(start, stop)}`'
+            )
             await ctx.send(embed = embd) 
         except ValueError:
             await ctx.send("The first number must be less than the other.")
@@ -62,7 +64,7 @@ class Fun(commands.Cog, name = 'fun'):
         An implementation of the 8ball fortune teller.
         '''
         random_response = await corefuncs.random_choice(eightball_messages)
-        embd = discord.Embed(title = '8ball says:', description = f'```{random_response}```', color = discord.Colour.from_rgb(255,255,255))
+        embd = discord.Embed(title = '8ball says:', description = f'```{random_response}```')
         embd.set_thumbnail(url = 'https://magic-8ball.com/assets/images/magicBallStart.png')
         embd.set_footer(text = f'Question: {question}')
         await ctx.send(embed = embd)
@@ -92,7 +94,6 @@ class Fun(commands.Cog, name = 'fun'):
         new_meme = await self.bot.reddit.get_random_post_new('memes')
         meme_embed = discord.Embed(
             title = new_meme[0],
-            color = discord.Colour.from_rgb(255,255,255),
             url = new_meme[3]
         )
         meme_embed.set_author(name = f'u/{new_meme[1]}')
@@ -109,7 +110,6 @@ class Fun(commands.Cog, name = 'fun'):
         new_meme = await self.bot.reddit.get_random_post_top('memes')
         meme_embed = discord.Embed(
             title = new_meme[0],
-            color = discord.Colour.from_rgb(255,255,255),
             url = new_meme[3]
         )
         meme_embed.set_author(name = f'u/{new_meme[1]}')
@@ -125,7 +125,6 @@ class Fun(commands.Cog, name = 'fun'):
         new_meme = await self.bot.reddit.get_random_post('memes')
         meme_embed = discord.Embed(
             title = new_meme[0],
-            color = discord.Colour.from_rgb(255,255,255),
             url = new_meme[3]
         )
         meme_embed.set_author(name = f'u/{new_meme[1]}')
@@ -154,7 +153,7 @@ class Fun(commands.Cog, name = 'fun'):
         Checks how lucky you are or how lucky a member is.
         '''
         luck = await corefuncs.generate_random_number(1, 100)
-        luck_embed = discord.Embed(description = f":four_leaf_clover: `{luck}%` :four_leaf_clover:", colour = discord.Colour.from_rgb(255,255,255))
+        luck_embed = discord.Embed(description = f":four_leaf_clover: `{luck}%` :four_leaf_clover:")
 
         if member is None:
             luck_embed.title = 'Your luck is:'
@@ -169,7 +168,7 @@ class Fun(commands.Cog, name = 'fun'):
         '''
         Slaps a specific member in a discord server.
         '''
-        embd = discord.Embed(description = f'{ctx.author.mention} slapped {member.mention} because of **{reason}**', color = discord.Colour.from_rgb(255,255,255))
+        embd = discord.Embed(description = f'{ctx.author.mention} slapped {member.mention} because of **{reason}**')
         embd.set_image(url = await corefuncs.random_choice(gif_url))
         await ctx.send(embed = embd)
 
@@ -180,7 +179,7 @@ class Fun(commands.Cog, name = 'fun'):
         Slaps a random member in a discord server.
         '''
         random_member = await corefuncs.random_choice(ctx.guild.members)
-        embd = discord.Embed(description = f'{ctx.author.mention} slapped {random_member.mention} because of **{reason}**.', color = discord.Colour.from_rgb(255,255,255))
+        embd = discord.Embed(description = f'{ctx.author.mention} slapped {random_member.mention} because of **{reason}**.')
         embd.set_image(url = await corefuncs.random_choice(gif_url))
         await ctx.send(embed = embd)
 
@@ -195,10 +194,7 @@ class Fun(commands.Cog, name = 'fun'):
         password = [await corefuncs.random_choice(password_chars) for _ in range(password_length)]
         hack_message = await ctx.send(f'Hacking {member.mention}')
 
-        hack_embed_message = discord.Embed(
-            title = f'Credentials of {member}', 
-            color = discord.Colour.from_rgb(255,255,255)
-        )
+        hack_embed_message = discord.Embed(title = f'Credentials of {member}')
 
         hack_embed_message.add_field(
             name = 'Ip address:', 
@@ -218,8 +214,8 @@ class Fun(commands.Cog, name = 'fun'):
             inline = False
         )
         
-        hack_embed_message.set_thumbnail(url = member.avatar_url)
-        hack_embed_message.set_footer(text = f'Hacked by: {ctx.message.author}', icon_url = ctx.author.avatar_url)
+        hack_embed_message.set_thumbnail(url = member.avatar.url)
+        hack_embed_message.set_footer(text = f'Hacked by: {ctx.message.author}', icon_url = ctx.author.avatar.url)
         message_dict = {0: 'Found ip', 1: 'Found email',2: 'Found email password'}
 
         for i in range(3):

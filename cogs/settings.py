@@ -1,8 +1,8 @@
 import discord 
-from discord.ext import commands 
-from .util.database.termino_servers import TerminoServers
+import inspect
+from discord.ext import commands
 
-class Settings(commands.Cog, name = 'settings'):
+class Settings(commands.Cog):
     '''
     This category contains all of the config commands.
     '''
@@ -14,23 +14,26 @@ class Settings(commands.Cog, name = 'settings'):
 
     @commands.Cog.listener()
     async def on_member_join(self, member):
-        server_info = await self.bot.servers_db.fetch_server_info(member.guild.id)
+        server_info = await self.bot.db.fetch_server_info(member.guild.id)
 
         welcome_channel = server_info['welcome_channel_id']
         welcome_role = server_info['welcome_role_id']
         welcome_dm = server_info['welcome_dm']
 
-        welcome_embed = discord.Embed(title = 'Someone joined the server!', description = f'''
-        ***Welcome {member}!***
-        > **Users: `{len([m for m in member.guild.members if not m.bot])}`**
-        > **Bots: `{len([m for m in member.guild.members if m.bot])}`**
-        > Total: **`{member.guild.member_count}`**
-        ''', color = discord.Colour.green())
-        welcome_embed.set_image(url = member.avatar_url)
+        users = len([member for member in member.guild.members if not member.bot])
+        bots = len([member for member in member.guild.members if not member.bot])
 
         if welcome_channel is not None:
             c = member.guild.get_channel(welcome_channel)
-            await c.send(embed = welcome_embed)
+            await c.send(inspect.cleandoc(
+                f'''
+                **Welcome {member.mention}!**
+                Right now we have:
+                {member.guild.member_count} member(s)
+                > {users} user(s)
+                > {bots} bot(s)
+                '''
+            ))
 
         if welcome_role is not None:
             r = member.guild.get_role(welcome_role)
@@ -45,17 +48,20 @@ class Settings(commands.Cog, name = 'settings'):
 
         leave_channel = server_info['leave_channel_id']
 
-        leave_embed = discord.Embed(title = 'Someone left the server', description = f'''
-        ***We hope you come back {member}!***
-        > **Users: `{len([m for m in member.guild.members if not m.bot])}`**
-        > **Bots: `{len([m for m in member.guild.members if m.bot])}`**
-        > Total: **`{member.guild.member_count}`**
-        ''', color = discord.Colour.red())
-        leave_embed.set_image(url = member.avatar_url)
+        users = len([member for member in member.guild.members if not member.bot])
+        bots = len([member for member in member.guild.members if not member.bot])
 
         if leave_channel is not None:
             c = member.guild.get_channel(leave_channel)
-            await c.send(embed = leave_embed)
+            await c.send(inspect.cleandoc(
+                f'''
+                **Goodbye {member.mention}!**
+                Right now we have:
+                {member.guild.member_count} member(s)
+                > {users} user(s)
+                > {bots} bot(s)
+                '''
+            ))
 
     @commands.command(name = 'set-welcome-channel')
     @commands.guild_only()

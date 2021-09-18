@@ -2,9 +2,9 @@ import discord
 from discord.ext import commands 
 from .util import imageutil
 
-class Image(commands.Cog, name = 'image'):
+class Image(commands.Cog):
     '''
-    This command category contains all the commands for image manipulation.
+    This category contains all the commands for image manipulation.
     '''
     def __init__(self, bot):
         self.bot = bot 
@@ -14,8 +14,8 @@ class Image(commands.Cog, name = 'image'):
 
     async def check_if_author(self, ctx, member):
         if member is None:
-            return await ctx.author.avatar_url_as(format = 'png').read()
-        return await member.avatar_url_as(format = 'png').read()
+            return await ctx.author.avatar.read()
+        return await member.avatar.url.read()
 
     @commands.command()
     @commands.guild_only()
@@ -59,7 +59,7 @@ class Image(commands.Cog, name = 'image'):
         async with ctx.typing():
             bytes_image = await self.check_if_author(ctx, member)
             filtered_bytes = await imageutil.mirror(bytes_image)
-            await ctx.send(file = discord.File(fp = filtered_bytes, filename = 'filtered.png'))
+            await ctx.send(file = discord.File(fp = filtered_bytes, filename = 'mirrored.png'))
 
 def setup(bot):
     bot.add_cog(Image(bot))

@@ -1,16 +1,13 @@
 import os
+import re 
 import discord
 import asyncpg
 import asyncio
 import wavelink
-from cogs.util import reddit
 from discord.ext import commands
-from cogs.util.database import termino_servers
+from cogs.util.clients import db
 from terminohelp import TerminoHelp
-
-user = os.getenv('PSQL_USER')
-passwd = os.getenv('PSQL_PASSWD')
-database = os.getenv('PSQL_DB')
+from cogs.util.clients import reddit
 
 class Bot(commands.AutoShardedBot):
     def __init__(self):
@@ -22,37 +19,14 @@ class Bot(commands.AutoShardedBot):
             description = 'Just your average bot.',
             owner_id = 790767157523775518
         )
-        self.loop = asyncio.get_event_loop()
-
-        self.wavelink = wavelink.Client(bot = self)
-        self.loop.create_task(self.start_wavelink_nodes())
-        self.create_reddit_client()
-
-        self.load_cogs()
 
     def load_cogs(self):
         for cog in os.listdir('./cogs'):
             if cog.endswith('.py') and cog != '__init__.py':
                 try:
                     self.load_extension(f'cogs.{cog[:-3]}')
-                except:
-                    pass
-
-    async def start_wavelink_nodes(self):
-        await self.wavelink.initiate_node(
-                host = '172.18.0.2',
-                port = 2333,
-                password = os.getenv('LAVALINK_PASSWD'),
-                identifier = 'node_identifier',
-                rest_uri = 'http://172.18.0.2:2333',
-                region = 'us_central'
-            )
-
-    def create_reddit_client(self):
-        self.reddit = reddit.SubReddit(
-            client_id = os.getenv('REDDIT_CLIENT_ID'), 
-            client_secret = os.getenv('REDDIT_CLIENT_SECRET')
-        )
+                except Exception as e:
+                    print(f'Error loading cog {cog}: {e}')
 
     async def on_connect(self):
         print(f'{self.user} successfully connected to Discord.')
@@ -61,7 +35,12 @@ class Bot(commands.AutoShardedBot):
         print(f'{self.user} is ready.')
 
     async def on_message(self, message):
-        if message.content == f'<@{self.user.id}>':
+        mentioned = discord.utils.find(lambda m: m.id == self.user.id, message.mentions)
+
+        if message.author == self.user:
+            return 
+
+        if mentioned:
             await message.channel.send(f'My prefix is `{self.command_prefix}`.')
         await self.process_commands(message)
 
@@ -91,21 +70,55 @@ class Bot(commands.AutoShardedBot):
 
         print(error)
 
-    async def on_guild_join(self, guild):
-        await self.servers_db.initialize_row(guild.id)
+async def start_wavelink_nodes(lavalink_host, lavalink_passwd, bot):
+    await bot.wavelink.initiate_node(
+        host = lavalink_host,
+        port = 2333,
+        password = lavalink_passwd,
+        identifier = 'node_identifier',
+        rest_uri = f'http://{lavalink_host}:2333',
+        region = 'us_central'
+    )
 
-    async def on_guild_remove(self, guild):
-        await self.servers_db.delete_row(guild.id)
+async def main():
 
-    @classmethod
-    async def main(cls):
-        async with asyncpg.create_pool(f'postgres://{user}:{passwd}@172.18.0.2:5432/{database}') as pool:
-            termino = cls()
-            termino.servers_db = termino_servers.TerminoServers(pool)
-            await termino.servers_db.create_table()
-            await termino.start(os.getenv('BOT_TOKEN'))
+    token = os.getenv('BOT_TOKEN')
 
+    psql_user = os.getenv('PSQL_USER')
+    psql_passwd = os.getenv('PSQL_PASSWD')
+    psql_host = os.getenv('PSQL_HOST')
+    psql_db = os.getenv('PSQL_DB')
+
+    client_id = os.getenv('REDDIT_CLIENT_ID')
+    client_secret = os.getenv('REDDIT_CLIENT_SECRET')
+
+    lavalink_host = os.getenv('LAVALINK_HOST')
+    lavalink_passwd = os.getenv('LAVALINK_PASSWD')
+
+    termino = Bot()
+    termino.loop = asyncio.get_event_loop()
+
+    try:
+        pool = await asyncpg.create_pool(dsn=f'postgres://{psql_user}:{psql_passwd}@{psql_host}:5432/{psql_db}')
+        termino.db = await db.DbClient(pool)
+        termino.loop.create_task(start_wavelink_nodes(lavalink_host, lavalink_passwd, termino))
+        termino.reddit = reddit.RedditClient(client_id=client_id, client_secret=client_secret)
+    except Exception as e:
+        print(f'An exception occured while initializing the api clients: {e}')
+
+    termino.load_cogs()
+
+    try:
+        print("Starting the damn bot.")
+        await termino.start(token)
+    except KeyboardInterrupt:
+        print("Okay, I'll stop.")
+        await termino.close()
 
 if __name__ == '__main__':
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(Bot.main())
+    try:
+        print('Trying to run the whole script.')
+        loop = asyncio.get_event_loop()
+        loop.run_until_complete(main())
+    except KeyboardInterrupt:
+        print('Aborting...')

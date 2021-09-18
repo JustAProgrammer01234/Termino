@@ -1,7 +1,6 @@
 import redditeasy
-from .corefuncs import random_choice
 
-class SubReddit(redditeasy.AsyncSubreddit):
+class RedditClient(redditeasy.AsyncSubreddit):
     def __init__(self, client_id, client_secret):
         super().__init__(client_id = client_id,
                 client_secret = client_secret,
